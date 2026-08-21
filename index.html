@@ -125,6 +125,14 @@
   .note-banner{ background:#fff7e8; border:1px solid #f2d9a3; color:#6b4c00; border-radius:10px; padding:10px 12px; font-size:12.5px; margin-bottom:12px; line-height:1.6; }
   .quicklinks{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
   .quicklinks a{ font-size:12.5px; }
+  .weather-card{ background:var(--page); border:1px solid var(--grid); border-radius:10px; padding:10px 12px; margin-top:10px; }
+  .weather-card h3{ margin:0 0 8px 0; font-size:14px; }
+  .wx-row{ display:flex; gap:8px; overflow-x:auto; padding-bottom:2px; }
+  .wx-day{ flex:0 0 68px; text-align:center; background:var(--surface); border:1px solid var(--grid); border-radius:8px; padding:6px 4px; }
+  .wx-date{ font-size:11px; color:var(--ink-muted); }
+  .wx-icon{ font-size:20px; margin:2px 0; }
+  .wx-desc{ font-size:10.5px; color:var(--ink-2); min-height:26px; }
+  .wx-temp{ font-size:12px; font-weight:600; font-variant-numeric: tabular-nums; margin-top:2px; }
   .phrase-cat{ margin-top:4px; }
   footer.app-footer{ max-width:760px; margin:0 auto; padding:0 16px; color:var(--ink-muted); font-size:11.5px; text-align:center; }
 
@@ -140,21 +148,25 @@
   #tab-overview:checked ~ header nav.tabs label[for="tab-overview"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-itinerary:checked ~ header nav.tabs label[for="tab-itinerary"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-logistics:checked ~ header nav.tabs label[for="tab-logistics"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
+  #tab-metro:checked ~ header nav.tabs label[for="tab-metro"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-journals:checked ~ header nav.tabs label[for="tab-journals"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-tickets:checked ~ header nav.tabs label[for="tab-tickets"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-budget:checked ~ header nav.tabs label[for="tab-budget"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-packing:checked ~ header nav.tabs label[for="tab-packing"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-phrases:checked ~ header nav.tabs label[for="tab-phrases"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-food:checked ~ header nav.tabs label[for="tab-food"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
+  #tab-weather:checked ~ header nav.tabs label[for="tab-weather"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-overview:checked ~ main #panel-overview{ display:block; }
   #tab-itinerary:checked ~ main #panel-itinerary{ display:block; }
   #tab-logistics:checked ~ main #panel-logistics{ display:block; }
+  #tab-metro:checked ~ main #panel-metro{ display:block; }
   #tab-journals:checked ~ main #panel-journals{ display:block; }
   #tab-tickets:checked ~ main #panel-tickets{ display:block; }
   #tab-budget:checked ~ main #panel-budget{ display:block; }
   #tab-packing:checked ~ main #panel-packing{ display:block; }
   #tab-phrases:checked ~ main #panel-phrases{ display:block; }
   #tab-food:checked ~ main #panel-food{ display:block; }
+  #tab-weather:checked ~ main #panel-weather{ display:block; }
   .day-panels > div{ display:none; }
   #day-1:checked ~ .day-panels #day-panel-1{ display:block; }
   #day-2:checked ~ .day-panels #day-panel-2{ display:block; }
@@ -191,12 +203,14 @@
 <input type="radio" name="maintab" id="tab-overview" class="tab-radio" checked>
 <input type="radio" name="maintab" id="tab-itinerary" class="tab-radio">
 <input type="radio" name="maintab" id="tab-logistics" class="tab-radio">
+<input type="radio" name="maintab" id="tab-metro" class="tab-radio">
 <input type="radio" name="maintab" id="tab-journals" class="tab-radio">
 <input type="radio" name="maintab" id="tab-tickets" class="tab-radio">
 <input type="radio" name="maintab" id="tab-budget" class="tab-radio">
 <input type="radio" name="maintab" id="tab-packing" class="tab-radio">
 <input type="radio" name="maintab" id="tab-phrases" class="tab-radio">
 <input type="radio" name="maintab" id="tab-food" class="tab-radio">
+<input type="radio" name="maintab" id="tab-weather" class="tab-radio">
 
 
 <header class="app-header">
@@ -209,6 +223,7 @@
       <label for="tab-overview">總覽</label>
       <label for="tab-itinerary">每日行程</label>
       <label for="tab-logistics">住宿交通</label>
+      <label for="tab-metro">地鐵地圖</label>
       <label for="tab-journals">精選遊記</label>
     </div>
     <div class="tab-row">
@@ -217,6 +232,7 @@
       <label for="tab-packing">打包清單</label>
       <label for="tab-phrases">常用西語</label>
       <label for="tab-food">美食必買</label>
+      <label for="tab-weather">天氣預報</label>
     </div>
   </nav>
 </header>
@@ -275,6 +291,7 @@
         <a class="tag-link" href="https://translate.google.com/?sl=zh-TW&tl=es&op=translate" target="_blank">Google 翻譯（中→西）</a>
         <a class="tag-link" href="https://www.deepl.com/translator#zh/es/" target="_blank">DeepL（中→西）</a>
         <a class="tag-link" href="https://www.renfe.com/es/en" target="_blank">Renfe 火車官網</a>
+        <a class="tag-link" href="https://www.thetrainline.com" target="_blank">Trainline（Renfe 備用訂票）</a>
         <a class="tag-link" href="https://www.google.com/maps" target="_blank">Google 地圖</a>
       </div>
     </div>
@@ -385,8 +402,16 @@
     </div>
     <div class="card">
       <h2>城市間交通細節</h2>
+      <p class="muted" style="margin-top:2px;margin-bottom:8px;">AVE 高鐵訂票官網：<a class="link" href="https://www.renfe.com/es/en" target="_blank">https://www.renfe.com/es/en</a>（台灣 IP 直連常遇「無法連線／地區限制」，為 Renfe 官網已知常見狀況，非連結失效；解法見下方說明）</p>
       <table class="info-table" id="transportTable"><tbody><tr><th>路段</th><th>方式</th><th>車程</th><th>班次</th><th>參考票價</th><th>備註</th></tr><tr><td>馬德里 → 托雷多（來回）</td><td>AVE／Avant</td><td>約 33-34 分</td><td class="muted">每日約 13 班（首班 06:45／末班 20:45）</td><td>約 US$17 起（約 €15-16）</td><td class="muted">Madrid Puerta de Atocha 站出發，建議訂上午班次。建議班次範例(直達)：07:15→07:49、08:15→08:49、09:15→09:49。</td></tr><tr><td>馬德里 → 哥多華</td><td>AVE 高鐵</td><td>約 1h43m-1h45m</td><td class="muted">每日約 42 班（首班 06:55／末班 21:00）</td><td>約 US$11 起（約 €10）</td><td class="muted">Madrid Atocha 站出發，班次密集。建議班次範例(直達)：10:35→12:19、11:25→13:08、12:35→14:19(首班約06:55,以上為日間範例)。</td></tr><tr><td>哥多華 → 塞維亞</td><td>AVE 高鐵</td><td>約 52-56 分</td><td class="muted">每日約 23 班（首班 08:42／末班 22:47）</td><td>約 US$8.5 起（約 €8）</td><td class="muted">班次密集，彈性大。建議班次範例(直達)：10:20→11:28、11:41→12:35、11:48→12:41。</td></tr><tr><td>塞維亞 → 格拉納達</td><td>AVE 高鐵</td><td>最快 2h34m，平均約 3h16m</td><td class="muted">每日約 6 班（首班 07:35／末班 19:25）</td><td>約 US$37 起（約 €35）</td><td class="muted">多數班次需於 Bobadilla/Antequera 轉乘一次，訂票時請留意轉乘資訊與轉乘時間。建議班次範例：06:35→09:49(需轉乘)、11:25→14:38(需轉乘)、12:15→15:49(需轉乘)。</td></tr><tr><td>格拉納達 → 巴塞隆納</td><td>AVE 高鐵</td><td>約 6h59m（新時刻表直達）</td><td class="muted">2026/9/14 起新時刻表：07:55 發車、14:54 抵達；全日約 6 班（其中 2 班直達）</td><td>約 US$78 起（約 €70+，長途路線價差大，越早訂越便宜）</td><td class="muted">長途直達車，建議提早於 Renfe 官網訂票並留意實際班次是否為新時刻表。建議班次範例：07:55→14:54(直達，2026/9/14起新時刻表，推薦首選)、14:40→22:00(直達，約7h20m)、10:08→17:54(需轉乘1次)。</td></tr><tr><td>（備選）格拉納達 → 巴塞隆納</td><td>國內線班機 Vueling</td><td>約 1.5h</td><td class="muted">每日多班</td><td>依訂票時間浮動</td><td class="muted">已選擇搭高鐵，此為備案，如高鐵客滿或臨時想調整可參考。</td></tr></tbody></table>
       <p class="muted" style="margin-top:8px;">班次與票價為近期查詢的參考值（部分來自 Trainline 等票務整合平台，幣別以美元顯示，實際歐元票價可能略有差異），Renfe 通常僅開放出發前約 2-3 個月的確切班表與票價，建議出發前 1-2 個月直接於 <a class="link" href="https://www.renfe.com/es/en" target="_blank">Renfe 官網</a> 或 App 核實並訂票，越早訂通常越便宜；旺季（含長週末）建議提早鎖定。</p>
+      <div class="note-banner" style="margin-top:8px;">
+        <strong>Renfe 官網連不上怎麼辦：</strong>從台灣 IP 直連 Renfe 官網常出現「連線失敗／頁面打不開」，這是台灣使用者普遍反映的已知現象（推測與地區流量限制或風控機制有關），並非本連結錯誤。可嘗試以下方式：
+        <br>1. 改用手機行動網路或不同 Wi-Fi 再試一次（偶爾是暫時性壅塞）。
+        <br>2. 開啟 VPN 並切換至歐洲（西班牙／法國等）節點後再連線官網或 App。
+        <br>3. 改用 <a class="link" href="https://www.thetrainline.com" target="_blank">Trainline</a> 訂票，介面有英文、不受此地區限制影響，但會酌收手續費。
+        <br>4. Renfe 官方 App（Apple/Google 商店搜尋「Renfe」）有時較網頁版穩定，可一併嘗試。
+      </div>
       <p class="muted" style="margin-top:6px;"><strong>路線狀態提醒：</strong>馬德里－塞維亞高鐵主線（經哥多華）在 2026 年初曾因意外一度停駛，已於 2026/2/17 全面恢復正常營運，目前班次已回復正常，供規劃行程參考。</p>
     </div>
   </section>
@@ -400,7 +425,7 @@
     </div>
     <div class="card">
       <h2>交通購票網站</h2>
-      <table class="info-table" id="transportTicketTable"><tbody><tr><th>用途</th><th>官方網站</th><th>備註</th></tr><tr><td>Renfe（西班牙國鐵／AVE 高鐵）</td><td><a class="link" href="https://www.renfe.com/es/en" target="_blank">www.renfe.com/es/en</a></td><td class="muted">訂購城市間 AVE 車票，建議提前 1-2 個月鎖定較優惠票價</td></tr><tr><td>Vueling（西班牙國內線航空）</td><td><a class="link" href="https://www.vueling.com" target="_blank">www.vueling.com</a></td><td class="muted">格拉納達／巴塞隆納等城市間國內航班備案</td></tr><tr><td>馬德里機場快線 Cercanías／地鐵 Metro Madrid</td><td><a class="link" href="https://www.metromadrid.es" target="_blank">www.metromadrid.es</a></td><td class="muted">機場往返市區交通</td></tr><tr><td>巴塞隆納大眾運輸 TMB</td><td><a class="link" href="https://www.tmb.cat" target="_blank">www.tmb.cat</a></td><td class="muted">地鐵／公車票券資訊，機場快線 Aerobús 亦可參考</td></tr></tbody></table>
+      <table class="info-table" id="transportTicketTable"><tbody><tr><th>用途</th><th>官方網站</th><th>備註</th></tr><tr><td>Renfe（西班牙國鐵／AVE 高鐵）</td><td><a class="link" href="https://www.renfe.com/es/en" target="_blank">www.renfe.com/es/en</a></td><td class="muted">訂購城市間 AVE 車票，建議提前 1-2 個月鎖定較優惠票價；台灣 IP 直連常遇連線失敗，可改用 VPN 切至歐洲節點、Renfe App，或改用下方 Trainline 備案</td></tr><tr><td>Trainline（Renfe 備用訂票平台）</td><td><a class="link" href="https://www.thetrainline.com" target="_blank">www.thetrainline.com</a></td><td class="muted">Renfe 官網連不上時的備用訂票管道，介面有英文、不受地區限制，但會酌收手續費</td></tr><tr><td>Vueling（西班牙國內線航空）</td><td><a class="link" href="https://www.vueling.com" target="_blank">www.vueling.com</a></td><td class="muted">格拉納達／巴塞隆納等城市間國內航班備案</td></tr><tr><td>馬德里機場快線 Cercanías／地鐵 Metro Madrid</td><td><a class="link" href="https://www.metromadrid.es" target="_blank">www.metromadrid.es</a></td><td class="muted">機場往返市區交通</td></tr><tr><td>巴塞隆納大眾運輸 TMB</td><td><a class="link" href="https://www.tmb.cat" target="_blank">www.tmb.cat</a></td><td class="muted">地鐵／公車票券資訊，機場快線 Aerobús 亦可參考</td></tr></tbody></table>
     </div>
   </section>
 
@@ -458,7 +483,28 @@
         <a class="tag-link" href="https://www.deepl.com/translator#zh/es/" target="_blank">DeepL 翻譯</a>
         <a class="tag-link" href="https://papago.naver.com/?sk=zh-CN&tk=es" target="_blank">Papago 翻譯</a>
       </div>
-      <div id="phraseBook"><div class="phrase-cat"><h3>基本問候</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th></tr><tr><td>你好</td><td>Hola</td></tr><tr><td>早安</td><td>Buenos días</td></tr><tr><td>午安/晚安</td><td>Buenas tardes / Buenas noches</td></tr><tr><td>謝謝</td><td>Gracias</td></tr><tr><td>不客氣</td><td>De nada</td></tr><tr><td>請</td><td>Por favor</td></tr><tr><td>對不起/借過</td><td>Perdón / Disculpe</td></tr><tr><td>再見</td><td>Adiós</td></tr></tbody></table></div><div class="phrase-cat"><h3>餐廳點餐</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th></tr><tr><td>請給我菜單</td><td>¿Me trae la carta, por favor?</td></tr><tr><td>我要這個</td><td>Quiero esto</td></tr><tr><td>帳單</td><td>La cuenta, por favor</td></tr><tr><td>不辣</td><td>Sin picante</td></tr><tr><td>素食</td><td>Vegetariano/a</td></tr><tr><td>水（有氣/無氣）</td><td>Agua con gas / sin gas</td></tr><tr><td>好吃</td><td>Está muy rico</td></tr></tbody></table></div><div class="phrase-cat"><h3>交通問路</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th></tr><tr><td>火車站在哪裡？</td><td>¿Dónde está la estación de tren?</td></tr><tr><td>這班車去…嗎？</td><td>¿Este tren va a...?</td></tr><tr><td>到…多少錢？</td><td>¿Cuánto cuesta hasta...?</td></tr><tr><td>我要去這個地址</td><td>Necesito ir a esta dirección</td></tr><tr><td>左/右/直走</td><td>Izquierda / Derecha / Todo recto</td></tr></tbody></table></div><div class="phrase-cat"><h3>購物與緊急</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th></tr><tr><td>多少錢？</td><td>¿Cuánto cuesta?</td></tr><tr><td>可以刷卡嗎？</td><td>¿Puedo pagar con tarjeta?</td></tr><tr><td>救命/幫忙</td><td>¡Ayuda!</td></tr><tr><td>我需要醫生</td><td>Necesito un médico</td></tr><tr><td>最近的藥局在哪？</td><td>¿Dónde está la farmacia más cercana?</td></tr><tr><td>我的護照/皮夾不見了</td><td>He perdido mi pasaporte / cartera</td></tr></tbody></table></div><div class="phrase-cat"><h3>數字 1-10</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th></tr><tr><td>1</td><td>uno</td></tr><tr><td>2</td><td>dos</td></tr><tr><td>3</td><td>tres</td></tr><tr><td>4</td><td>cuatro</td></tr><tr><td>5</td><td>cinco</td></tr><tr><td>6</td><td>seis</td></tr><tr><td>7</td><td>siete</td></tr><tr><td>8</td><td>ocho</td></tr><tr><td>9</td><td>nueve</td></tr><tr><td>10</td><td>diez</td></tr></tbody></table></div></div>
+      <div id="phraseBook"><div class="phrase-cat"><h3>基本問候</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th><th>發音</th></tr><tr><td>你好</td><td>Hola</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Hola&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>早安</td><td>Buenos días</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Buenos%20d%C3%ADas&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>午安/晚安</td><td>Buenas tardes / Buenas noches</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Buenas%20tardes%20%2F%20Buenas%20noches&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>謝謝</td><td>Gracias</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Gracias&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>不客氣</td><td>De nada</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=De%20nada&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>請</td><td>Por favor</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Por%20favor&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>對不起/借過</td><td>Perdón / Disculpe</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Perd%C3%B3n%20%2F%20Disculpe&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>再見</td><td>Adiós</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Adi%C3%B3s&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr></tbody></table></div><div class="phrase-cat"><h3>餐廳點餐</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th><th>發音</th></tr><tr><td>請給我菜單</td><td>¿Me trae la carta, por favor?</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%BFMe%20trae%20la%20carta%2C%20por%20favor%3F&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>我要這個</td><td>Quiero esto</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Quiero%20esto&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>帳單</td><td>La cuenta, por favor</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=La%20cuenta%2C%20por%20favor&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>不辣</td><td>Sin picante</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Sin%20picante&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>素食</td><td>Vegetariano/a</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Vegetariano%2Fa&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>水（有氣/無氣）</td><td>Agua con gas / sin gas</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Agua%20con%20gas%20%2F%20sin%20gas&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>好吃</td><td>Está muy rico</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Est%C3%A1%20muy%20rico&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr></tbody></table></div><div class="phrase-cat"><h3>交通問路</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th><th>發音</th></tr><tr><td>火車站在哪裡？</td><td>¿Dónde está la estación de tren?</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%BFD%C3%B3nde%20est%C3%A1%20la%20estaci%C3%B3n%20de%20tren%3F&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>這班車去…嗎？</td><td>¿Este tren va a...?</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%BFEste%20tren%20va%20a...%3F&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>到…多少錢？</td><td>¿Cuánto cuesta hasta...?</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%BFCu%C3%A1nto%20cuesta%20hasta...%3F&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>我要去這個地址</td><td>Necesito ir a esta dirección</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Necesito%20ir%20a%20esta%20direcci%C3%B3n&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>左/右/直走</td><td>Izquierda / Derecha / Todo recto</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Izquierda%20%2F%20Derecha%20%2F%20Todo%20recto&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr></tbody></table></div><div class="phrase-cat"><h3>購物與緊急</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th><th>發音</th></tr><tr><td>多少錢？</td><td>¿Cuánto cuesta?</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%BFCu%C3%A1nto%20cuesta%3F&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>可以刷卡嗎？</td><td>¿Puedo pagar con tarjeta?</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%BFPuedo%20pagar%20con%20tarjeta%3F&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>救命/幫忙</td><td>¡Ayuda!</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%A1Ayuda!&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>我需要醫生</td><td>Necesito un médico</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=Necesito%20un%20m%C3%A9dico&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>最近的藥局在哪？</td><td>¿Dónde está la farmacia más cercana?</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=%C2%BFD%C3%B3nde%20est%C3%A1%20la%20farmacia%20m%C3%A1s%20cercana%3F&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>我的護照/皮夾不見了</td><td>He perdido mi pasaporte / cartera</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=He%20perdido%20mi%20pasaporte%20%2F%20cartera&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr></tbody></table></div><div class="phrase-cat"><h3>數字 1-10</h3><table class="info-table"><tbody><tr><th>中文</th><th>西班牙語</th><th>發音</th></tr><tr><td>1</td><td>uno</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=uno&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>2</td><td>dos</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=dos&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>3</td><td>tres</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=tres&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>4</td><td>cuatro</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=cuatro&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>5</td><td>cinco</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=cinco&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>6</td><td>seis</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=seis&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>7</td><td>siete</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=siete&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>8</td><td>ocho</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=ocho&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>9</td><td>nueve</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=nueve&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr><tr><td>10</td><td>diez</td><td><a class="tag-link" href="https://translate.google.com/translate_tts?ie=UTF-8&amp;q=diez&amp;tl=es&amp;client=tw-ob" target="_blank">🔊 播放</a></td></tr></tbody></table></div></div>
+      <p class="muted" style="margin-top:8px;">點每一列的「🔊 播放」可聽 Google 發音朗讀該句西班牙語，需要網路連線才能播放。</p>
+    </div>
+  </section>
+
+  <!-- ============ 地鐵地圖 ============ -->
+  <section class="panel" id="panel-metro">
+    <div class="card">
+      <h2>馬德里地鐵 Metro de Madrid</h2>
+      <p class="muted">官方營運單位：<a class="link" href="https://www.metromadrid.es" target="_blank">Metro de Madrid</a>；官方地圖由 <a class="link" href="https://www.crtm.es" target="_blank">CRTM（Consorcio Regional de Transportes de Madrid）</a>發布，僅提供 PDF 格式。下方為簡易版路網圖（非官方繪製，僅供行前快速對照路線顏色與站名，實際新線/改名請以下方官方 PDF 為準）：</p>
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Madrid_Metro_Map_2019-2024_expansion.svg" alt="馬德里地鐵簡易路網圖" style="width:100%; height:auto; background:#fff; border:1px solid var(--grid); border-radius:10px; display:block; margin-top:8px;" loading="lazy">
+      <p class="muted" style="margin-top:6px; font-size:11px;">簡易圖來源：Wikimedia Commons（社群繪製，創用CC授權），非 Metro de Madrid 官方發布。</p>
+      <div class="quicklinks" style="margin-top:8px;">
+        <a class="tag-link" href="https://www.crtm.es/media/hmllv0q3/0a-esqmetro-mar26-copia.pdf" target="_blank">📄 CRTM 官方地鐵路網圖 PDF（2026/3 版）</a>
+        <a class="tag-link" href="https://www.metromadrid.es" target="_blank">Metro de Madrid 官網</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>巴塞隆納地鐵 Barcelona Metro（TMB）</h2>
+      <p class="muted">官方營運單位：<a class="link" href="https://www.tmb.cat/en/" target="_blank">TMB（Transports Metropolitans de Barcelona）</a>。</p>
+      <img src="https://www.tmb.cat/documents/20182/45206/Mapa+xarxa+de+metro.jpg/5b05ec8d-7346-469a-a0ae-210ee63bd87e?t=1770288459369" alt="Barcelona Metro 地鐵路網圖" style="width:100%; height:auto; border:1px solid var(--grid); border-radius:10px; display:block; margin-top:8px;" loading="lazy">
+      <p class="muted" style="margin-top:8px;">PDF 版本：<a class="link" href="https://www.tmb.cat/documents/20182/45206/Pl%C3%A0nol+xarxa+de+Metro.pdf/f5578f40-5a66-46ba-907c-cf31e0d368c0?t=1743600720567" target="_blank">TMB 官方地鐵路網圖 PDF（2026 版）</a>。</p>
     </div>
   </section>
 
@@ -472,77 +518,156 @@
     <div class="time" style="color:var(--blue)">馬德里</div>
     <p><strong>馬德里舊城區：太陽門廣場 Puerta del Sol／馬約爾廣場 Plaza Mayor</strong></p>
     <p style="margin-top:4px;">太陽門廣場是馬德里的城市中心點，西班牙全國公路的「零公里」起點就標記在此廣場地面；馬約爾廣場則是17世紀興建的巴洛克式方形廣場，過去曾作為市集、鬥牛場甚至宗教審判的場地，現為周邊林立咖啡廳與紀念品店的熱門聚點。</p>
-    <div class="tags"><a class="tag-link" href="https://www.esmadrid.com/en" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>全天開放（戶外公共廣場）</td></tr>
+      <tr><th>公休日</th><td>無公休</td></tr>
+      <tr><th>票價</th><td>免費</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.esmadrid.com/en" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--blue)">馬德里</div>
     <p><strong>馬德里皇宮 Palacio Real de Madrid</strong></p>
     <p style="margin-top:4px;">西班牙王室的官方宮殿，由波旁王朝腓力五世下令於18世紀在舊城堡遺址上興建，是歐洲現存最大的宮殿之一（房間數超過3000間），現為國事活動場地，王室平時實際居住於郊區的薩蘇埃拉宮。內部可參觀皇家軍械庫、王座廳與皇室收藏。</p>
-    <div class="tags"><a class="tag-link" href="https://www.patrimonionacional.es" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>冬季（11-3月）週一至週六 10:00-18:00；週日 10:00-16:00（售票與入場提前1小時截止）</td></tr>
+      <tr><th>公休日</th><td>1/1、1/6、5/1、12/25 全日休；12/24、12/31 15:00後提前休館</td></tr>
+      <tr><th>票價</th><td>自由參觀 €18（優待€9：65歲以上／25歲以下學生／5-16歲）；歐盟公民週一至週四17:00-19:00免費</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.patrimonionacional.es" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--blue)">馬德里</div>
     <p><strong>普拉多博物館 Museo del Prado</strong></p>
-    <p style="margin-top:4px;">世界頂級古典藝術博物館之一，1819年開幕，館藏以西班牙皇室收藏為基礎，收錄哥雅（Goya）、委拉斯奎茲（Velázquez）、葛雷柯（El Greco）等大師作品，是欣賞西班牙黃金時代繪畫的必訪之地。週一至週六 10:00-20:00 開放。</p>
-    <div class="tags"><a class="tag-link" href="https://www.museodelprado.es" target="_blank">官方網站</a></div>
+    <p style="margin-top:4px;">世界頂級古典藝術博物館之一，1819年開幕，館藏以西班牙皇室收藏為基礎，收錄哥雅（Goya）、委拉斯奎茲（Velázquez）、葛雷柯（El Greco）等大師作品，是欣賞西班牙黃金時代繪畫的必訪之地。</p>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>週一至週六 10:00-20:00；週日及國定假日 10:00-19:00</td></tr>
+      <tr><th>公休日</th><td>依官網公告之特定國定假日調整</td></tr>
+      <tr><th>票價</th><td>全票 €15（優待€7.5）；免費時段：週一至週六18:00-20:00、週日及假日17:00-19:00</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.museodelprado.es" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--violet)">托雷多</div>
-    <p><strong>托雷多古城：主教座堂與阿爾卡薩堡</strong></p>
-    <p style="margin-top:4px;">托雷多曾是西班牙首都，因長期融合天主教、伊斯蘭與猶太三大文化而有「三文化之都」美譽，1986年古城整體被列為UNESCO世界遺產。主教座堂是西班牙哥德式建築代表作之一；山頂的阿爾卡薩堡歷經多次戰火重建，現為軍事博物館，居高臨下俯瞰整座古城。</p>
-    <div class="tags"><a class="tag-link" href="https://www.catedralprimada.es" target="_blank">官方網站</a></div>
+    <p><strong>托雷多主教座堂 Catedral Primada</strong></p>
+    <p style="margin-top:4px;">托雷多曾是西班牙首都，因長期融合天主教、伊斯蘭與猶太三大文化而有「三文化之都」美譽，1986年古城整體被列為UNESCO世界遺產。主教座堂是西班牙哥德式建築代表作之一，內部主祭壇、聖器室與唱詩席極為華麗。</p>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>週一至週六 10:00-18:30；週日 14:00-18:30（入場提前30分鐘截止）</td></tr>
+      <tr><th>公休日</th><td>1/1、12/25</td></tr>
+      <tr><th>票價</th><td>基本票 €12（另有夜間 Lumina 體驗 €24.90）</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.catedralprimada.es" target="_blank">官方網站</a></div>
+  </div>
+
+  <div class="day-block">
+    <div class="time" style="color:var(--violet)">托雷多</div>
+    <p><strong>托雷多阿爾卡薩堡 Alcázar de Toledo（軍事博物館）</strong></p>
+    <p style="margin-top:4px;">山頂城堡歷經多次戰火重建，現為西班牙軍事博物館 Museo del Ejército，居高臨下俯瞰整座古城，館藏含中世紀兵器、西班牙內戰史料等。</p>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>10:00-17:00</td></tr>
+      <tr><th>公休日</th><td>每週一（含國定假日）</td></tr>
+      <tr><th>票價</th><td>約 €5；週三免費入場</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://ejercito.defensa.gob.es/museo/" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--orange)">哥多華</div>
     <p><strong>哥多華清真寺-大教堂 Mezquita-Catedral de Córdoba</strong></p>
     <p style="margin-top:4px;">始建於西元8世紀後倭馬亞王朝時期，以超過850根雙層拱柱組成的祈禱大廳聞名於世；16世紀天主教收復失地後，在清真寺中央嵌入一座文藝復興式主教座堂，形成伊斯蘭與天主教建築並存的獨特景觀，1984年列入UNESCO世界遺產。</p>
-    <div class="tags"><a class="tag-link" href="https://mezquita-catedraldecordoba.es" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>每日 08:30 起開放，實際閉館時間隨季節微調（11月約至18:00-18:30，建議出發前上官網核實當月時刻）</td></tr>
+      <tr><th>公休日</th><td>無定期公休</td></tr>
+      <tr><th>票價</th><td>全票 €13（優待€10：65歲以上／15-26歲學生；€7：10-14歲兒童／身心障礙）；10歲以下免費；週一至週六08:30-09:30 為免費參觀時段（不含團體）</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://mezquita-catedraldecordoba.es" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--aqua)">塞維亞</div>
     <p><strong>塞維亞王宮 Real Alcázar de Sevilla</strong></p>
     <p style="margin-top:4px;">現今仍在使用的最古老皇家宮殿之一（西班牙王室訪塞維亞時的官邸），主體為14世紀佩德羅一世下令興建的「穆德哈爾式」建築，融合伊斯蘭工藝與天主教元素，宮殿花園層層疊疊、水池噴泉交錯，也是《冰與火之歌：權力遊戲》多恩取景地，1987年與大教堂一同列入UNESCO世界遺產。</p>
-    <div class="tags"><a class="tag-link" href="https://www.alcazarsevilla.org" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>冬季（10/1-3/31）09:30-17:00（17:45淨空離場）</td></tr>
+      <tr><th>公休日</th><td>1/1、1/6、聖週五、12/25</td></tr>
+      <tr><th>票價</th><td>全票 €15.5（另加購上宮 Cuarto Real Alto €5.5）；優待 €8（65歲以上／14-30歲學生）</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.alcazarsevilla.org" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--aqua)">塞維亞</div>
     <p><strong>塞維亞大教堂與希拉達塔 Catedral de Sevilla &amp; La Giralda</strong></p>
     <p style="margin-top:4px;">世界最大的哥德式教堂之一，建於12世紀清真寺遺址之上，哥倫布的陵墓即安放於此。鐘樓希拉達塔前身為清真寺宣禮塔，登頂以斜坡道（而非階梯）設計，據傳原是方便騎馬登頂宣禮，塔頂可俯瞰整座塞維亞舊城。</p>
-    <div class="tags"><a class="tag-link" href="https://www.catedraldesevilla.es" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>週一至週六 11:00-18:00；週日 14:30-19:00（希拉達塔提前1小時停止入場，實際時刻依宗教儀式彈性調整）</td></tr>
+      <tr><th>公休日</th><td>依宗教慶典彈性調整，建議出發前查詢</td></tr>
+      <tr><th>票價</th><td>全票 €13（線上）／€14（現場）；優待 €7/€8；0-13歲免費；週日16:30-18:00免費場次需事先預約</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.catedraldesevilla.es" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--yellow)">格拉納達</div>
     <p><strong>阿爾罕布拉宮 La Alhambra</strong></p>
     <p style="margin-top:4px;">伊斯蘭教在西班牙最後一個王朝——納斯里德王朝的皇宮城堡群，融合宮殿、城堡與花園三大區域，以精細的阿拉伯幾何雕花與水景設計聞名於世，1984年列入UNESCO世界遺產，是西班牙最多人造訪的古蹟之一。門票採時段預約制，納斯里德宮殿場次務必準時入場。</p>
-    <div class="tags"><a class="tag-link" href="https://tickets.alhambra-patronato.es" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>冬季（10/15-3/31）白天參觀 08:30-18:00</td></tr>
+      <tr><th>公休日</th><td>12/25、1/1</td></tr>
+      <tr><th>票價</th><td>「Alhambra General」約 €21（現場）／約€22.27（線上含手續費），確切金額請以官網為準</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://tickets.alhambra-patronato.es" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--magenta)">巴塞隆納</div>
     <p><strong>聖家堂 La Sagrada Família</strong></p>
     <p style="margin-top:4px;">建築師高第（Antoni Gaudí）畢生代表作，自1882年動工至今仍在興建中，融合哥德式與新藝術風格，以有機曲線與自然光影設計聞名，2010年由教宗本篤十六世祝聖為次級宗座聖殿，2005年列入UNESCO世界遺產（高第作品群之一）。登塔需另外預約時段票。</p>
-    <div class="tags"><a class="tag-link" href="https://sagradafamilia.org" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>11月：週一至週六 09:00-18:00；週日 10:30-18:00</td></tr>
+      <tr><th>公休日</th><td>無固定公休（特殊宗教活動可能臨時調整）</td></tr>
+      <tr><th>票價</th><td>基本入場 €26（含APP語音導覽）；含登塔套票約 €36</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://sagradafamilia.org" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--magenta)">巴塞隆納</div>
     <p><strong>奎爾公園 Park Güell</strong></p>
     <p style="margin-top:4px;">高第與贊助人奎爾伯爵原本規劃作為高級住宅區開發，後因銷售不佳改為公共公園，園內以馬賽克拼貼工藝（Trencadís）、蜿蜒長椅與知名的彩色蜥蜴雕塑聞名，1984年同樣列入UNESCO世界遺產，現需預約時段入園。</p>
-    <div class="tags"><a class="tag-link" href="https://parkguell.barcelona" target="_blank">官方網站</a></div>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>冬季約 09:30-18:00（各資料略有出入，建議出發前上官網核實當月時刻）</td></tr>
+      <tr><th>公休日</th><td>無公休，採預約時段＋限流入園</td></tr>
+      <tr><th>票價</th><td>監管區（Monumental Zone）約 €18 起，各購票通路價格略有差異，建議以官網「Buy tickets」頁面實際金額為準</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://parkguell.barcelona" target="_blank">官方網站</a></div>
   </div>
 
   <div class="day-block">
     <div class="time" style="color:var(--magenta)">巴塞隆納</div>
-    <p><strong>巴特略之家／米拉之家（格拉西亞大道高第建築）</strong></p>
-    <p style="margin-top:4px;">兩棟皆為高第晚期代表作，巴特略之家以骨骼與鱗片般的立面外觀又被稱為「骨頭之家」；米拉之家（La Pedrera）則以波浪狀的石灰岩外牆與屋頂上宛如戰士的煙囪雕塑著稱，兩者皆已列入UNESCO世界遺產，內部皆可購票參觀。</p>
-    <div class="tags"><a class="tag-link" href="https://www.casabatllo.es" target="_blank">官方網站</a></div>
+    <p><strong>巴特略之家 Casa Batlló</strong></p>
+    <p style="margin-top:4px;">高第晚期代表作，以骨骼與鱗片般的立面外觀又被稱為「骨頭之家」，內部空間、樓梯扶手與屋頂煙囪皆充滿有機曲線設計，已列入UNESCO世界遺產。</p>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>每日 09:00-19:15（最晚入場時間，全館開放至22:30）</td></tr>
+      <tr><th>公休日</th><td>無固定公休</td></tr>
+      <tr><th>票價</th><td>Blue Ticket（基本票）約 €29 起，依場次與加購項目浮動</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.casabatllo.es" target="_blank">官方網站</a></div>
+  </div>
+
+  <div class="day-block">
+    <div class="time" style="color:var(--magenta)">巴塞隆納</div>
+    <p><strong>米拉之家 La Pedrera（Casa Milà）</strong></p>
+    <p style="margin-top:4px;">高第晚期代表作之一，以波浪狀的石灰岩外牆與屋頂上宛如戰士的煙囪雕塑著稱，同樣列入UNESCO世界遺產，內部可參觀公寓樓層與著名的屋頂平台。</p>
+    <table class="info-table" style="margin-top:8px;">
+      <tbody><tr><th style="width:70px;">營業時間</th><td>冬季（2026/11/2 起至隔年2/25）每日 09:00-18:30</td></tr>
+      <tr><th>公休日</th><td>7/6、9/7、12/25、隔年1/11-17</td></tr>
+      <tr><th>票價</th><td>基本票約 €29 起（優待：12-17歲／65歲以上／學生／身心障礙33%以上；12歲以下免費）</td></tr>
+    </tbody></table>
+    <div class="tags" style="margin-top:6px;"><a class="tag-link" href="https://www.lapedrera.com" target="_blank">官方網站</a></div>
   </div>
 </div>
     </div>
@@ -647,6 +772,29 @@
     </div>
   </section>
 
+  <!-- ============ 天氣預報 ============ -->
+  <section class="panel" id="panel-weather">
+    <div class="card">
+      <h2>各城市即時天氣預報（未來 7 天）</h2>
+      <p class="muted">開啟本頁時會即時抓取各城市未來 7 天預報（資料來源：Open-Meteo，整合歐洲氣象模式），需要網路連線；若長時間未顯示或顯示失敗，請改用下方 AEMET 官方連結查詢。實際到出發前 7-10 天，仍建議以 AEMET 官方預報為準。</p>
+      <div id="weatherLive"><p class="muted">正在載入即時天氣預報...</p></div>
+    </div>
+    <div class="card">
+      <h2>西班牙官方氣象預報（AEMET）官方連結</h2>
+      <p class="muted">西班牙國家氣象局 AEMET（Agencia Estatal de Meteorología）為西班牙官方氣象預報網站，資料最準確的區間通常為出發前 7-10 天內，建議行前一週再回來確認各城市最新預報與是否需調整穿著／行李。</p>
+      <table class="info-table">
+        <tr><th>城市</th><th>官方預報連結</th></tr>
+        <tr><td>馬德里 Madrid</td><td><a class="link" href="https://www.aemet.es/en/eltiempo/prediccion/municipios/madrid-id28079" target="_blank">查看預報</a></td></tr>
+        <tr><td>托雷多 Toledo</td><td><a class="link" href="https://www.aemet.es/en/eltiempo/prediccion/municipios/toledo-id45168" target="_blank">查看預報</a></td></tr>
+        <tr><td>哥多華 Córdoba</td><td><a class="link" href="https://www.aemet.es/en/eltiempo/prediccion/municipios/cordoba-id14021" target="_blank">查看預報</a></td></tr>
+        <tr><td>塞維亞 Sevilla</td><td><a class="link" href="https://www.aemet.es/en/eltiempo/prediccion/municipios/sevilla-id41091" target="_blank">查看預報</a></td></tr>
+        <tr><td>格拉納達 Granada</td><td><a class="link" href="https://www.aemet.es/en/eltiempo/prediccion/municipios/granada-id18087" target="_blank">查看預報</a></td></tr>
+        <tr><td>巴塞隆納 Barcelona</td><td><a class="link" href="https://www.aemet.es/en/eltiempo/prediccion/municipios/barcelona-id08019" target="_blank">查看預報</a></td></tr>
+      </table>
+      <p class="muted" style="margin-top:8px;">點擊「查看預報」會開啟 AEMET 官網該城市的 7 日天氣預報頁面（需要網路連線）。11 月的西班牙日夜溫差較大，馬德里／托雷多／哥多華內陸地區早晚偏涼，建議洋蔥式穿搭並攜帶薄外套。</p>
+    </div>
+  </section>
+
 </main>
 
 <footer class="app-footer">西班牙 15 日行程規劃工具・僅供個人行程參考，實際票價/時刻請以官方資訊為準</footer>
@@ -683,6 +831,62 @@ function removeExpense(i){ expenses.splice(i,1); renderBudget(); }
 document.getElementById('totalBudget').addEventListener('input', renderBudget);
 document.getElementById('groupSize').addEventListener('input', renderBudget);
 renderBudget();
+
+var WEATHER_CITIES = [
+  {id:'madrid', name:'馬德里 Madrid', lat:40.4168, lon:-3.7038},
+  {id:'toledo', name:'托雷多 Toledo', lat:39.8628, lon:-4.0273},
+  {id:'cordoba', name:'哥多華 Córdoba', lat:37.8882, lon:-4.7794},
+  {id:'sevilla', name:'塞維亞 Sevilla', lat:37.3891, lon:-5.9845},
+  {id:'granada', name:'格拉納達 Granada', lat:37.1773, lon:-3.5986},
+  {id:'barcelona', name:'巴塞隆納 Barcelona', lat:41.3851, lon:2.1734}
+];
+var WMO_MAP = {
+  0:['☀️','晴朗'],1:['🌤️','大致晴朗'],2:['⛅','局部多雲'],3:['☁️','多雲'],
+  45:['🌫️','有霧'],48:['🌫️','霧淞'],
+  51:['🌦️','小毛毛雨'],53:['🌦️','中毛毛雨'],55:['🌧️','大毛毛雨'],
+  56:['🌧️','凍毛毛雨'],57:['🌧️','強凍毛毛雨'],
+  61:['🌧️','小雨'],63:['🌧️','中雨'],65:['🌧️','大雨'],
+  66:['🌧️','凍雨'],67:['🌧️','強凍雨'],
+  71:['🌨️','小雪'],73:['🌨️','中雪'],75:['🌨️','大雪'],77:['🌨️','霰'],
+  80:['🌦️','短暫陣雨'],81:['🌦️','陣雨'],82:['⛈️','強陣雨'],
+  85:['🌨️','陣雪'],86:['🌨️','強陣雪'],
+  95:['⛈️','雷雨'],96:['⛈️','雷雨挾冰雹'],99:['⛈️','強雷雨挾冰雹']
+};
+function wmoInfo(code){ return WMO_MAP[code] || ['🌡️','—']; }
+function loadWeather(){
+  var container = document.getElementById('weatherLive');
+  if(!container) return;
+  var reqs = WEATHER_CITIES.map(function(c){
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude='+c.lat+'&longitude='+c.lon+'&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Europe%2FMadrid&forecast_days=7';
+    return fetch(url).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(data){ return {city:c, data:data}; })
+      .catch(function(err){ return {city:c, error:err}; });
+  });
+  Promise.all(reqs).then(function(results){
+    var html = '';
+    results.forEach(function(r){
+      if(r.error || !r.data || !r.data.daily){
+        html += '<div class="weather-card"><h3>'+r.city.name+'</h3><p class="muted">暫時無法取得即時預報，請改用下方官方連結查詢。</p></div>';
+        return;
+      }
+      var d = r.data.daily;
+      var days = '';
+      for (var i=0;i<d.time.length;i++){
+        var info = wmoInfo(d.weathercode[i]);
+        var dt = new Date(d.time[i]+'T00:00:00');
+        var label = (dt.getMonth()+1)+'/'+dt.getDate();
+        var hi = Math.round(d.temperature_2m_max[i]);
+        var lo = Math.round(d.temperature_2m_min[i]);
+        days += '<div class="wx-day"><div class="wx-date">'+label+'</div><div class="wx-icon">'+info[0]+'</div><div class="wx-desc">'+info[1]+'</div><div class="wx-temp">'+hi+'°/'+lo+'°</div></div>';
+      }
+      html += '<div class="weather-card"><h3>'+r.city.name+'</h3><div class="wx-row">'+days+'</div></div>';
+    });
+    container.innerHTML = html;
+  }).catch(function(){
+    container.innerHTML = '<p class="muted">無法載入即時天氣預報，可能是網路連線問題，請改用下方 AEMET 官方連結查詢各城市天氣。</p>';
+  });
+}
+loadWeather();
 </script>
 </body>
 </html>
