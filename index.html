@@ -11,6 +11,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="西班牙15日行程">
 <link rel="icon" href="icon-192.png" type="image/png">
+<script id="theme-boot">
+(function(){
+  try{
+    var t = localStorage.getItem('theme-pref');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  }catch(e){}
+})();
+</script>
 <style>
   :root{
     color-scheme: light;
@@ -33,6 +41,70 @@
     --yellow: #eda100;
     --magenta: #e87ba4;
     --violet: #4a3aa7;
+    --chip-active-bg: #eaf2fc;
+    --banner-bg: #fff7e8;
+    --banner-border: #f2d9a3;
+    --banner-ink: #6b4c00;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --surface-2: #201f1e;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --ink-muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255,255,255,0.10);
+      --good: #0ca30c;
+      --warning: #fab219;
+      --serious: #ec835a;
+      --critical: #d03b3b;
+      --blue: #3987e5;
+      --orange: #d95926;
+      --aqua: #199e70;
+      --yellow: #c98500;
+      --magenta: #d55181;
+      --violet: #9085e9;
+      --chip-active-bg: rgba(57,135,229,0.22);
+      --banner-bg: #332a12;
+      --banner-border: #6b4c00;
+      --banner-ink: #ffd889;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --surface-2: #201f1e;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --ink-muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255,255,255,0.10);
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --blue: #3987e5;
+    --orange: #d95926;
+    --aqua: #199e70;
+    --yellow: #c98500;
+    --magenta: #d55181;
+    --violet: #9085e9;
+    --chip-active-bg: rgba(57,135,229,0.22);
+    --banner-bg: #332a12;
+    --banner-border: #6b4c00;
+    --banner-ink: #ffd889;
+  }
+  .theme-toggle{
+    appearance:none; cursor:pointer; flex:0 0 auto;
+    width:34px; height:34px; border-radius:50%; font-size:16px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:var(--surface-2); border:1px solid var(--border); color:var(--ink);
   }
   *{ box-sizing: border-box; }
   html,body{ margin:0; padding:0; }
@@ -85,7 +157,7 @@
   .flight-leg .arrow{ flex:1; text-align:center; color:var(--ink-muted); font-size:11px; }
   .flight-leg .arrow .line{ height:1px; background:var(--baseline); margin:4px 0; }
   table.info-table{ width:100%; border-collapse:collapse; font-size:13px; }
-  table.info-table th, table.info-table td{ text-align:left; padding:8px 6px; border-bottom:1px solid var(--grid); vertical-align:top; }
+  table.info-table th, table.info-table td{ text-align:left; padding:8px 6px; border-bottom:1px solid var(--grid); vertical-align:top; overflow-wrap:anywhere; word-break:break-word; }
   table.info-table th{ color:var(--ink-muted); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; }
   a.link{ color:var(--blue); text-decoration:none; font-weight:600; }
   a.link:hover{ text-decoration:underline; }
@@ -98,19 +170,19 @@
   .day-chip .d{ font-size:10.5px; color:var(--ink-muted); font-weight:600; }
   .day-chip .n{ font-size:15px; font-weight:700; }
   .day-chip .c{ font-size:10px; margin-top:2px; font-weight:700; }
-  .day-chip.active{ border-color: var(--blue); background: #eaf2fc; }
+  .day-chip.active{ border-color: var(--blue); background: var(--chip-active-bg); }
   .day-block{ margin-bottom:10px; padding:10px 12px; border-radius:10px; background:var(--page); border:1px solid var(--grid); }
   .day-block .time{ font-size:11.5px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.04em; }
   .day-block p{ margin:6px 0 0 0; font-size:13.5px; line-height:1.6; }
   .day-block .tags{ margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; }
-  .tag-link{ font-size:11.5px; background:#fff; border:1px solid var(--border); border-radius:8px; padding:3px 8px; color:var(--blue); text-decoration:none; font-weight:600; }
+  .tag-link{ font-size:11.5px; background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:3px 8px; color:var(--blue); text-decoration:none; font-weight:600; }
   .badge-book{ display:inline-block; font-size:10.5px; font-weight:700; color:#fff; background:var(--warning); padding:2px 7px; border-radius:6px; margin-left:6px; }
   .badge-book.dark{ color:#3a2900; }
   .meter{ height:10px; border-radius:6px; background: var(--grid); overflow:hidden; margin:8px 0; }
   .meter > div{ height:100%; border-radius:6px; }
   .budget-row{ display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
   .budget-row input, .budget-row select{
-    font-family:inherit; font-size:13px; padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:#fff;
+    font-family:inherit; font-size:13px; padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink);
   }
   .budget-row input[type=text]{ flex:1 1 120px; }
   .budget-row input[type=number]{ width:90px; }
@@ -129,7 +201,7 @@
   .stat-tile{ flex:1 1 100px; background:var(--page); border:1px solid var(--grid); border-radius:10px; padding:10px 12px; }
   .stat-tile .v{ font-size:19px; font-weight:700; font-variant-numeric: tabular-nums; }
   .stat-tile .l{ font-size:11px; color:var(--ink-muted); margin-top:2px; }
-  .note-banner{ background:#fff7e8; border:1px solid #f2d9a3; color:#6b4c00; border-radius:10px; padding:10px 12px; font-size:12.5px; margin-bottom:12px; line-height:1.6; }
+  .note-banner{ background:var(--banner-bg); border:1px solid var(--banner-border); color:var(--banner-ink); border-radius:10px; padding:10px 12px; font-size:12.5px; margin-bottom:12px; line-height:1.6; }
   .quicklinks{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
   .quicklinks a{ font-size:12.5px; }
   .weather-card{ background:var(--page); border:1px solid var(--grid); border-radius:10px; padding:10px 12px; margin-top:10px; }
@@ -155,7 +227,12 @@
     appearance:none; cursor:pointer; flex:0 0 auto;
     padding:8px 12px; font-size:12.5px; font-weight:600; color:var(--ink-2);
     white-space:nowrap; border-radius:999px; background:var(--page); border:1px solid var(--border);
-    display:inline-block;
+    display:inline-flex; align-items:center; gap:5px;
+  }
+  nav.tabs label .tab-num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:15px; height:15px; border-radius:50%; background:var(--border);
+    font-size:9.5px; font-weight:700; color:var(--ink-muted); flex:0 0 auto;
   }
   #tab-overview:checked ~ header nav.tabs label[for="tab-overview"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-itinerary:checked ~ header nav.tabs label[for="tab-itinerary"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
@@ -163,22 +240,33 @@
   #tab-metro:checked ~ header nav.tabs label[for="tab-metro"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-journals:checked ~ header nav.tabs label[for="tab-journals"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-tickets:checked ~ header nav.tabs label[for="tab-tickets"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
-  #tab-budget:checked ~ header nav.tabs label[for="tab-budget"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
-  #tab-packing:checked ~ header nav.tabs label[for="tab-packing"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-phrases:checked ~ header nav.tabs label[for="tab-phrases"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-food:checked ~ header nav.tabs label[for="tab-food"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
   #tab-weather:checked ~ header nav.tabs label[for="tab-weather"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
+  #tab-packing:checked ~ header nav.tabs label[for="tab-packing"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
+  #tab-budget:checked ~ header nav.tabs label[for="tab-budget"]{ color:#fff; background:var(--blue); border-color:var(--blue); }
+  #tab-overview:checked ~ header nav.tabs label[for="tab-overview"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-itinerary:checked ~ header nav.tabs label[for="tab-itinerary"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-logistics:checked ~ header nav.tabs label[for="tab-logistics"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-metro:checked ~ header nav.tabs label[for="tab-metro"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-journals:checked ~ header nav.tabs label[for="tab-journals"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-tickets:checked ~ header nav.tabs label[for="tab-tickets"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-phrases:checked ~ header nav.tabs label[for="tab-phrases"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-food:checked ~ header nav.tabs label[for="tab-food"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-weather:checked ~ header nav.tabs label[for="tab-weather"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-packing:checked ~ header nav.tabs label[for="tab-packing"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
+  #tab-budget:checked ~ header nav.tabs label[for="tab-budget"] .tab-num{ background:rgba(255,255,255,0.3); color:#fff; }
   #tab-overview:checked ~ main #panel-overview{ display:block; }
   #tab-itinerary:checked ~ main #panel-itinerary{ display:block; }
   #tab-logistics:checked ~ main #panel-logistics{ display:block; }
   #tab-metro:checked ~ main #panel-metro{ display:block; }
   #tab-journals:checked ~ main #panel-journals{ display:block; }
   #tab-tickets:checked ~ main #panel-tickets{ display:block; }
-  #tab-budget:checked ~ main #panel-budget{ display:block; }
-  #tab-packing:checked ~ main #panel-packing{ display:block; }
   #tab-phrases:checked ~ main #panel-phrases{ display:block; }
   #tab-food:checked ~ main #panel-food{ display:block; }
   #tab-weather:checked ~ main #panel-weather{ display:block; }
+  #tab-packing:checked ~ main #panel-packing{ display:block; }
+  #tab-budget:checked ~ main #panel-budget{ display:block; }
   .day-panels > div{ display:none; }
   #day-1:checked ~ .day-panels #day-panel-1{ display:block; }
   #day-2:checked ~ .day-panels #day-panel-2{ display:block; }
@@ -194,20 +282,20 @@
   #day-12:checked ~ .day-panels #day-panel-12{ display:block; }
   #day-13:checked ~ .day-panels #day-panel-13{ display:block; }
   #day-14:checked ~ .day-panels #day-panel-14{ display:block; }
-  #day-1:checked ~ .day-select label[for="day-1"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-2:checked ~ .day-select label[for="day-2"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-3:checked ~ .day-select label[for="day-3"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-4:checked ~ .day-select label[for="day-4"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-5:checked ~ .day-select label[for="day-5"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-6:checked ~ .day-select label[for="day-6"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-7:checked ~ .day-select label[for="day-7"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-8:checked ~ .day-select label[for="day-8"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-9:checked ~ .day-select label[for="day-9"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-10:checked ~ .day-select label[for="day-10"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-11:checked ~ .day-select label[for="day-11"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-12:checked ~ .day-select label[for="day-12"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-13:checked ~ .day-select label[for="day-13"]{ border-color: var(--blue); background:#eaf2fc; }
-  #day-14:checked ~ .day-select label[for="day-14"]{ border-color: var(--blue); background:#eaf2fc; }
+  #day-1:checked ~ .day-select label[for="day-1"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-2:checked ~ .day-select label[for="day-2"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-3:checked ~ .day-select label[for="day-3"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-4:checked ~ .day-select label[for="day-4"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-5:checked ~ .day-select label[for="day-5"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-6:checked ~ .day-select label[for="day-6"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-7:checked ~ .day-select label[for="day-7"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-8:checked ~ .day-select label[for="day-8"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-9:checked ~ .day-select label[for="day-9"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-10:checked ~ .day-select label[for="day-10"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-11:checked ~ .day-select label[for="day-11"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-12:checked ~ .day-select label[for="day-12"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-13:checked ~ .day-select label[for="day-13"]{ border-color: var(--blue); background:var(--chip-active-bg); }
+  #day-14:checked ~ .day-select label[for="day-14"]{ border-color: var(--blue); background:var(--chip-active-bg); }
   
 </style>
 </head>
@@ -218,32 +306,33 @@
 <input type="radio" name="maintab" id="tab-metro" class="tab-radio">
 <input type="radio" name="maintab" id="tab-journals" class="tab-radio">
 <input type="radio" name="maintab" id="tab-tickets" class="tab-radio">
-<input type="radio" name="maintab" id="tab-budget" class="tab-radio">
-<input type="radio" name="maintab" id="tab-packing" class="tab-radio">
 <input type="radio" name="maintab" id="tab-phrases" class="tab-radio">
 <input type="radio" name="maintab" id="tab-food" class="tab-radio">
 <input type="radio" name="maintab" id="tab-weather" class="tab-radio">
+<input type="radio" name="maintab" id="tab-packing" class="tab-radio">
+<input type="radio" name="maintab" id="tab-budget" class="tab-radio">
 
 
 <header class="app-header">
   <div class="title-row">
     <h1>🇪🇸 西班牙 15 日行程</h1>
+    <button type="button" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="切換深色/淺色模式">🌓</button>
   </div>
   <nav class="tabs" id="tabNav">
     <div class="tab-row">
-      <label for="tab-overview">總覽</label>
-      <label for="tab-itinerary">每日行程</label>
-      <label for="tab-logistics">住宿交通</label>
-      <label for="tab-metro">地鐵地圖</label>
-      <label for="tab-journals">精選遊記</label>
+      <label for="tab-overview"><span class="tab-num">1</span>總覽</label>
+      <label for="tab-itinerary"><span class="tab-num">2</span>每日行程</label>
+      <label for="tab-logistics"><span class="tab-num">3</span>住宿交通</label>
+      <label for="tab-metro"><span class="tab-num">4</span>地鐵地圖</label>
+      <label for="tab-journals"><span class="tab-num">5</span>精選遊記</label>
     </div>
     <div class="tab-row">
-      <label for="tab-tickets">訂票資訊</label>
-      <label for="tab-budget">預算</label>
-      <label for="tab-packing">打包清單</label>
-      <label for="tab-phrases">常用西語</label>
-      <label for="tab-food">美食必買</label>
-      <label for="tab-weather">天氣預報</label>
+      <label for="tab-tickets"><span class="tab-num">6</span>訂票資訊</label>
+      <label for="tab-phrases"><span class="tab-num">7</span>常用西語</label>
+      <label for="tab-food"><span class="tab-num">8</span>美食必買</label>
+      <label for="tab-weather"><span class="tab-num">9</span>天氣預報</label>
+      <label for="tab-packing"><span class="tab-num">10</span>打包清單</label>
+      <label for="tab-budget"><span class="tab-num">11</span>預算</label>
     </div>
   </nav>
 </header>
@@ -257,26 +346,26 @@
       <div class="pill info">去程</div>
       <div class="flight-leg">
         <div class="pt"><div class="time">18:40</div><div class="code">TPE 桃園T2</div></div>
-        <div class="arrow">10/31（六）<div class="line"></div>CI／華航實際航司請以票證為準</div>
+        <div class="arrow">10/31（六）・MU5006<div class="line"></div>中國東方航空・空中巴士 A330-200</div>
         <div class="pt"><div class="time">20:25</div><div class="code">PVG 浦東T1</div></div>
       </div>
       <div class="flight-leg">
         <div class="pt"><div class="time">00:50</div><div class="code">PVG 浦東T1</div></div>
-        <div class="arrow">11/1（日）轉機 4h25m・行李直掛<div class="line"></div></div>
+        <div class="arrow">11/1（日）轉機 4h25m・行李直掛<div class="line"></div>MU709・空中巴士 A350-900</div>
         <div class="pt"><div class="time">08:00</div><div class="code">MAD 馬德里T1</div></div>
       </div>
       <div class="pill info" style="margin-top:10px;">回程</div>
       <div class="flight-leg">
         <div class="pt"><div class="time">10:20</div><div class="code">BCN 巴塞隆納T1</div></div>
-        <div class="arrow">11/14（六）<div class="line"></div></div>
+        <div class="arrow">11/14（六）・MU250<div class="line"></div>中國東方航空・空中巴士 A350-900</div>
         <div class="pt"><div class="time">05:30</div><div class="code">PVG 浦東T1（11/15）</div></div>
       </div>
       <div class="flight-leg">
         <div class="pt"><div class="time">12:05</div><div class="code">PVG 浦東T1</div></div>
-        <div class="arrow">11/15（日）轉機 6h35m・行李直掛<div class="line"></div></div>
+        <div class="arrow">11/15（日）轉機 6h35m・行李直掛<div class="line"></div>MU5007・空中巴士 A330-200</div>
         <div class="pt"><div class="time">14:00</div><div class="code">TPE 桃園T2</div></div>
       </div>
-      <p class="muted" style="margin-top:8px;">訂單編號 ORD0031196381。西班牙境內實際天數為 11/1（日）08:00 抵達 至 11/14（六）10:20 起飛，共 13 晚 14 天。</p>
+      <p class="muted" style="margin-top:8px;">航空公司訂位代號 Booking Ref：MJT5JP／機票號碼 Ticket Number：7815219643630/31（旅行社訂單編號 ORD0031196381）。西班牙境內實際天數為 11/1（日）08:00 抵達 至 11/14（六）10:20 起飛，共 13 晚 14 天。</p>
     </div>
 
     <div class="card">
@@ -404,8 +493,8 @@
   <section class="panel" id="panel-logistics">
     <div class="card">
       <h2>國際航班</h2>
-      <table class="info-table" id="flightTable"><tbody><tr><th>航段</th><th>路線</th><th>日期</th><th>時間</th><th>備註</th></tr><tr><td>去程 第1段</td><td>台北 TPE T2 → 上海浦東 PVG T1</td><td>10/31（六）</td><td>18:40 → 20:25</td><td class="muted"></td></tr><tr><td>去程 轉機</td><td>上海浦東 PVG T1</td><td>10/31（六）</td><td>轉機 4h25m</td><td class="muted">行李直掛</td></tr><tr><td>去程 第2段</td><td>上海浦東 PVG T1 → 馬德里 MAD T1</td><td>11/1（日）</td><td>00:50 → 08:00</td><td class="muted"></td></tr><tr><td>回程 第1段</td><td>巴塞隆納 BCN T1 → 上海浦東 PVG T1</td><td>11/14（六）→11/15（日）</td><td>10:20 → 05:30</td><td class="muted"></td></tr><tr><td>回程 轉機</td><td>上海浦東 PVG T1</td><td>11/15（日）</td><td>轉機 6h35m</td><td class="muted">行李直掛</td></tr><tr><td>回程 第2段</td><td>上海浦東 PVG T1 → 台北 TPE T2</td><td>11/15（日）</td><td>12:05 → 14:00</td><td class="muted"></td></tr></tbody></table>
-      <p class="muted" style="margin-top:8px;">訂單編號 ORD0031196381。行李於轉機點直掛，無需於上海重新托運；仍建議預留足夠轉機時間並留意登機門異動。</p>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;"><table class="info-table" id="flightTable" style="min-width:640px;"><tbody><tr><th>航段</th><th>路線</th><th>日期</th><th>時間</th><th>航班</th><th>飛行時間</th><th>機型</th><th>艙等/座位</th><th>備註</th></tr><tr><td>去程 第1段</td><td>台北 TPE T2 → 上海浦東 PVG T1</td><td>10/31（六）</td><td>18:40 → 20:25</td><td>MU5006</td><td>1小時45分</td><td>A330-200</td><td>經濟艙 B / 39L</td><td class="muted"></td></tr><tr><td>去程 轉機</td><td>上海浦東 PVG T1</td><td>10/31（六）</td><td>轉機 4h25m</td><td></td><td></td><td></td><td></td><td class="muted">行李直掛</td></tr><tr><td>去程 第2段</td><td>上海浦東 PVG T1 → 馬德里 MAD T1</td><td>11/1（日）</td><td>00:50 → 08:00</td><td>MU709</td><td>14小時10分</td><td>A350-900</td><td>經濟艙 V / 69D</td><td class="muted"></td></tr><tr><td>回程 第1段</td><td>巴塞隆納 BCN T1 → 上海浦東 PVG T1</td><td>11/14（六）→11/15（日）</td><td>10:20 → 05:30</td><td>MU250</td><td>12小時10分</td><td>A350-900</td><td>經濟艙 V / 65H</td><td class="muted"></td></tr><tr><td>回程 轉機</td><td>上海浦東 PVG T1</td><td>11/15（日）</td><td>轉機 6h35m</td><td></td><td></td><td></td><td></td><td class="muted">行李直掛</td></tr><tr><td>回程 第2段</td><td>上海浦東 PVG T1 → 台北 TPE T2</td><td>11/15（日）</td><td>12:05 → 14:00</td><td>MU5007</td><td>1小時55分</td><td>A330-200</td><td>經濟艙 B / 尚未選位</td><td class="muted"></td></tr></tbody></table></div>
+      <p class="muted" style="margin-top:8px;">航空公司訂位代號 Booking Ref：MJT5JP／機票號碼 Ticket Number：7815219643630/31（旅行社訂單編號 ORD0031196381）。行李於轉機點直掛，無需於上海重新托運；仍建議預留足夠轉機時間並留意登機門異動。回程 PVG→TPE（MU5007）目前尚未選位，建議開放線上報到後盡快選位。</p>
     </div>
     <div class="card">
       <h2>住宿一覽</h2>
@@ -414,7 +503,7 @@
     <div class="card">
       <h2>城市間交通細節</h2>
       <p class="muted" style="margin-top:2px;margin-bottom:8px;">AVE 高鐵訂票官網：<a class="link" href="https://www.renfe.com/es/en" target="_blank">https://www.renfe.com/es/en</a>（台灣 IP 直連常遇「無法連線／地區限制」，為 Renfe 官網已知常見狀況，非連結失效；解法見下方說明）</p>
-      <table class="info-table" id="transportTable"><tbody><tr><th>路段</th><th>方式</th><th>車程</th><th>班次</th><th>參考票價</th><th>備註</th></tr><tr><td>馬德里 → 托雷多（來回）</td><td>AVE／Avant</td><td>約 33-34 分</td><td class="muted">每日約 13 班（首班 06:45／末班 20:45）</td><td>約 US$17 起（約 €15-16）</td><td class="muted">Madrid Puerta de Atocha 站出發，建議訂上午班次。建議班次範例(直達)：07:15→07:49、08:15→08:49、09:15→09:49。</td></tr><tr><td>馬德里 → 哥多華</td><td>AVE 高鐵</td><td>約 1h43m-1h45m</td><td class="muted">每日約 42 班（首班 06:55／末班 21:00）</td><td>約 US$11 起（約 €10）</td><td class="muted">Madrid Atocha 站出發，班次密集。建議班次範例(直達)：10:35→12:19、11:25→13:08、12:35→14:19(首班約06:55,以上為日間範例)。</td></tr><tr><td>哥多華 → 塞維亞</td><td>AVE 高鐵</td><td>約 52-56 分</td><td class="muted">每日約 23 班（首班 08:42／末班 22:47）</td><td>約 US$8.5 起（約 €8）</td><td class="muted">班次密集，彈性大。建議班次範例(直達)：10:20→11:28、11:41→12:35、11:48→12:41。</td></tr><tr><td>塞維亞 → 格拉納達</td><td>AVE 高鐵</td><td>最快 2h34m，平均約 3h16m</td><td class="muted">每日約 6 班（首班 07:35／末班 19:25）</td><td>約 US$37 起（約 €35）</td><td class="muted">多數班次需於 Bobadilla/Antequera 轉乘一次，訂票時請留意轉乘資訊與轉乘時間。建議班次範例：06:35→09:49(需轉乘)、11:25→14:38(需轉乘)、12:15→15:49(需轉乘)。</td></tr><tr><td>格拉納達 → 巴塞隆納</td><td>AVE 高鐵</td><td>約 6h59m（新時刻表直達）</td><td class="muted">2026/9/14 起新時刻表：07:55 發車、14:54 抵達；全日約 6 班（其中 2 班直達）</td><td>約 US$78 起（約 €70+，長途路線價差大，越早訂越便宜）</td><td class="muted">長途直達車，建議提早於 Renfe 官網訂票並留意實際班次是否為新時刻表。建議班次範例：07:55→14:54(直達，2026/9/14起新時刻表，推薦首選)、14:40→22:00(直達，約7h20m)、10:08→17:54(需轉乘1次)。</td></tr><tr><td>（備選）格拉納達 → 巴塞隆納</td><td>國內線班機 Vueling</td><td>約 1.5h</td><td class="muted">每日多班</td><td>依訂票時間浮動</td><td class="muted">已選擇搭高鐵，此為備案，如高鐵客滿或臨時想調整可參考。</td></tr></tbody></table>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;"><table class="info-table" id="transportTable" style="min-width:640px;"><tbody><tr><th>路段</th><th>方式</th><th>車程</th><th>班次</th><th>參考票價</th><th>備註</th></tr><tr><td>馬德里 → 托雷多（來回）</td><td>AVE／Avant</td><td>約 33-34 分</td><td class="muted">每日約 13 班（首班 06:45／末班 20:45）</td><td>約 US$17 起（約 €15-16）</td><td class="muted">Madrid Puerta de Atocha 站出發，建議訂上午班次。建議班次範例(直達)：07:15→07:49、08:15→08:49、09:15→09:49。</td></tr><tr><td>馬德里 → 哥多華</td><td>AVE 高鐵</td><td>約 1h43m-1h45m</td><td class="muted">每日約 42 班（首班 06:55／末班 21:00）</td><td>約 US$11 起（約 €10）</td><td class="muted">Madrid Atocha 站出發，班次密集。建議班次範例(直達)：10:35→12:19、11:25→13:08、12:35→14:19(首班約06:55,以上為日間範例)。</td></tr><tr><td>哥多華 → 塞維亞</td><td>AVE 高鐵</td><td>約 52-56 分</td><td class="muted">每日約 23 班（首班 08:42／末班 22:47）</td><td>約 US$8.5 起（約 €8）</td><td class="muted">班次密集，彈性大。建議班次範例(直達)：10:20→11:28、11:41→12:35、11:48→12:41。</td></tr><tr><td>塞維亞 → 格拉納達</td><td>AVE 高鐵</td><td>最快 2h34m，平均約 3h16m</td><td class="muted">每日約 6 班（首班 07:35／末班 19:25）</td><td>約 US$37 起（約 €35）</td><td class="muted">多數班次需於 Bobadilla/Antequera 轉乘一次，訂票時請留意轉乘資訊與轉乘時間。建議班次範例：06:35→09:49(需轉乘)、11:25→14:38(需轉乘)、12:15→15:49(需轉乘)。</td></tr><tr><td>格拉納達 → 巴塞隆納</td><td>AVE 高鐵</td><td>約 6h59m（新時刻表直達）</td><td class="muted">2026/9/14 起新時刻表：07:55 發車、14:54 抵達；全日約 6 班（其中 2 班直達）</td><td>約 US$78 起（約 €70+，長途路線價差大，越早訂越便宜）</td><td class="muted">長途直達車，建議提早於 Renfe 官網訂票並留意實際班次是否為新時刻表。建議班次範例：07:55→14:54(直達，2026/9/14起新時刻表，推薦首選)、14:40→22:00(直達，約7h20m)、10:08→17:54(需轉乘1次)。</td></tr><tr><td>（備選）格拉納達 → 巴塞隆納</td><td>國內線班機 Vueling</td><td>約 1.5h</td><td class="muted">每日多班</td><td>依訂票時間浮動</td><td class="muted">已選擇搭高鐵，此為備案，如高鐵客滿或臨時想調整可參考。</td></tr></tbody></table></div>
       <p class="muted" style="margin-top:8px;">班次與票價為近期查詢的參考值（部分來自 Trainline 等票務整合平台，幣別以美元顯示，實際歐元票價可能略有差異），Renfe 通常僅開放出發前約 2-3 個月的確切班表與票價，建議出發前 1-2 個月直接於 <a class="link" href="https://www.renfe.com/es/en" target="_blank">Renfe 官網</a> 或 App 核實並訂票，越早訂通常越便宜；旺季（含長週末）建議提早鎖定。</p>
       <div class="note-banner" style="margin-top:8px;">
         <strong>Renfe 官網連不上怎麼辦：</strong>從台灣 IP 直連 Renfe 官網常出現「連線失敗／頁面打不開」，這是台灣使用者普遍反映的已知現象（推測與地區流量限制或風控機制有關），並非本連結錯誤。可嘗試以下方式：
@@ -928,6 +1017,31 @@ function speakEs(text){
     }catch(e){}
   }
   window.open('https://translate.google.com/?sl=zh-TW&tl=es&text=' + encodeURIComponent(text) + '&op=translate', '_blank');
+}
+
+function currentTheme(){
+  var attr = document.documentElement.getAttribute('data-theme');
+  if (attr === 'light' || attr === 'dark') return attr;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+}
+function updateThemeIcon(){
+  var btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  btn.textContent = currentTheme() === 'dark' ? '🌙' : '☀️';
+}
+function toggleTheme(){
+  var next = currentTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try{ localStorage.setItem('theme-pref', next); }catch(e){}
+  updateThemeIcon();
+}
+updateThemeIcon();
+if (window.matchMedia){
+  try{
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){
+      if (!document.documentElement.getAttribute('data-theme')) updateThemeIcon();
+    });
+  }catch(e){}
 }
 </script>
 </body>
