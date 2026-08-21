@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>西班牙 15 日行程 | 10/31 - 11/15</title>
+<style>
+  :root{
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --surface-2: #ffffff;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --blue: #2a78d6;
+    --orange: #eb6834;
+    --aqua: #1baf7a;
+    --yellow: #eda100;
+    --magenta: #e87ba4;
+    --violet: #4a3aa7;
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 48px;
+  }
+  header.app-header{
+    position: sticky; top:0; z-index: 20;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px 0 16px;
+  }
+  .title-row{ display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:4px 12px; }
+  .title-row h1{ font-size: 19px; margin:0 0 6px 0; font-weight:700; letter-spacing:.2px; }
+  .title-row .sub{ font-size:12.5px; color:var(--ink-2); margin:0 0 10px 0; }
+  nav.tabs{ display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; padding-bottom:0; }
+  nav.tabs::-webkit-scrollbar{ display:none; }
+  nav.tabs button{
+    appearance:none; border:none; background:transparent; cursor:pointer;
+    padding:10px 12px; font-size:13px; font-weight:600; color:var(--ink-muted);
+    white-space:nowrap; border-bottom:2px solid transparent; font-family:inherit;
+  }
+  nav.tabs button.active{ color:var(--blue); border-bottom-color:var(--blue); }
+  main{ max-width: 760px; margin: 0 auto; padding: 16px; }
+  section.panel{ display:none; }
+  section.panel.active{ display:block; }
+  .card{
+    background: var(--surface-2); border:1px solid var(--border); border-radius:14px;
+    padding:16px; margin-bottom:14px;
+  }
+  .card h2{ font-size:15px; margin:0 0 10px 0; font-weight:700; }
+  .card h3{ font-size:13.5px; margin:14px 0 6px 0; font-weight:700; color:var(--ink-2); }
+  .muted{ color:var(--ink-muted); font-size:12.5px; }
+  .pill{
+    display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:700;
+    padding:3px 9px; border-radius:999px; color:#fff; line-height:1.5;
+  }
+  .pill.flag{ background: var(--critical); }
+  .pill.ok{ background: var(--good); }
+  .pill.info{ background: var(--blue); }
+  .flight-leg{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px dashed var(--grid); }
+  .flight-leg:last-child{ border-bottom:none; }
+  .flight-leg .pt{ text-align:center; min-width:64px; }
+  .flight-leg .pt .time{ font-weight:700; font-size:15px; }
+  .flight-leg .pt .code{ font-size:11px; color:var(--ink-muted); }
+  .flight-leg .arrow{ flex:1; text-align:center; color:var(--ink-muted); font-size:11px; }
+  .flight-leg .arrow .line{ height:1px; background:var(--baseline); margin:4px 0; }
+  table.info-table{ width:100%; border-collapse:collapse; font-size:13px; }
+  table.info-table th, table.info-table td{ text-align:left; padding:8px 6px; border-bottom:1px solid var(--grid); vertical-align:top; }
+  table.info-table th{ color:var(--ink-muted); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; }
+  a.link{ color:var(--blue); text-decoration:none; font-weight:600; }
+  a.link:hover{ text-decoration:underline; }
+  .day-select{ display:flex; overflow-x:auto; gap:6px; padding-bottom:10px; margin-bottom:4px; scrollbar-width:none; }
+  .day-select::-webkit-scrollbar{ display:none; }
+  .day-chip{
+    flex:0 0 auto; border:1px solid var(--border); background:var(--surface-2); border-radius:12px;
+    padding:8px 10px; cursor:pointer; text-align:center; min-width:58px;
+  }
+  .day-chip .d{ font-size:10.5px; color:var(--ink-muted); font-weight:600; }
+  .day-chip .n{ font-size:15px; font-weight:700; }
+  .day-chip .c{ font-size:10px; margin-top:2px; font-weight:700; }
+  .day-chip.active{ border-color: var(--blue); background: #eaf2fc; }
+  .day-block{ margin-bottom:10px; padding:10px 12px; border-radius:10px; background:var(--page); border:1px solid var(--grid); }
+  .day-block .time{ font-size:11.5px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.04em; }
+  .day-block p{ margin:6px 0 0 0; font-size:13.5px; line-height:1.6; }
+  .day-block .tags{ margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; }
+  .tag-link{ font-size:11.5px; background:#fff; border:1px solid var(--border); border-radius:8px; padding:3px 8px; color:var(--blue); text-decoration:none; font-weight:600; }
+  .badge-book{ display:inline-block; font-size:10.5px; font-weight:700; color:#fff; background:var(--warning); padding:2px 7px; border-radius:6px; margin-left:6px; }
+  .badge-book.dark{ color:#3a2900; }
+  .meter{ height:10px; border-radius:6px; background: var(--grid); overflow:hidden; margin:8px 0; }
+  .meter > div{ height:100%; border-radius:6px; }
+  .budget-row{ display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
+  .budget-row input, .budget-row select{
+    font-family:inherit; font-size:13px; padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:#fff;
+  }
+  .budget-row input[type=text]{ flex:1 1 120px; }
+  .budget-row input[type=number]{ width:90px; }
+  button.btn{
+    font-family:inherit; font-size:13px; font-weight:700; color:#fff; background:var(--blue);
+    border:none; border-radius:8px; padding:8px 14px; cursor:pointer;
+  }
+  button.btn.ghost{ background:transparent; color:var(--critical); border:1px solid var(--critical); padding:4px 9px; font-size:11.5px; }
+  ul.plain{ list-style:none; margin:0; padding:0; }
+  ul.plain li{ display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--grid); font-size:13px; }
+  ul.plain li:last-child{ border-bottom:none; }
+  .pack-cat{ margin-top:6px; }
+  label.pack-item{ display:flex; align-items:center; gap:8px; padding:6px 0; font-size:13.5px; cursor:pointer; }
+  label.pack-item input{ width:16px; height:16px; accent-color: var(--blue); flex:0 0 auto; }
+  .stat-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .stat-tile{ flex:1 1 100px; background:var(--page); border:1px solid var(--grid); border-radius:10px; padding:10px 12px; }
+  .stat-tile .v{ font-size:19px; font-weight:700; font-variant-numeric: tabular-nums; }
+  .stat-tile .l{ font-size:11px; color:var(--ink-muted); margin-top:2px; }
+  .note-banner{ background:#fff7e8; border:1px solid #f2d9a3; color:#6b4c00; border-radius:10px; padding:10px 12px; font-size:12.5px; margin-bottom:12px; line-height:1.6; }
+  .quicklinks{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .quicklinks a{ font-size:12.5px; }
+  .phrase-cat{ margin-top:4px; }
+  footer.app-footer{ max-width:760px; margin:0 auto; padding:0 16px; color:var(--ink-muted); font-size:11.5px; text-align:center; }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="title-row">
+    <h1>🇪🇸 西班牙 15 日行程</h1>
+  </div>
+  <p class="sub">2026/10/31（六）出發 — 2026/11/15（日）抵台北　·　馬德里 → 哥多華 → 塞維亞 → 格拉納達 → 巴塞隆納</p>
+  <nav class="tabs" id="tabNav"></nav>
+</header>
+
+<main>
+
+  <!-- ============ 總覽 ============ -->
+  <section class="panel" id="panel-overview">
+    <div class="card">
+      <h2>航班資訊</h2>
+      <div class="pill info">去程</div>
+      <div class="flight-leg">
+        <div class="pt"><div class="time">18:40</div><div class="code">TPE 桃園T2</div></div>
+        <div class="arrow">10/31（六）<div class="line"></div>CI／華航實際航司請以票證為準</div>
+        <div class="pt"><div class="time">20:25</div><div class="code">PVG 浦東T1</div></div>
+      </div>
+      <div class="flight-leg">
+        <div class="pt"><div class="time">00:50</div><div class="code">PVG 浦東T1</div></div>
+        <div class="arrow">11/1（日）轉機 4h25m・行李直掛<div class="line"></div></div>
+        <div class="pt"><div class="time">08:00</div><div class="code">MAD 馬德里T1</div></div>
+      </div>
+      <div class="pill info" style="margin-top:10px;">回程</div>
+      <div class="flight-leg">
+        <div class="pt"><div class="time">10:20</div><div class="code">BCN 巴塞隆納T1</div></div>
+        <div class="arrow">11/14（六）<div class="line"></div></div>
+        <div class="pt"><div class="time">05:30</div><div class="code">PVG 浦東T1（11/15）</div></div>
+      </div>
+      <div class="flight-leg">
+        <div class="pt"><div class="time">12:05</div><div class="code">PVG 浦東T1</div></div>
+        <div class="arrow">11/15（日）轉機 6h35m・行李直掛<div class="line"></div></div>
+        <div class="pt"><div class="time">14:00</div><div class="code">TPE 桃園T2</div></div>
+      </div>
+      <p class="muted" style="margin-top:8px;">訂單編號 ORD0031196381。西班牙境內實際天數為 11/1（日）08:00 抵達 至 11/14（六）10:20 起飛，共 13 晚 14 天。</p>
+    </div>
+
+    <div class="card">
+      <h2>路線總覽</h2>
+      <table class="info-table">
+        <tr><th>城市</th><th>晚數</th><th>日期</th><th>交通方式</th></tr>
+        <tr><td><span class="pill" style="background:var(--blue)">馬德里</span></td><td>3 晚</td><td>11/1 – 11/4</td><td>抵達城市</td></tr>
+        <tr><td><span class="pill" style="background:var(--orange)">哥多華</span></td><td>1 晚</td><td>11/4 – 11/5</td><td>AVE 高鐵 約1h45m</td></tr>
+        <tr><td><span class="pill" style="background:var(--aqua)">塞維亞</span></td><td>2 晚</td><td>11/5 – 11/7</td><td>AVE 高鐵 約45m</td></tr>
+        <tr><td><span class="pill" style="background:var(--yellow)">格拉納達</span></td><td>2 晚</td><td>11/7 – 11/9</td><td>AVE 高鐵 約2h40m</td></tr>
+        <tr><td><span class="pill" style="background:var(--magenta)">巴塞隆納</span></td><td>5 晚</td><td>11/9 – 11/14</td><td>AVE 高鐵 約7h（07:55發車）</td></tr>
+      </table>
+      <p class="muted" style="margin-top:8px;">11/3 已安排托雷多 Toledo 一日來回（AVE 約 33 分），當晚仍返回馬德里過夜，無須更改住宿。城市間車程為概估值，實際班次與時刻請於出發前 1-2 個月至 Renfe 官網核實並訂票。</p>
+    </div>
+
+    <div class="note-banner">
+      <strong>待確認事項：</strong>馬德里 3 晚（11/1→11/4）已由團長訂妥 Urbansea Atocha 113。哥多華／塞維亞／格拉納達／巴塞隆納全數住宿仍待確認或預訂，詳見「住宿交通」頁籤。
+    </div>
+
+    <div class="card">
+      <h2>快速翻譯 / 常用網站</h2>
+      <div class="quicklinks">
+        <a class="tag-link" href="https://translate.google.com/?sl=zh-TW&tl=es&op=translate" target="_blank">Google 翻譯（中→西）</a>
+        <a class="tag-link" href="https://www.deepl.com/translator#zh/es/" target="_blank">DeepL（中→西）</a>
+        <a class="tag-link" href="https://www.renfe.com/es/en" target="_blank">Renfe 火車官網</a>
+        <a class="tag-link" href="https://www.google.com/maps" target="_blank">Google 地圖</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 每日行程 ============ -->
+  <section class="panel" id="panel-itinerary">
+    <div class="day-select" id="daySelect"></div>
+    <div id="dayDetail"></div>
+  </section>
+
+  <!-- ============ 住宿交通 ============ -->
+  <section class="panel" id="panel-logistics">
+    <div class="card">
+      <h2>國際航班</h2>
+      <table class="info-table" id="flightTable"></table>
+      <p class="muted" style="margin-top:8px;">訂單編號 ORD0031196381。行李於轉機點直掛，無需於上海重新托運；仍建議預留足夠轉機時間並留意登機門異動。</p>
+    </div>
+    <div class="card">
+      <h2>住宿一覽</h2>
+      <table class="info-table" id="hotelTable"></table>
+    </div>
+    <div class="card">
+      <h2>城市間交通細節</h2>
+      <table class="info-table" id="transportTable"></table>
+      <p class="muted" style="margin-top:8px;">班次與票價為近期查詢的參考值（部分來自 Trainline 等票務整合平台，幣別以美元顯示，實際歐元票價可能略有差異），Renfe 通常僅開放出發前約 2-3 個月的確切班表與票價，建議出發前 1-2 個月直接於 <a class="link" href="https://www.renfe.com/es/en" target="_blank">Renfe 官網</a> 或 App 核實並訂票，越早訂通常越便宜；旺季（含長週末）建議提早鎖定。</p>
+      <p class="muted" style="margin-top:6px;"><strong>路線狀態提醒：</strong>馬德里－塞維亞高鐵主線（經哥多華）在 2026 年初曾因意外一度停駛，已於 2026/2/17 全面恢復正常營運，目前班次已回復正常，供規劃行程參考。</p>
+    </div>
+  </section>
+
+  <!-- ============ 訂票資訊 ============ -->
+  <section class="panel" id="panel-tickets">
+    <div class="card">
+      <h2>景點官方售票網站</h2>
+      <table class="info-table" id="ticketTable"></table>
+      <p class="muted" style="margin-top:8px;">建議優先使用官方網站購票，避免透過非官方轉售平台。阿爾罕布拉宮、聖家堂、奎爾公園旺季常提前數週售罄，11 月為淡季相對好訂，但仍建議提前 2-4 週鎖定場次時段。</p>
+    </div>
+    <div class="card">
+      <h2>交通購票網站</h2>
+      <table class="info-table" id="transportTicketTable"></table>
+    </div>
+  </section>
+
+  <!-- ============ 預算 ============ -->
+  <section class="panel" id="panel-budget">
+    <div class="card">
+      <h2>預算追蹤</h2>
+      <div class="budget-row">
+        <label class="muted" style="align-self:center;">總預算（€）</label>
+        <input type="number" id="totalBudget" value="1500" min="0">
+        <label class="muted" style="align-self:center;">同行人數</label>
+        <input type="number" id="groupSize" value="4" min="1">
+      </div>
+      <div class="meter"><div id="budgetMeter" style="width:0%; background:var(--good);"></div></div>
+      <div class="stat-row">
+        <div class="stat-tile"><div class="v" id="statSpent">€0</div><div class="l">已記錄花費</div></div>
+        <div class="stat-tile"><div class="v" id="statRemain">€0</div><div class="l">剩餘預算</div></div>
+        <div class="stat-tile"><div class="v" id="statPerPerson">€0</div><div class="l">每人分攤（累計）</div></div>
+      </div>
+      <h3>新增花費</h3>
+      <div class="budget-row">
+        <input type="text" id="expName" placeholder="項目，例如：Alhambra 門票">
+        <select id="expCat">
+          <option>住宿</option>
+          <option>交通</option>
+          <option>餐飲</option>
+          <option>門票/活動</option>
+          <option>購物</option>
+          <option>其他</option>
+        </select>
+        <input type="number" id="expAmt" placeholder="金額 €">
+        <button class="btn" onclick="addExpense()">新增</button>
+      </div>
+      <ul class="plain" id="expenseList"></ul>
+      <p class="muted" style="margin-top:8px;">此頁面重新整理或關閉後，花費紀錄不會保留，建議記帳後自行截圖或另存備份。</p>
+    </div>
+  </section>
+
+  <!-- ============ 打包清單 ============ -->
+  <section class="panel" id="panel-packing">
+    <div class="card">
+      <h2>打包清單 / 行前待辦</h2>
+      <div id="packingList"></div>
+      <p class="muted" style="margin-top:8px;">此頁面重新整理或關閉後，勾選狀態不會保留。</p>
+    </div>
+  </section>
+
+  <!-- ============ 常用西語 ============ -->
+  <section class="panel" id="panel-phrases">
+    <div class="card">
+      <h2>常用西班牙語（中西對照）</h2>
+      <p class="muted">臨時需要的句子，直接用下方網站即時翻譯（中文 → 西班牙語）：</p>
+      <div class="quicklinks">
+        <a class="tag-link" href="https://translate.google.com/?sl=zh-TW&tl=es&op=translate" target="_blank">Google 翻譯</a>
+        <a class="tag-link" href="https://www.deepl.com/translator#zh/es/" target="_blank">DeepL 翻譯</a>
+        <a class="tag-link" href="https://papago.naver.com/?sk=zh-CN&tk=es" target="_blank">Papago 翻譯</a>
+      </div>
+      <div id="phraseBook"></div>
+    </div>
+  </section>
+
+  <!-- ============ 精選遊記 ============ -->
+  <section class="panel" id="panel-journals">
+    <div class="card">
+      <h2>行程景點介紹</h2>
+      <p class="muted">依行程順序整理本次會造訪的重點景點簡介，資料參考官方網站與知名旅遊攻略。</p>
+      <div id="attractionIntro"></div>
+    </div>
+    <div class="card">
+      <h2>精選遊記／攻略（近 24 個月內）</h2>
+      <p class="muted">以下為網路上口碑不錯、內容實用的西班牙自助旅行遊記與攻略文章，依發布/更新日期排序，可點入原文參考更多細節。</p>
+      <div id="journalList"></div>
+    </div>
+  </section>
+
+  <!-- ============ 美食必買 ============ -->
+  <section class="panel" id="panel-food">
+    <div class="card">
+      <h2>各城市推薦餐廳與美食</h2>
+      <p class="muted">人均消費為參考 Google 地圖／Tripadvisor 價格分級與實際評論金額換算的粗估區間，實際會因點餐內容、季節與匯率浮動，僅供抓預算參考。</p>
+      <div id="foodCityList"></div>
+    </div>
+    <div class="card">
+      <h2>必買清單</h2>
+      <div id="buyList"></div>
+      <div class="note-banner" style="margin-top:10px;">
+        <strong>海關提醒：</strong>風乾伊比利火腿等肉類加工品，依台灣動植物防疫檢疫規定通常<b>不可攜帶入境</b>，出發前建議至<a class="link" href="https://www.baphiq.gov.tw" target="_blank">行政院農業部動植物防疫檢疫署</a>官網確認最新規定，以免在海關被沒收或開罰。
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer">西班牙 15 日行程規劃工具・僅供個人行程參考，實際票價/時刻請以官方資訊為準</footer>
+
+<script>
+/* ---------------- Tabs ---------------- */
+const TABS = [
+  {id:'overview', label:'總覽'},
+  {id:'itinerary', label:'每日行程'},
+  {id:'logistics', label:'住宿交通'},
+  {id:'tickets', label:'訂票資訊'},
+  {id:'budget', label:'預算'},
+  {id:'packing', label:'打包清單'},
+  {id:'phrases', label:'常用西語'},
+  {id:'journals', label:'精選遊記'},
+  {id:'food', label:'美食必買'},
+];
+const tabNav = document.getElementById('tabNav');
+TABS.forEach((t,i)=>{
+  const b = document.createElement('button');
+  b.textContent = t.label;
+  b.className = i===0 ? 'active' : '';
+  b.onclick = ()=> switchTab(t.id);
+  b.id = 'tabbtn-'+t.id;
+  tabNav.appendChild(b);
+});
+function switchTab(id){
+  TABS.forEach(t=>{
+    document.getElementById('panel-'+t.id).classList.toggle('active', t.id===id);
+    document.getElementById('tabbtn-'+t.id).classList.toggle('active', t.id===id);
+  });
+  window.scrollTo({top:0, behavior:'instant'});
+}
+document.getElementById('panel-overview').classList.add('active');
+
+/* ---------------- Helpers ---------------- */
+function gmap(q){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q); }
+
+/* ---------------- Itinerary data ---------------- */
+const CITY_COLOR = {
+  '馬德里':'var(--blue)', '哥多華':'var(--orange)', '塞維亞':'var(--aqua)',
+  '格拉納達':'var(--yellow)', '巴塞隆納':'var(--magenta)', '托雷多':'var(--violet)'
+};
+const DAYS = [
+  { n:1, date:'11/1（日）', city:'馬德里', title:'抵達馬德里・市中心經典 D1', blocks:[
+    {time:'上午', text:'08:00 抵達馬德里機場 T1，入境、領行李。搭機場快線 Cercanías 或地鐵至市區約 40 分鐘（也可搭定額計程車約 €30）。Check-in Urbansea Atocha 113（團長已訂，11/1-11/4 共 3 晚），稍作休息。', tags:['機場','馬德里機場']},
+    {time:'下午', text:'太陽門廣場 Puerta del Sol → 馬約爾廣場 Plaza Mayor → 聖米蓋爾市場 Mercado de San Miguel（推薦在此吃 Tapas 當午餐）→ 馬德里皇宮 Royal Palace → 阿穆德納主教堂 Almudena Cathedral。', tags:['Puerta del Sol','Plaza Mayor','Mercado de San Miguel','Royal Palace Madrid','Almudena Cathedral']},
+    {time:'傍晚', text:'德波神廟 Temple of Debod 看夕陽（西班牙唯一的埃及神廟，黃昏景色極美）。晚餐可在馬拉薩尼亞區找家常小館，第一天不宜安排太晚，適應時差為主。', tags:['Temple of Debod']},
+  ]},
+  { n:2, date:'11/2（一）', city:'馬德里', title:'藝術與公園 D2', blocks:[
+    {time:'上午', text:'普拉多博物館 Museo del Prado（週一正常開放 10:00-20:00，建議提前於官網 entradas.museodelprado.es 訂票避免排隊）。', tags:['Prado Museum'], book:true},
+    {time:'下午', text:'麗池公園 El Retiro → 水晶宮 Crystal Palace → 阿爾卡拉門 Puerta de Alcalá → 西貝萊斯廣場 Plaza de Cibeles。', tags:['El Retiro Park','Crystal Palace Madrid','Puerta de Alcala','Plaza de Cibeles']},
+    {time:'傍晚', text:'格蘭大道 Gran Vía 逛街、晚餐，感受馬德里夜生活。', tags:['Gran Via Madrid']},
+  ]},
+  { n:3, date:'11/3（二）', city:'托雷多', title:'托雷多 Toledo 一日遊', blocks:[
+    {time:'交通', text:'搭 AVE 高鐵，Madrid Puerta de Atocha 站出發 → Toledo（單程約 33 分，建議訂 09:00 左右班次）。班次不算密集，建議提前上 Renfe 官網確認並訂票。', tags:[]},
+    {time:'上午', text:'抵達後步行或搭市區接駁上山進古城。參觀托雷多主教座堂 Toledo Cathedral（哥德式建築代表）與阿爾卡薩堡 Alcázar de Toledo（軍事博物館，外觀氣勢磅礴）。', tags:['Toledo Cathedral','Alcazar de Toledo']},
+    {time:'中午', text:'古城區午餐，可嚐當地烤乳豬 Cochinillo 或托雷多名產杏仁糖 Mazapán。', tags:[]},
+    {time:'下午', text:'聖多默教堂 Iglesia de Santo Tomé（葛雷柯名畫《歐貴茲伯爵的葬禮》）→ 猶太區兩大會堂：白色猶太會堂 Sinagoga de Santa María la Blanca、特蘭西托猶太會堂 Sinagoga del Tránsito。', tags:['Iglesia de Santo Tome','Sinagoga de Santa Maria la Blanca','Sinagoga del Transito']},
+    {time:'傍晚', text:'太加斯河對岸觀景台 Mirador del Valle，眺望托雷多古城全景日落，是必拍經典畫面。建議抓 19-20 點左右班次搭 AVE 返回馬德里，晚餐可在馬德里市區解決。', tags:['Mirador del Valle Toledo']},
+  ]},
+  { n:4, date:'11/4（三）', city:'哥多華', title:'馬德里 → 哥多華', blocks:[
+    {time:'交通', text:'搭 AVE 高鐵，Madrid Atocha 站出發 → Córdoba（約 1h45m）。建議提前 1-2 個月於 Renfe 官網訂票。', tags:[]},
+    {time:'下午', text:'抵達後 Check-in 哥多華飯店。', tags:['Cordoba train station']},
+    {time:'傍晚', text:'哥多華清真寺-大教堂 Mezquita-Catedral 外觀（若當天時間充裕可先入內參觀，建議先上官網訂票），漫遊百花巷 Calleja de las Flores，晚餐嚐當地 Salmorejo 冷湯與 Rabo de Toro 燉牛尾。', tags:['Mezquita Cordoba','Calleja de las Flores'], book:true},
+  ]},
+  { n:5, date:'11/5（四）', city:'塞維亞', title:'哥多華晨遊 → 前往塞維亞', blocks:[
+    {time:'上午', text:'哥多華自由活動：羅馬橋 Roman Bridge、阿爾卡薩城堡花園 Alcázar de los Reyes Cristianos、猶太區。若昨晚未參觀，把握上午進入清真寺-大教堂。', tags:['Roman Bridge Cordoba','Alcazar de los Reyes Cristianos']},
+    {time:'交通', text:'搭 AVE 高鐵 Córdoba → Sevilla（約 45 分鐘）。班次密集，不需太早到站候車，車程短適合輕鬆安排。', tags:[]},
+    {time:'下午/傍晚', text:'抵達塞維亞，Check-in 飯店。漫遊聖十字街區 Barrio Santa Cruz，遠觀塞維亞大教堂與希拉達塔 Giralda。晚上可安排 Flamenco 佛朗明哥秀（建議提前訂位）。', tags:['Barrio Santa Cruz Seville','Seville Cathedral'] },
+  ]},
+  { n:6, date:'11/6（五）', city:'塞維亞', title:'塞維亞全日', blocks:[
+    {time:'上午', text:'塞維亞王宮 Real Alcázar de Sevilla（摩爾建築代表作，建議官網 alcazarsevilla.org 提前訂時段票）。', tags:['Real Alcazar de Sevilla'], book:true},
+    {time:'下午', text:'西班牙廣場 Plaza de España → 瑪莉亞露意莎公園 Parque de María Luisa。', tags:['Plaza de Espana Sevilla','Parque de Maria Luisa']},
+    {time:'傍晚', text:'瓜達幾維河畔散步，晚餐選一家道地 Tapas 酒館，多點幾道小菜分食最道地。', tags:[]},
+  ]},
+  { n:7, date:'11/7（六）', city:'格拉納達', title:'塞維亞收尾 → 前往格拉納達', blocks:[
+    {time:'上午', text:'塞維亞大教堂內部參觀 + 登 Giralda 塔俯瞰全城（如尚未參觀），或自由活動、購物。', tags:['Seville Cathedral']},
+    {time:'交通', text:'搭 AVE 高鐵 Sevilla → Granada（約 2h40m）。此為 2019 年通車的高鐵直達路線，免轉車。', tags:[]},
+    {time:'傍晚', text:'抵達格拉納達，Check-in 飯店。漫遊阿爾拜辛區 Albaicín 蜿蜒巷弄，至聖尼可拉斯觀景台 Mirador de San Nicolás 眺望夕陽下的阿爾罕布拉宮，是格拉納達最經典的畫面。', tags:['Albaicin Granada','Mirador de San Nicolas']},
+  ]},
+  { n:8, date:'11/8（日）', city:'格拉納達', title:'阿爾罕布拉宮全日', blocks:[
+    {time:'全天', text:'阿爾罕布拉宮 La Alhambra：納斯里德宮殿（Palacios Nazaríes，需預約時段、務必準時入場）、赫內拉利費宮 Generalife、阿爾卡薩瓦城堡 Alcazaba。務必提前於官網 tickets.alhambra-patronato.es 訂票；11 月為淡季相對好訂，仍建議提前 2-4 週鎖定場次。', tags:['Alhambra Granada'], book:true},
+    {time:'晚上', text:'格拉納達傳統小酒館，點飲料常附贈免費 Tapas，是體驗當地文化的好方式。', tags:[]},
+  ]},
+  { n:9, date:'11/9（一）', city:'巴塞隆納', title:'高鐵長途日：格拉納達 → 巴塞隆納', blocks:[
+    {time:'交通', text:'07:55 搭 AVE 高鐵 Granada → Barcelona Sants（新時刻表車程約 6h59m，2026/9/14 起生效，屬長途直達車，實際時刻請以 Renfe 官網為準）。備選方案為國內線班機 Vueling（約 1.5h，如高鐵客滿或臨時想調整可參考）。', tags:['Granada train station']},
+    {time:'下午', text:'約 14:54 抵達 Barcelona Sants，Check-in 飯店，稍作休息。', tags:['Barcelona Sants']},
+    {time:'傍晚', text:'蘭布拉大道 La Rambla → 波格利亞市場 Mercat de la Boqueria → 哥德區 Barri Gòtic 初探。', tags:['La Rambla Barcelona','Mercat de la Boqueria','Barri Gotic']},
+  ]},
+  { n:10, date:'11/10（二）', city:'巴塞隆納', title:'高第建築日', blocks:[
+    {time:'上午', text:'聖家堂 Sagrada Família（建議官網 sagradafamilia.org 提前 1-2 週以上訂票，登塔票需另外預約時段）。', tags:['Sagrada Familia'], book:true},
+    {time:'下午', text:'奎爾公園 Park Güell（官網 parkguell.barcelona 需預約入場時段）。', tags:['Park Guell'], book:true},
+    {time:'傍晚', text:'格拉西亞大道 Passeig de Gràcia 欣賞巴特略之家 Casa Batlló、米拉之家 La Pedrera 外觀，可擇一入內參觀。', tags:['Casa Batllo','La Pedrera']},
+  ]},
+  { n:11, date:'11/11（三）', city:'巴塞隆納', title:'人文歷史日', blocks:[
+    {time:'上午', text:'哥德區深度漫遊：巴塞隆納主教座堂 Barcelona Cathedral、猶太區 El Call。', tags:['Barcelona Cathedral','El Call Barcelona']},
+    {time:'下午', text:'畢卡索美術館 Museu Picasso（建議事先訂票）。', tags:['Museu Picasso'], book:true},
+    {time:'傍晚', text:'波恩區 El Born 散步、聖母瑪利亞海洋聖殿 Santa Maria del Mar。', tags:['El Born Barcelona','Santa Maria del Mar']},
+  ]},
+  { n:12, date:'11/12（四）', city:'巴塞隆納', title:'蒙特惠奇山 & 海灘日', blocks:[
+    {time:'上午', text:'蒙特惠奇山 Montjuïc：加泰隆尼亞美術館 MNAC、奧運場館區。', tags:['Montjuic','MNAC Barcelona']},
+    {time:'傍晚', text:'魔法噴泉 Font Màgica（如週四有開放表演場次，請事先查詢當週時刻表）。', tags:['Font Magica']},
+    {time:'晚上', text:'巴塞隆內塔海灘 Barceloneta 散步，海鮮飯 Paella 晚餐。', tags:['Barceloneta Beach']},
+  ]},
+  { n:13, date:'11/13（五）', city:'巴塞隆納', title:'自由活動・購物・（可選）蒙塞拉特山一日遊', optional:'體力充足可安排蒙塞拉特山 Montserrat 一日遊（山中修道院＋壯麗奇岩地形，來回含參觀約需 5-6 小時）；若想保留悠閒步調，建議留在市區購物、補拍照、找間喜歡的咖啡廳坐坐即可。', blocks:[
+    {time:'全日', text:'格拉西亞大道購物、補走喜歡的景點、整理行李。晚上提早休息，準備隔天航班。', tags:['Passeig de Gracia']},
+  ]},
+  { n:14, date:'11/14（六）', city:'巴塞隆納→桃園', title:'賦歸', blocks:[
+    {time:'上午', text:'建議 07:30-08:00 出發前往巴塞隆納機場（航班 10:20 起飛，提前約 2.5-3 小時抵達辦理登機）。', tags:['Barcelona Airport']},
+    {time:'航班', text:'10:20 BCN 起飛 → 11/15 05:30 抵上海浦東（轉機 6h35m）→ 12:05 浦東起飛 → 14:00 抵達桃園機場，行程結束。', tags:[]},
+  ]},
+];
+
+/* Day maps (single point or A→B route embed, no API key needed) */
+const DAY_MAPS = {
+  1: {type:'point', q:'Puerta del Sol Madrid'},
+  2: {type:'point', q:'Museo del Prado Madrid'},
+  3: {type:'point', q:'Toledo Spain'},
+  4: {type:'route', from:'Madrid Atocha', to:'Cordoba Spain'},
+  5: {type:'route', from:'Cordoba Spain', to:'Sevilla Spain'},
+  6: {type:'point', q:'Real Alcazar de Sevilla'},
+  7: {type:'route', from:'Sevilla Spain', to:'Granada Spain'},
+  8: {type:'point', q:'Alhambra Granada'},
+  9: {type:'route', from:'Granada Spain', to:'Barcelona Spain'},
+  10:{type:'point', q:'Sagrada Familia Barcelona'},
+  11:{type:'point', q:'Barcelona Cathedral'},
+  12:{type:'point', q:'Montjuic Barcelona'},
+  13:{type:'point', q:'Passeig de Gracia Barcelona'},
+  14:{type:'route', from:'Barcelona Spain', to:'Barcelona Airport'},
+};
+function mapEmbedUrl(m){
+  if(m.type==='route'){
+    return 'https://www.google.com/maps?saddr='+encodeURIComponent(m.from)+'&daddr='+encodeURIComponent(m.to)+'&output=embed';
+  }
+  return 'https://www.google.com/maps?q='+encodeURIComponent(m.q)+'&output=embed';
+}
+
+/* Day selector */
+const daySelect = document.getElementById('daySelect');
+const dayDetail = document.getElementById('dayDetail');
+DAYS.forEach(d=>{
+  const chip = document.createElement('div');
+  chip.className = 'day-chip';
+  chip.id = 'daychip-'+d.n;
+  chip.innerHTML = `<div class="d">Day ${d.n}</div><div class="n">${d.date.replace(/（.*/,'')}</div><div class="c" style="color:${CITY_COLOR[d.city.split('→')[0]]||'var(--ink-2)'}">${d.city}</div>`;
+  chip.onclick = ()=> showDay(d.n);
+  daySelect.appendChild(chip);
+});
+function showDay(n){
+  const d = DAYS.find(x=>x.n===n);
+  DAYS.forEach(x=> document.getElementById('daychip-'+x.n).classList.toggle('active', x.n===n));
+  let html = `<div class="card"><h2>Day ${d.n} ・ ${d.date} ・ ${d.title}</h2>`;
+  if(d.optional){
+    html += `<div class="note-banner"><strong>可選安排：</strong>${d.optional}</div>`;
+  }
+  d.blocks.forEach(b=>{
+    html += `<div class="day-block"><div class="time">${b.time}</div><p>${b.text}${b.book?'<span class="badge-book">需提前訂票</span>':''}</p>`;
+    if(b.tags && b.tags.length){
+      html += `<div class="tags">`+ b.tags.map(t=>`<a class="tag-link" target="_blank" href="${gmap(t+' Spain')}">📍 ${t}</a>`).join('') +`</div>`;
+    }
+    html += `</div>`;
+  });
+  html += `</div>`;
+  const mapInfo = DAY_MAPS[d.n];
+  if(mapInfo){
+    const label = mapInfo.type==='route' ? `${mapInfo.from} → ${mapInfo.to}` : mapInfo.q;
+    html += `<div class="card" style="padding:0; overflow:hidden;">
+      <div style="padding:12px 16px 0 16px; font-size:12.5px; font-weight:700; color:var(--ink-2);">地圖：${label}</div>
+      <iframe src="${mapEmbedUrl(mapInfo)}" width="100%" height="230" style="border:0; display:block; margin-top:8px;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>`;
+  }
+  dayDetail.innerHTML = html;
+}
+showDay(1);
+
+/* ---------------- 國際航班 ---------------- */
+const FLIGHTS = [
+  {leg:'去程 第1段', route:'台北 TPE T2 → 上海浦東 PVG T1', date:'10/31（六）', time:'18:40 → 20:25', note:''},
+  {leg:'去程 轉機', route:'上海浦東 PVG T1', date:'10/31（六）', time:'轉機 4h25m', note:'行李直掛'},
+  {leg:'去程 第2段', route:'上海浦東 PVG T1 → 馬德里 MAD T1', date:'11/1（日）', time:'00:50 → 08:00', note:''},
+  {leg:'回程 第1段', route:'巴塞隆納 BCN T1 → 上海浦東 PVG T1', date:'11/14（六）→11/15（日）', time:'10:20 → 05:30', note:''},
+  {leg:'回程 轉機', route:'上海浦東 PVG T1', date:'11/15（日）', time:'轉機 6h35m', note:'行李直掛'},
+  {leg:'回程 第2段', route:'上海浦東 PVG T1 → 台北 TPE T2', date:'11/15（日）', time:'12:05 → 14:00', note:''},
+];
+document.getElementById('flightTable').innerHTML = '<tr><th>航段</th><th>路線</th><th>日期</th><th>時間</th><th>備註</th></tr>' +
+  FLIGHTS.map(f=>`<tr><td>${f.leg}</td><td>${f.route}</td><td>${f.date}</td><td>${f.time}</td><td class="muted">${f.note}</td></tr>`).join('');
+
+/* ---------------- 住宿 ---------------- */
+const HOTELS = [
+  {city:'馬德里', dates:'11/1 – 11/4（3晚）', name:'Urbansea Atocha 113', status:'ok', note:'團長已訂，4.2/5，近麗池公園、普拉多博物館，Antón Martín 地鐵站旁'},
+  {city:'哥多華', dates:'11/4 – 11/5（1晚）', name:'待訂', status:'flag', note:'建議住老城區（猶太區 Judería）步行範圍內'},
+  {city:'塞維亞', dates:'11/5 – 11/7（2晚）', name:'待訂', status:'flag', note:'建議住聖十字街區 Barrio Santa Cruz 或大教堂周邊'},
+  {city:'格拉納達', dates:'11/7 – 11/9（2晚）', name:'待訂', status:'flag', note:'建議住阿爾拜辛區 Albaicín 或市中心 Puerta Real 周邊'},
+  {city:'巴塞隆納', dates:'11/9 – 11/14（5晚）', name:'待訂', status:'flag', note:'建議住哥德區 Barri Gòtic、格拉西亞區 Gràcia 或格拉西亞大道周邊，交通最方便'},
+];
+const hotelTable = document.getElementById('hotelTable');
+hotelTable.innerHTML = '<tr><th>城市</th><th>日期</th><th>飯店</th><th>狀態</th><th>備註</th></tr>' +
+  HOTELS.map(h=>`<tr><td>${h.city}</td><td>${h.dates}</td><td>${h.name}</td><td><span class="pill ${h.status==='ok'?'ok':'flag'}">${h.status==='ok'?'已訂':'待訂'}</span></td><td class="muted">${h.note}</td></tr>`).join('');
+
+/* ---------------- 交通 ---------------- */
+const TRANSPORT = [
+  {leg:'馬德里 → 托雷多（來回）', mode:'AVE／Avant', dur:'約 33-34 分', freq:'每日約 13 班（首班 06:45／末班 20:45）', fare:'約 US$17 起（約 €15-16）', note:'Madrid Puerta de Atocha 站出發，建議訂上午班次'},
+  {leg:'馬德里 → 哥多華', mode:'AVE 高鐵', dur:'約 1h43m-1h45m', freq:'每日約 42 班（首班 06:55／末班 21:00）', fare:'約 US$11 起（約 €10）', note:'Madrid Atocha 站出發，班次密集'},
+  {leg:'哥多華 → 塞維亞', mode:'AVE 高鐵', dur:'約 52-56 分', freq:'每日約 23 班（首班 08:42／末班 22:47）', fare:'約 US$8.5 起（約 €8）', note:'班次密集，彈性大'},
+  {leg:'塞維亞 → 格拉納達', mode:'AVE 高鐵', dur:'最快 2h34m，平均約 3h16m', freq:'每日約 6 班（首班 07:35／末班 19:25）', fare:'約 US$37 起（約 €35）', note:'2019年後開通的高鐵直達路線，部分班次仍為對號轉乘，訂票時留意是否直達'},
+  {leg:'格拉納達 → 巴塞隆納', mode:'AVE 高鐵', dur:'約 6h59m（新時刻表直達）', freq:'2026/9/14 起新時刻表：07:55 發車、14:54 抵達；全日約 6 班（其中 2 班直達）', fare:'約 US$78 起（約 €70+，長途路線價差大，越早訂越便宜）', note:'長途直達車，建議提早於 Renfe 官網訂票並留意實際班次是否為新時刻表'},
+  {leg:'（備選）格拉納達 → 巴塞隆納', mode:'國內線班機 Vueling', dur:'約 1.5h', freq:'每日多班', fare:'依訂票時間浮動', note:'已選擇搭高鐵，此為備案，如高鐵客滿或臨時想調整可參考'},
+];
+document.getElementById('transportTable').innerHTML = '<tr><th>路段</th><th>方式</th><th>車程</th><th>班次</th><th>參考票價</th><th>備註</th></tr>' +
+  TRANSPORT.map(t=>`<tr><td>${t.leg}</td><td>${t.mode}</td><td>${t.dur}</td><td class="muted">${t.freq}</td><td>${t.fare}</td><td class="muted">${t.note}</td></tr>`).join('');
+
+/* ---------------- 訂票網站 ---------------- */
+const TICKETS = [
+  {name:'阿爾罕布拉宮 La Alhambra', url:'https://tickets.alhambra-patronato.es', note:'官方唯一售票網站，Nasrid Palaces 需選定時段'},
+  {name:'聖家堂 Sagrada Família', url:'https://sagradafamilia.org', note:'官網僅開放約 2 個月內場次，登塔票另計'},
+  {name:'奎爾公園 Park Güell', url:'https://parkguell.barcelona', note:'需預約入場時段'},
+  {name:'巴特略之家 Casa Batlló', url:'https://www.casabatllo.es', note:'官方售票'},
+  {name:'米拉之家 La Pedrera', url:'https://www.lapedrera.com', note:'官方售票'},
+  {name:'普拉多博物館 Museo del Prado', url:'https://www.museodelprado.es', note:'售票見 entradas.museodelprado.es，週一至週六 10:00-20:00'},
+  {name:'托雷多主教座堂 Catedral de Toledo', url:'https://www.catedralprimada.es', note:'官方售票／時刻資訊'},
+  {name:'托雷多阿爾卡薩堡／軍事博物館 Alcázar de Toledo', url:'https://ejercito.defensa.gob.es/museo/visitas/prepara_visita/', note:'西班牙國防部軍事博物館官網，週三常有免費時段'},
+  {name:'馬德里皇宮 Palacio Real', url:'https://www.patrimonionacional.es', note:'西班牙王室資產管理局官網'},
+  {name:'塞維亞王宮 Real Alcázar', url:'https://www.alcazarsevilla.org', note:'官方售票，建議提前訂時段票'},
+  {name:'哥多華清真寺-大教堂 Mezquita', url:'https://mezquita-catedraldecordoba.es', note:'官網含門票與開放時間'},
+  {name:'畢卡索美術館 Museu Picasso', url:'https://www.museupicasso.bcn.cat', note:'巴塞隆納市立美術館官網'},
+  {name:'伯納烏球場導覽 Santiago Bernabéu', url:'https://www.realmadrid.com/en/santiago-bernabeu-stadium/tickets', note:'皇馬官網，可選球場導覽或比賽門票'},
+];
+document.getElementById('ticketTable').innerHTML = '<tr><th>景點</th><th>官方網站</th><th>備註</th></tr>' +
+  TICKETS.map(t=>`<tr><td>${t.name}</td><td><a class="link" href="${t.url}" target="_blank">${t.url.replace('https://','')}</a></td><td class="muted">${t.note}</td></tr>`).join('');
+
+const TRANSPORT_TICKETS = [
+  {name:'Renfe（西班牙國鐵／AVE 高鐵）', url:'https://www.renfe.com/es/en', note:'訂購城市間 AVE 車票，建議提前 1-2 個月鎖定較優惠票價'},
+  {name:'Vueling（西班牙國內線航空）', url:'https://www.vueling.com', note:'格拉納達／巴塞隆納等城市間國內航班備案'},
+  {name:'馬德里機場快線 Cercanías／地鐵 Metro Madrid', url:'https://www.metromadrid.es', note:'機場往返市區交通'},
+  {name:'巴塞隆納大眾運輸 TMB', url:'https://www.tmb.cat', note:'地鐵／公車票券資訊，機場快線 Aerobús 亦可參考'},
+];
+document.getElementById('transportTicketTable').innerHTML = '<tr><th>用途</th><th>官方網站</th><th>備註</th></tr>' +
+  TRANSPORT_TICKETS.map(t=>`<tr><td>${t.name}</td><td><a class="link" href="${t.url}" target="_blank">${t.url.replace('https://','')}</a></td><td class="muted">${t.note}</td></tr>`).join('');
+
+/* ---------------- 預算 ---------------- */
+let expenses = [];
+function renderBudget(){
+  const total = parseFloat(document.getElementById('totalBudget').value)||0;
+  const group = parseFloat(document.getElementById('groupSize').value)||1;
+  const spent = expenses.reduce((s,e)=>s+e.amt,0);
+  const remain = total - spent;
+  const pct = total>0 ? Math.min(100, (spent/total)*100) : 0;
+  const meter = document.getElementById('budgetMeter');
+  meter.style.width = pct+'%';
+  meter.style.background = pct<70 ? 'var(--good)' : (pct<100 ? 'var(--warning)' : 'var(--critical)');
+  document.getElementById('statSpent').textContent = '€'+spent.toFixed(0);
+  document.getElementById('statRemain').textContent = '€'+remain.toFixed(0);
+  document.getElementById('statPerPerson').textContent = '€'+(spent/group).toFixed(0);
+  const list = document.getElementById('expenseList');
+  list.innerHTML = expenses.map((e,i)=>`<li><span>[${e.cat}] ${e.name}</span><span>€${e.amt.toFixed(0)} <button class="btn ghost" onclick="removeExpense(${i})">刪除</button></span></li>`).join('') || '<li class="muted">尚無花費紀錄</li>';
+}
+function addExpense(){
+  const name = document.getElementById('expName').value.trim();
+  const cat = document.getElementById('expCat').value;
+  const amt = parseFloat(document.getElementById('expAmt').value);
+  if(!name || !amt || amt<=0){ return; }
+  expenses.push({name, cat, amt});
+  document.getElementById('expName').value='';
+  document.getElementById('expAmt').value='';
+  renderBudget();
+}
+function removeExpense(i){ expenses.splice(i,1); renderBudget(); }
+document.getElementById('totalBudget').addEventListener('input', renderBudget);
+document.getElementById('groupSize').addEventListener('input', renderBudget);
+renderBudget();
+
+/* ---------------- 打包清單 ---------------- */
+const PACKING = {
+  '證件與財務': ['護照（效期需 6 個月以上）','護照影本／電子檔備份','信用卡（含 2 張以上分開放）','歐元現金','西班牙住宿訂單／機票電子憑證','國際駕照（如租車）','旅平險保單'],
+  '3C與轉接': ['歐規轉接頭（圓孔 Type C/F）','行動電源','手機／相機充電線','歐洲可用 SIM 卡或網卡','萬用轉接頭（多國插座型）'],
+  '衣物（11月西班牙偏涼)': ['薄外套/風衣','保暖內搭/毛衣','長褲數件','舒適好走的鞋（石板路多）','圍巾','輕便雨具/折疊傘'],
+  '健康與盥洗': ['個人常備藥品','暈車藥（長途高鐵/巴士）','防曬乳','個人盥洗用品','口罩'],
+  '行前待辦': ['預訂哥多華/塞維亞/格拉納達/巴塞隆納住宿','阿爾罕布拉宮門票（官網 tickets.alhambra-patronato.es）','聖家堂＋奎爾公園門票','各段 AVE 高鐵車票','Flamenco 秀訂位（塞維亞或格拉納達）','歐元現金兌換／通知信用卡海外消費','申請歐洲網卡/漫遊'],
+};
+const packingList = document.getElementById('packingList');
+Object.entries(PACKING).forEach(([cat, items])=>{
+  const div = document.createElement('div');
+  div.className = 'pack-cat';
+  div.innerHTML = `<h3>${cat}</h3>` + items.map((it,i)=>`<label class="pack-item"><input type="checkbox">${it}</label>`).join('');
+  packingList.appendChild(div);
+});
+
+/* ---------------- 行程景點介紹 ---------------- */
+const ATTRACTIONS = [
+  {name:'馬德里舊城區：太陽門廣場 Puerta del Sol／馬約爾廣場 Plaza Mayor', city:'馬德里', desc:'太陽門廣場是馬德里的城市中心點，西班牙全國公路的「零公里」起點就標記在此廣場地面；馬約爾廣場則是17世紀興建的巴洛克式方形廣場，過去曾作為市集、鬥牛場甚至宗教審判的場地，現為周邊林立咖啡廳與紀念品店的熱門聚點。', url:'https://www.esmadrid.com/en'},
+  {name:'馬德里皇宮 Palacio Real de Madrid', city:'馬德里', desc:'西班牙王室的官方宮殿，由波旁王朝腓力五世下令於18世紀在舊城堡遺址上興建，是歐洲現存最大的宮殿之一（房間數超過3000間），現為國事活動場地，王室平時實際居住於郊區的薩蘇埃拉宮。內部可參觀皇家軍械庫、王座廳與皇室收藏。', url:'https://www.patrimonionacional.es'},
+  {name:'普拉多博物館 Museo del Prado', city:'馬德里', desc:'世界頂級古典藝術博物館之一，1819年開幕，館藏以西班牙皇室收藏為基礎，收錄哥雅（Goya）、委拉斯奎茲（Velázquez）、葛雷柯（El Greco）等大師作品，是欣賞西班牙黃金時代繪畫的必訪之地。週一至週六 10:00-20:00 開放。', url:'https://www.museodelprado.es'},
+  {name:'托雷多古城：主教座堂與阿爾卡薩堡', city:'托雷多', desc:'托雷多曾是西班牙首都，因長期融合天主教、伊斯蘭與猶太三大文化而有「三文化之都」美譽，1986年古城整體被列為UNESCO世界遺產。主教座堂是西班牙哥德式建築代表作之一；山頂的阿爾卡薩堡歷經多次戰火重建，現為軍事博物館，居高臨下俯瞰整座古城。', url:'https://www.catedralprimada.es'},
+  {name:'哥多華清真寺-大教堂 Mezquita-Catedral de Córdoba', city:'哥多華', desc:'始建於西元8世紀後倭馬亞王朝時期，以超過850根雙層拱柱組成的祈禱大廳聞名於世；16世紀天主教收復失地後，在清真寺中央嵌入一座文藝復興式主教座堂，形成伊斯蘭與天主教建築並存的獨特景觀，1984年列入UNESCO世界遺產。', url:'https://mezquita-catedraldecordoba.es'},
+  {name:'塞維亞王宮 Real Alcázar de Sevilla', city:'塞維亞', desc:'現今仍在使用的最古老皇家宮殿之一（西班牙王室訪塞維亞時的官邸），主體為14世紀佩德羅一世下令興建的「穆德哈爾式」建築，融合伊斯蘭工藝與天主教元素，宮殿花園層層疊疊、水池噴泉交錯，也是《冰與火之歌：權力遊戲》多恩取景地，1987年與大教堂一同列入UNESCO世界遺產。', url:'https://www.alcazarsevilla.org'},
+  {name:'塞維亞大教堂與希拉達塔 Catedral de Sevilla & La Giralda', city:'塞維亞', desc:'世界最大的哥德式教堂之一，建於12世紀清真寺遺址之上，哥倫布的陵墓即安放於此。鐘樓希拉達塔前身為清真寺宣禮塔，登頂以斜坡道（而非階梯）設計，據傳原是方便騎馬登頂宣禮，塔頂可俯瞰整座塞維亞舊城。', url:'https://www.catedraldesevilla.es'},
+  {name:'阿爾罕布拉宮 La Alhambra', city:'格拉納達', desc:'伊斯蘭教在西班牙最後一個王朝——納斯里德王朝的皇宮城堡群，融合宮殿、城堡與花園三大區域，以精細的阿拉伯幾何雕花與水景設計聞名於世，1984年列入UNESCO世界遺產，是西班牙最多人造訪的古蹟之一。門票採時段預約制，納斯里德宮殿場次務必準時入場。', url:'https://tickets.alhambra-patronato.es'},
+  {name:'聖家堂 La Sagrada Família', city:'巴塞隆納', desc:'建築師高第（Antoni Gaudí）畢生代表作，自1882年動工至今仍在興建中，融合哥德式與新藝術風格，以有機曲線與自然光影設計聞名，2010年由教宗本篤十六世祝聖為次級宗座聖殿，2005年列入UNESCO世界遺產（高第作品群之一）。登塔需另外預約時段票。', url:'https://sagradafamilia.org'},
+  {name:'奎爾公園 Park Güell', city:'巴塞隆納', desc:'高第與贊助人奎爾伯爵原本規劃作為高級住宅區開發，後因銷售不佳改為公共公園，園內以馬賽克拼貼工藝（Trencadís）、蜿蜒長椅與知名的彩色蜥蜴雕塑聞名，1984年同樣列入UNESCO世界遺產，現需預約時段入園。', url:'https://parkguell.barcelona'},
+  {name:'巴特略之家／米拉之家（格拉西亞大道高第建築）', city:'巴塞隆納', desc:'兩棟皆為高第晚期代表作，巴特略之家以骨骼與鱗片般的立面外觀又被稱為「骨頭之家」；米拉之家（La Pedrera）則以波浪狀的石灰岩外牆與屋頂上宛如戰士的煙囪雕塑著稱，兩者皆已列入UNESCO世界遺產，內部皆可購票參觀。', url:'https://www.casabatllo.es'},
+];
+const attractionIntro = document.getElementById('attractionIntro');
+attractionIntro.innerHTML = ATTRACTIONS.map(a=>`
+  <div class="day-block">
+    <div class="time" style="color:${CITY_COLOR[a.city]||'var(--blue)'}">${a.city}</div>
+    <p><strong>${a.name}</strong></p>
+    <p style="margin-top:4px;">${a.desc}</p>
+    <div class="tags"><a class="tag-link" href="${a.url}" target="_blank">官方網站</a></div>
+  </div>
+`).join('');
+
+/* ---------------- 精選遊記／攻略 ---------------- */
+const JOURNALS = [
+  {title:'西班牙自由行25天遊記（含跨境安道爾）', site:'BISHDREAM', date:'2025/08/21 發布', url:'https://bishdream.com/spain-trip-journal/', note:'真實日記型遊記，涵蓋馬德里、托雷多、塞維亞、格拉納達、巴塞隆納等10餘城市，實用心得含租車自駕、停車、氣候應對與文化差異提醒。'},
+  {title:'2026西班牙自由行攻略（總覽：城市/機票/交通/住宿/花費）', site:'蔡小妞依玲 tsnio.com', date:'2025/12/28 發布・2026/07/06 更新', url:'https://tsnio.com/sapin/', note:'建議「不同點進出機票」節省交通、5小時以上車程可考慮飛機、淡季住宿預算等實用策略，並附16天雙週行程範例。'},
+  {title:'西班牙格拉納達自由行攻略（交通/景點/美食/住宿）', site:'蔡小妞依玲 tsnio.com', date:'2026/03/23 發布・2026/03/30 更新', url:'https://tsnio.com/granada/', note:'介紹阿爾罕布拉宮購票重點、阿爾拜辛觀景台，以及格拉納達獨有的「消費送免費Tapas」文化。'},
+  {title:'西班牙塞維亞自由行攻略（交通/景點/美食/住宿）', site:'蔡小妞依玲 tsnio.com', date:'2026/02/04 發布・2026/02/09 更新', url:'https://tsnio.com/sevilla/', note:'推薦人氣Tapas小酒館與免費佛朗明哥秀酒館，並提醒西班牙廣場需避開人潮時段。'},
+  {title:'旅遊達人教您規劃：塞維亞2天1夜自由行全攻略', site:'旅途中的景深隨想', date:'2025 最新版', url:'https://huitinchou.tw/%E3%80%902025%E6%9C%80%E6%96%B0%E3%80%91%E6%97%85%E9%81%8A%E9%81%94%E4%BA%BA%E6%95%99%E6%82%A8%E8%A6%8F%E5%8A%83-%E8%A5%BF%E7%8F%AD%E7%89%99%E8%B3%BD%E7%B6%AD%E4%BA%9Esevila-2%E5%A4%A91%E5%A4%9C/', note:'短天數塞維亞行程安排參考，交通與美食建議濃縮實用。'},
+  {title:'西班牙馬德里美食推薦：10家馬德里必吃餐廳總整理', site:'蔡小妞依玲 tsnio.com', date:'2024/12/20 發布・2025/01/04 更新', url:'https://tsnio.com/madrid-food-guide/', note:'涵蓋百年老酒館、市場美食、甜點名店，價位親民路線為主。'},
+  {title:'西班牙巴塞隆納美食推薦：9家巴塞隆納必吃餐廳總整理', site:'蔡小妞依玲 tsnio.com', date:'2024/12/18 發布・2025/01/04 更新', url:'https://tsnio.com/eating-in-barcelona/', note:'從畢卡索常去的百年老店到蘭布拉大道燉飯名店都有收錄。'},
+  {title:'2025 西班牙必買懶人包：25款美食/藥妝/精品/紀念品', site:'justinfunfun.com', date:'2025/12/10 發布・2026/04/17 更新', url:'https://justinfunfun.com/spain-must-buy-items/', note:'本 App「必買清單」頁籤主要參考來源之一，含食品、藥妝、精品分類整理。'},
+];
+const journalList = document.getElementById('journalList');
+journalList.innerHTML = JOURNALS.map(j=>`
+  <div class="day-block">
+    <div class="time">${j.date}　·　${j.site}</div>
+    <p><a class="link" href="${j.url}" target="_blank">${j.title}</a></p>
+    <p class="muted" style="margin-top:4px;">${j.note}</p>
+  </div>
+`).join('');
+
+/* ---------------- 美食必買 ---------------- */
+const FOOD_BY_CITY = [
+  {city:'馬德里', items:[
+    {name:'Casa Labra', dish:'炸鱈魚排、鱈魚可樂餅', price:'約 €8-12', note:'太陽門廣場旁百年老酒館'},
+    {name:'Chocolatería San Ginés', dish:'油條 Churros 配熱巧克力', price:'約 €6-10', note:'傳統西班牙早餐／宵夜體驗'},
+    {name:'Mercado de San Miguel', dish:'Tapas、海鮮燉飯', price:'約 €15-25', note:'市場型美食聚落，多攤位分食價格會累加'},
+    {name:'La Mallorquina', dish:'糕點、鮮奶油甜點', price:'約 €8-12', note:'太陽門廣場旁百年糕餅店，多為站立式快速消費'},
+  ]},
+  {city:'哥多華', items:[
+    {name:'（無特定店家，可就近選擇猶太區餐館）', dish:'Salmorejo 冷湯、Flamenquín（火腿起司豬排捲）', price:'約 €15-25', note:'哥多華地方特色菜，百花巷周邊小館普遍有供應'},
+  ]},
+  {city:'塞維亞', items:[
+    {name:'Taberna Coloniales', dish:'綜合 Tapas', price:'約 €12-18', note:'部落客公認塞維亞最念念不忘的小酒館之一'},
+    {name:'La Carboneria', dish:'佛朗明哥秀＋餐酒', price:'約 €10-15', note:'每日多場免費佛朗明哥表演的知名酒館，消費以飲料為主'},
+    {name:'Confitería La Campana', dish:'糕點、甜食', price:'約 €10-15', note:'塞維亞百年糕餅店'},
+  ]},
+  {city:'格拉納達', items:[
+    {name:'Bar los Diamantes', dish:'炒大蒜蘑菇、炸蝦、鳳尾魚等免費 Tapas', price:'約 €10-15', note:'格拉納達「消費送Tapas」文化代表店家，Calle Navas 巷內'},
+    {name:'KASBAH Tetería', dish:'阿拉伯茶飲、輕食', price:'約 €15-25', note:'阿爾拜辛區摩爾風情茶館'},
+    {name:'La Bella Y La Bestia', dish:'份量豐盛的創意料理', price:'約 €15-20', note:'裝潢華麗、CP值高的人氣餐廳'},
+  ]},
+  {city:'巴塞隆納', items:[
+    {name:'Els 4 Gats', dish:'午間套餐', price:'約 €20-30', note:'畢卡索等藝術家昔日聚集地，百年老店'},
+    {name:'Cervecería Catalana', dish:'精緻 Tapas', price:'約 €15-20', note:'格拉西亞大道附近人氣名店，常需排隊'},
+    {name:'Les Quinze Nits', dish:'墨魚燉飯 Black Rice', price:'約 €20-30', note:'蘭布拉大道旁海鮮燉飯名店'},
+    {name:'Mercat de la Boqueria', dish:'伊比利火腿、海鮮、Tapas', price:'約 €15-25', note:'聖約瑟市場，多攤位分食價格會累加'},
+    {name:'Granja M. Viader', dish:'油條、起司火腿吐司、熱巧克力', price:'約 €6-10', note:'哥德區百年早餐老店'},
+  ]},
+];
+const foodCityList = document.getElementById('foodCityList');
+foodCityList.innerHTML = FOOD_BY_CITY.map(c=>`
+  <h3 style="color:${CITY_COLOR[c.city]||'var(--ink-2)'}">${c.city}</h3>
+  <table class="info-table">
+    <tr><th>店家</th><th>推薦菜色</th><th>人均消費</th><th>備註</th></tr>
+    ${c.items.map(it=>`<tr><td>${it.name}</td><td>${it.dish}</td><td>${it.price}</td><td class="muted">${it.note}</td></tr>`).join('')}
+  </table>
+`).join('');
+
+const BUY_LIST = [
+  {cat:'食品', items:['橄欖油（冷壓初榨）','Turrón 杜隆杏仁糖','Manchego 拉曼查起司','托雷多杏仁糖糕 Mazapán','La Violeta 紫羅蘭糖（馬德里1915年老牌）','Inés Rosales 橄欖油脆餅']},
+  {cat:'飲品', items:['Cava 氣泡酒（加泰隆尼亞產區）','Marcilla 咖啡']},
+  {cat:'藥妝保養', items:['ISDIN 防曬系列','MartiDerm 安瓶','Xhekpon 頸紋霜','SUAVINA 護唇膏']},
+  {cat:'精品服飾與家居', items:['LOEWE 皮革精品','Camper 休閒鞋','TOUS 小熊珠寶','彩繪磁磚（Talavera 風格）','橄欖木製廚具']},
+];
+const buyList = document.getElementById('buyList');
+buyList.innerHTML = BUY_LIST.map(b=>`<h3>${b.cat}</h3><ul class="plain">${b.items.map(i=>`<li>${i}</li>`).join('')}</ul>`).join('');
+
+/* ---------------- 常用西語 ---------------- */
+const PHRASES = {
+  '基本問候': [['你好','Hola'],['早安','Buenos días'],['午安/晚安','Buenas tardes / Buenas noches'],['謝謝','Gracias'],['不客氣','De nada'],['請','Por favor'],['對不起/借過','Perdón / Disculpe'],['再見','Adiós']],
+  '餐廳點餐': [['請給我菜單','¿Me trae la carta, por favor?'],['我要這個','Quiero esto'],['帳單','La cuenta, por favor'],['不辣','Sin picante'],['素食','Vegetariano/a'],['水（有氣/無氣）','Agua con gas / sin gas'],['好吃','Está muy rico']],
+  '交通問路': [['火車站在哪裡？','¿Dónde está la estación de tren?'],['這班車去…嗎？','¿Este tren va a...?'],['到…多少錢？','¿Cuánto cuesta hasta...?'],['我要去這個地址','Necesito ir a esta dirección'],['左/右/直走','Izquierda / Derecha / Todo recto']],
+  '購物與緊急': [['多少錢？','¿Cuánto cuesta?'],['可以刷卡嗎？','¿Puedo pagar con tarjeta?'],['救命/幫忙','¡Ayuda!'],['我需要醫生','Necesito un médico'],['最近的藥局在哪？','¿Dónde está la farmacia más cercana?'],['我的護照/皮夾不見了','He perdido mi pasaporte / cartera']],
+  '數字 1-10': [['1','uno'],['2','dos'],['3','tres'],['4','cuatro'],['5','cinco'],['6','seis'],['7','siete'],['8','ocho'],['9','nueve'],['10','diez']],
+};
+const phraseBook = document.getElementById('phraseBook');
+Object.entries(PHRASES).forEach(([cat, rows])=>{
+  const div = document.createElement('div');
+  div.className = 'phrase-cat';
+  div.innerHTML = `<h3>${cat}</h3><table class="info-table"><tr><th>中文</th><th>西班牙語</th></tr>` +
+    rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('') + `</table>`;
+  phraseBook.appendChild(div);
+});
+</script>
+</body>
+</html>
