@@ -360,6 +360,49 @@
   .tomorrow-chip b{ color:var(--ink); }
   .tomorrow-chip .tc-label{ font-size:10px; font-weight:800; letter-spacing:.08em; color:var(--accent); background:rgba(179,71,42,0.1); padding:2px 7px; border-radius:6px; flex:0 0 auto; }
 
+  /* ================= V5 Trip Preparation Center ================= */
+  .prep-progress-row{ display:flex; align-items:center; gap:12px; margin:8px 0 6px 0; }
+  .prep-percent{ font-family:"Fraunces", serif; font-size:24px; font-weight:600; color:var(--accent); flex:0 0 auto; min-width:52px; }
+  .prep-bar-track{ flex:1; height:8px; border-radius:999px; background:var(--grid); overflow:hidden; }
+  .prep-bar-fill{ height:100%; background:var(--olive); border-radius:999px; transition:width .25s ease; }
+  .prep-remain{ font-size:12px; color:var(--ink-muted); margin-bottom:6px; }
+  .top3-list{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+  .top3-item{ display:flex; align-items:flex-start; gap:10px; padding:9px 10px; border-radius:10px; background:var(--page); }
+  .top3-item .t3-rank{ font-family:"Fraunces", serif; font-size:15px; font-weight:600; color:var(--ink-muted); flex:0 0 auto; width:16px; }
+  .top3-item .t3-body{ flex:1; min-width:0; }
+  .top3-item .t3-title{ font-size:13px; font-weight:700; line-height:1.4; }
+  .top3-item .t3-meta{ font-size:11px; color:var(--ink-muted); margin-top:3px; display:flex; gap:8px; flex-wrap:wrap; }
+  .top3-empty{ font-size:12.5px; color:var(--ink-muted); padding:6px 2px; }
+  .prep-center-card.prep-compact .top3-list{ display:none; }
+  .prep-center-card.prep-compact .prep-remain{ margin-bottom:0; }
+  .priority-badge{ font-size:10px; font-weight:800; letter-spacing:.02em; padding:2px 7px; border-radius:6px; white-space:nowrap; }
+  .priority-badge.pr-high{ background:rgba(179,71,42,0.12); color:var(--accent); }
+  .priority-badge.pr-medium{ background:var(--chip-active-bg); color:var(--olive); }
+  .priority-badge.pr-low{ background:var(--grid); color:var(--ink-muted); }
+  .booking-badge{ font-size:10px; font-weight:800; padding:2px 8px; border-radius:6px; white-space:nowrap; }
+  .todo-booking-select{ font-size:11px; font-weight:700; border:1px solid var(--border); border-radius:6px; padding:3px 6px; background:var(--surface); color:var(--ink-2); min-height:26px; }
+  .cat-group{ margin-bottom:16px; }
+  .cat-group-title{ font-size:12px; font-weight:800; letter-spacing:.04em; color:var(--ink-2); text-transform:uppercase; margin:0 2px 8px 2px; display:flex; align-items:center; gap:6px; }
+  .todo-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:10px; box-shadow: var(--shadow-card); }
+  .todo-card.is-done{ opacity:.6; }
+  .todo-head{ display:flex; align-items:flex-start; gap:10px; }
+  .todo-check{ width:22px; height:22px; flex:0 0 auto; margin-top:1px; accent-color: var(--olive); cursor:pointer; }
+  .todo-body{ flex:1; min-width:0; }
+  .todo-title{ font-size:14px; font-weight:700; line-height:1.4; }
+  .todo-card.is-done .todo-title{ text-decoration: line-through; color:var(--ink-muted); }
+  .todo-meta-row{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px; }
+  .todo-deadline{ font-size:11.5px; color:var(--ink-muted); }
+  .todo-doneat{ font-size:11px; color:var(--ink-muted); margin-top:4px; }
+  .todo-next{ font-size:12.5px; color:var(--ink-2); margin-top:8px; padding-top:8px; border-top:1px dashed var(--grid); line-height:1.5; }
+  .todo-next b{ color:var(--olive); font-size:10.5px; letter-spacing:.05em; }
+  .todo-details{ margin-top:8px; }
+  .todo-details summary{ font-size:11.5px; font-weight:700; color:var(--olive); cursor:pointer; list-style:none; }
+  .todo-details summary::-webkit-details-marker{ display:none; }
+  .todo-details[open] summary{ margin-bottom:6px; }
+  .todo-detail-row{ font-size:12px; color:var(--ink-2); padding:3px 0; display:flex; gap:6px; line-height:1.5; }
+  .todo-detail-row .dl-label{ color:var(--ink-muted); flex:0 0 66px; }
+  .todo-note{ width:100%; margin-top:8px; font-size:12.5px; padding:7px 9px; border:1px solid var(--border); border-radius:8px; background:var(--page); color:var(--ink); resize:vertical; min-height:36px; font-family:inherit; box-sizing:border-box; }
+
   input.tab-radio, input.day-radio{ display:none; }
   #tab-overview:checked ~ main #panel-overview{ display:block; }
   #tab-itinerary:checked ~ main #panel-itinerary{ display:block; }
@@ -496,16 +539,18 @@
       </div>
     </div>
 
-    <label class="card prep-row" for="tab-packing">
-      <div class="prep-badge">
-        <svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--olive);"><rect x="3" y="4" width="17" height="17" rx="2"/><path d="M7.5 12l2.7 2.7L16.5 8.5"/></svg>
-        <div>
-          <div class="t-card">行前待辦</div>
-          <div class="muted" style="margin-top:2px;">點擊查看完整打包清單</div>
-        </div>
+    <div class="card prep-center-card" id="prepCenterCard">
+      <div class="section-head" style="margin:0 0 2px 0;">
+        <span class="t-section">TRIP PREPARATION</span>
+        <label class="back-link" for="tab-packing" style="cursor:pointer;">查看全部 ›</label>
       </div>
-      <div class="prep-todo"><span class="prep-count">3 項</span><br>未完成</div>
-    </label>
+      <div class="prep-progress-row">
+        <div class="prep-percent" id="prepPercent">4%</div>
+        <div class="prep-bar-track"><div class="prep-bar-fill" id="prepBar" style="width:4%"></div></div>
+      </div>
+      <div class="prep-remain" id="prepRemainText">還有 23 件事情待完成</div>
+      <div class="top3-list" id="top3List"><div class="top3-item"><div class="t3-rank">1</div><div class="t3-body"><div class="t3-title">護照效期確認（需 6 個月以上）</div><div class="t3-meta"><span>📄 DOCUMENTS 證件</span><span>期限 10/31</span><span>🔴 HIGH</span></div></div></div><div class="top3-item"><div class="t3-rank">2</div><div class="t3-body"><div class="t3-title">購買旅平險</div><div class="t3-meta"><span>📄 DOCUMENTS 證件</span><span>期限 10/31</span><span>🔴 HIGH</span></div></div></div><div class="top3-item"><div class="t3-rank">3</div><div class="t3-body"><div class="t3-title">哥多華住宿（1晚）</div><div class="t3-meta"><span>🏨 HOTEL 住宿</span><span>期限 11/4</span><span>🔴 HIGH</span></div></div></div></div>
+    </div>
 
     <label class="card safety-card" for="tab-logistics">
       <svg class="icon si" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z"/></svg>
@@ -893,12 +938,22 @@
     </div>
   </section>
 
-  <!-- ============ 打包清單 ============ -->
+  <!-- ============ 行前待辦 / 打包清單 ============ -->
   <section class="panel" id="panel-packing">
     <div class="card">
-      <h2>打包清單 / 行前待辦</h2>
-      <div id="packingList"><div class="pack-cat"><h3>證件與財務</h3><label class="pack-item"><input type="checkbox">護照（效期需 6 個月以上）</label><label class="pack-item"><input type="checkbox">護照影本／電子檔備份</label><label class="pack-item"><input type="checkbox">信用卡（含 2 張以上分開放）</label><label class="pack-item"><input type="checkbox">歐元現金</label><label class="pack-item"><input type="checkbox">西班牙住宿訂單／機票電子憑證</label><label class="pack-item"><input type="checkbox">國際駕照（如租車）</label><label class="pack-item"><input type="checkbox">旅平險保單</label></div><div class="pack-cat"><h3>3C與轉接</h3><label class="pack-item"><input type="checkbox">歐規轉接頭（圓孔 Type C/F）</label><label class="pack-item"><input type="checkbox">行動電源</label><label class="pack-item"><input type="checkbox">手機／相機充電線</label><label class="pack-item"><input type="checkbox">歐洲可用 SIM 卡或網卡</label><label class="pack-item"><input type="checkbox">萬用轉接頭（多國插座型）</label></div><div class="pack-cat"><h3>衣物（11月西班牙偏涼)</h3><label class="pack-item"><input type="checkbox">薄外套/風衣</label><label class="pack-item"><input type="checkbox">保暖內搭/毛衣</label><label class="pack-item"><input type="checkbox">長褲數件</label><label class="pack-item"><input type="checkbox">舒適好走的鞋（石板路多）</label><label class="pack-item"><input type="checkbox">圍巾</label><label class="pack-item"><input type="checkbox">輕便雨具/折疊傘</label></div><div class="pack-cat"><h3>健康與盥洗</h3><label class="pack-item"><input type="checkbox">個人常備藥品</label><label class="pack-item"><input type="checkbox">暈車藥（長途高鐵/巴士）</label><label class="pack-item"><input type="checkbox">防曬乳</label><label class="pack-item"><input type="checkbox">個人盥洗用品</label><label class="pack-item"><input type="checkbox">口罩</label></div><div class="pack-cat"><h3>行前待辦</h3><label class="pack-item"><input type="checkbox">預訂哥多華/塞維亞/格拉納達/巴塞隆納住宿</label><label class="pack-item"><input type="checkbox">阿爾罕布拉宮門票（官網 tickets.alhambra-patronato.es）</label><label class="pack-item"><input type="checkbox">聖家堂＋奎爾公園門票</label><label class="pack-item"><input type="checkbox">各段 AVE 高鐵車票</label><label class="pack-item"><input type="checkbox">Flamenco 秀訂位（塞維亞或格拉納達）</label><label class="pack-item"><input type="checkbox">歐元現金兌換／通知信用卡海外消費</label><label class="pack-item"><input type="checkbox">申請歐洲網卡/漫遊</label></div></div>
-      <p class="muted" style="margin-top:8px;">此頁面重新整理或關閉後，勾選狀態不會保留。</p>
+      <div class="section-head" style="margin:0 0 2px 0;"><span class="t-section">行前任務中心</span></div>
+      <div class="prep-progress-row">
+        <div class="prep-percent" id="prepPercentFull">4%</div>
+        <div class="prep-bar-track"><div class="prep-bar-fill" id="prepBarFull" style="width:4%"></div></div>
+      </div>
+      <div class="prep-remain" id="prepRemainTextFull">還有 23 件事情待完成</div>
+      <p class="muted" style="margin:4px 0 0 0;">勾選、預訂狀態與備註會自動儲存在此裝置的瀏覽器中，重新整理或關閉分頁後仍會保留。</p>
+    </div>
+    <div id="prepItemsList"><div class="cat-group"><div class="cat-group-title">🎟️ TICKETS 門票</div><div class="todo-card" id="todo-ticket-prado"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-ticket-prado"><div class="todo-body"><div class="todo-title">普拉多博物館門票 Museo del Prado</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 11/2</span><select class="todo-booking-select" data-id="ticket-prado"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>至 entradas.museodelprado.es 訂票避免排隊</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 2（11/2）上午</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>週一正常開放 10:00-20:00，建議提前於官網訂票避免排隊</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.museodelprado.es" target="_blank">www.museodelprado.es</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="ticket-prado"></textarea></details></div></div></div><div class="todo-card" id="todo-ticket-mezquita"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-ticket-mezquita"><div class="todo-body"><div class="todo-title">哥多華清真寺-大教堂門票 Mezquita</div><div class="todo-meta-row"><span class="priority-badge pr-low">🟢 LOW</span><span class="todo-deadline">期限 11/4</span><select class="todo-booking-select" data-id="ticket-mezquita"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>若當天想入內參觀，先上官網訂票</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 4（11/4）傍晚</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>若當天時間充裕可先入內參觀，建議先上官網訂票</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://mezquita-catedraldecordoba.es" target="_blank">mezquita-catedraldecordoba.es</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="ticket-mezquita"></textarea></details></div></div></div><div class="todo-card" id="todo-ticket-alcazar-sevilla"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-ticket-alcazar-sevilla"><div class="todo-body"><div class="todo-title">塞維亞王宮門票 Real Alcázar de Sevilla</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 11/6</span><select class="todo-booking-select" data-id="ticket-alcazar-sevilla"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>至 alcazarsevilla.org 訂時段票</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 6（11/6）上午</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>建議官網 alcazarsevilla.org 提前訂時段票</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.alcazarsevilla.org" target="_blank">www.alcazarsevilla.org</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="ticket-alcazar-sevilla"></textarea></details></div></div></div><div class="todo-card" id="todo-ticket-alhambra"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-ticket-alhambra"><div class="todo-body"><div class="todo-title">阿爾罕布拉宮門票 La Alhambra</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/8</span><select class="todo-booking-select" data-id="ticket-alhambra"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>至 tickets.alhambra-patronato.es 訂票，建議提前 2-4 週鎖定場次</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 8（11/8）全天</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>務必提前於官網訂票；11月為淡季相對好訂，仍建議提前2-4週鎖定場次</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://tickets.alhambra-patronato.es" target="_blank">tickets.alhambra-patronato.es</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="ticket-alhambra"></textarea></details></div></div></div><div class="todo-card" id="todo-ticket-sagrada"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-ticket-sagrada"><div class="todo-body"><div class="todo-title">聖家堂門票 Sagrada Família</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/10</span><select class="todo-booking-select" data-id="ticket-sagrada"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>至 sagradafamilia.org 訂票，建議提前 1-2 週以上（登塔票需另約）</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 10（11/10）上午</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>建議官網提前1-2週以上訂票，登塔票需另外預約時段</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://sagradafamilia.org" target="_blank">sagradafamilia.org</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="ticket-sagrada"></textarea></details></div></div></div><div class="todo-card" id="todo-ticket-parkguell"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-ticket-parkguell"><div class="todo-body"><div class="todo-title">奎爾公園門票 Park Güell</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 11/10</span><select class="todo-booking-select" data-id="ticket-parkguell"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>至 parkguell.barcelona 預約入場時段</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 10（11/10）下午</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>官網需預約入場時段</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://parkguell.barcelona" target="_blank">parkguell.barcelona</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="ticket-parkguell"></textarea></details></div></div></div><div class="todo-card" id="todo-ticket-picasso"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-ticket-picasso"><div class="todo-body"><div class="todo-title">畢卡索美術館門票 Museu Picasso</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 11/11</span><select class="todo-booking-select" data-id="ticket-picasso"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>至官網事先訂票</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 11（11/11）下午</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>建議事先訂票</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.museupicasso.bcn.cat" target="_blank">www.museupicasso.bcn.cat</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="ticket-picasso"></textarea></details></div></div></div></div><div class="cat-group"><div class="cat-group-title">🚄 TRANSPORT 交通</div><div class="todo-card" id="todo-transport-ave-toledo"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-transport-ave-toledo"><div class="todo-body"><div class="todo-title">AVE 高鐵：馬德里 → 托雷多（來回）</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 11/3</span><select class="todo-booking-select" data-id="transport-ave-toledo"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>至 Renfe 官網訂票，建議訂上午班次</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">路段</span><span>馬德里 → 托雷多（來回）</span></div><div class="todo-detail-row"><span class="dl-label">方式</span><span>AVE／Avant</span></div><div class="todo-detail-row"><span class="dl-label">車程</span><span>約 33-34 分</span></div><div class="todo-detail-row"><span class="dl-label">班次</span><span>每日約 13 班（首班06:45／末班20:45）</span></div><div class="todo-detail-row"><span class="dl-label">參考票價</span><span>約 US$17 起（約 €15-16）</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.renfe.com/es/en" target="_blank">www.renfe.com/es/en</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="transport-ave-toledo"></textarea></details></div></div></div><div class="todo-card" id="todo-transport-ave-cordoba"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-transport-ave-cordoba"><div class="todo-body"><div class="todo-title">AVE 高鐵：馬德里 → 哥多華</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/4</span><select class="todo-booking-select" data-id="transport-ave-cordoba"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>建議提前 1-2 個月於 Renfe 官網訂票</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">路段</span><span>馬德里 → 哥多華</span></div><div class="todo-detail-row"><span class="dl-label">方式</span><span>AVE 高鐵</span></div><div class="todo-detail-row"><span class="dl-label">車程</span><span>約 1h43m-1h45m</span></div><div class="todo-detail-row"><span class="dl-label">班次</span><span>每日約 42 班</span></div><div class="todo-detail-row"><span class="dl-label">參考票價</span><span>約 US$11 起（約 €10）</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.renfe.com/es/en" target="_blank">www.renfe.com/es/en</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="transport-ave-cordoba"></textarea></details></div></div></div><div class="todo-card" id="todo-transport-ave-sevilla"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-transport-ave-sevilla"><div class="todo-body"><div class="todo-title">AVE 高鐵：哥多華 → 塞維亞</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 11/5</span><select class="todo-booking-select" data-id="transport-ave-sevilla"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>班次密集，可視行程彈性訂票</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">路段</span><span>哥多華 → 塞維亞</span></div><div class="todo-detail-row"><span class="dl-label">方式</span><span>AVE 高鐵</span></div><div class="todo-detail-row"><span class="dl-label">車程</span><span>約 52-56 分</span></div><div class="todo-detail-row"><span class="dl-label">班次</span><span>每日約 23 班</span></div><div class="todo-detail-row"><span class="dl-label">參考票價</span><span>約 US$8.5 起（約 €8）</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.renfe.com/es/en" target="_blank">www.renfe.com/es/en</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="transport-ave-sevilla"></textarea></details></div></div></div><div class="todo-card" id="todo-transport-ave-granada"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-transport-ave-granada"><div class="todo-body"><div class="todo-title">AVE 高鐵：塞維亞 → 格拉納達</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/7</span><select class="todo-booking-select" data-id="transport-ave-granada"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>多數班次需轉乘一次，訂票時留意轉乘資訊</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">路段</span><span>塞維亞 → 格拉納達</span></div><div class="todo-detail-row"><span class="dl-label">方式</span><span>AVE 高鐵</span></div><div class="todo-detail-row"><span class="dl-label">車程</span><span>最快 2h34m，平均約 3h16m</span></div><div class="todo-detail-row"><span class="dl-label">班次</span><span>每日約 6 班，多數需轉乘 1 次</span></div><div class="todo-detail-row"><span class="dl-label">參考票價</span><span>約 US$37 起（約 €35）</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.renfe.com/es/en" target="_blank">www.renfe.com/es/en</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="transport-ave-granada"></textarea></details></div></div></div><div class="todo-card" id="todo-transport-ave-barcelona"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-transport-ave-barcelona"><div class="todo-body"><div class="todo-title">AVE 高鐵：格拉納達 → 巴塞隆納</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/9</span><select class="todo-booking-select" data-id="transport-ave-barcelona"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>長途直達車，建議儘早於 Renfe 官網訂票（越早越便宜）</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">路段</span><span>格拉納達 → 巴塞隆納</span></div><div class="todo-detail-row"><span class="dl-label">方式</span><span>AVE 高鐵</span></div><div class="todo-detail-row"><span class="dl-label">車程</span><span>約 6h59m（新時刻表直達）</span></div><div class="todo-detail-row"><span class="dl-label">班次</span><span>2026/9/14 起新時刻表：07:55發車／14:54抵達</span></div><div class="todo-detail-row"><span class="dl-label">參考票價</span><span>約 US$78 起（約 €70+）</span></div><div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="https://www.renfe.com/es/en" target="_blank">www.renfe.com/es/en</a></span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="transport-ave-barcelona"></textarea></details></div></div></div><div class="todo-card" id="todo-transport-flight-seat"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-transport-flight-seat"><div class="todo-body"><div class="todo-title">回程航班選位 MU5007（浦東→桃園）</div><div class="todo-meta-row"><span class="priority-badge pr-low">🟢 LOW</span><span class="todo-deadline">期限 待確認</span><select class="todo-booking-select" data-id="transport-flight-seat"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>開放線上報到後盡快選位</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">航段</span><span>上海浦東 PVG T1 → 台北 TPE T2</span></div><div class="todo-detail-row"><span class="dl-label">日期時間</span><span>11/15（日）12:05 → 14:00</span></div><div class="todo-detail-row"><span class="dl-label">航班</span><span>MU5007</span></div><div class="todo-detail-row"><span class="dl-label">目前座位</span><span>尚未選位</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="transport-flight-seat"></textarea></details></div></div></div></div><div class="cat-group"><div class="cat-group-title">🏨 HOTEL 住宿</div><div class="todo-card is-done" id="todo-hotel-madrid"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-hotel-madrid" checked=""><div class="todo-body"><div class="todo-title">馬德里住宿：Urbansea Atocha 113</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/1</span><select class="todo-booking-select" data-id="hotel-madrid"><option value="PENDING">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED" selected="">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>已由團長訂妥，無需動作</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">城市</span><span>馬德里</span></div><div class="todo-detail-row"><span class="dl-label">日期</span><span>11/1 – 11/4（3晚）</span></div><div class="todo-detail-row"><span class="dl-label">飯店</span><span>Urbansea Atocha 113</span></div><div class="todo-detail-row"><span class="dl-label">備註</span><span>團長已訂，4.2/5，近麗池公園、普拉多博物館，Antón Martín 地鐵站旁</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="hotel-madrid"></textarea></details></div></div></div><div class="todo-card" id="todo-hotel-cordoba"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-hotel-cordoba"><div class="todo-body"><div class="todo-title">哥多華住宿（1晚）</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/4</span><select class="todo-booking-select" data-id="hotel-cordoba"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>於訂房網站預訂老城區（猶太區 Judería）步行範圍內飯店</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">城市</span><span>哥多華</span></div><div class="todo-detail-row"><span class="dl-label">日期</span><span>11/4 – 11/5（1晚）</span></div><div class="todo-detail-row"><span class="dl-label">建議</span><span>建議住老城區（猶太區 Judería）步行範圍內</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="hotel-cordoba"></textarea></details></div></div></div><div class="todo-card" id="todo-hotel-sevilla"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-hotel-sevilla"><div class="todo-body"><div class="todo-title">塞維亞住宿（2晚）</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/5</span><select class="todo-booking-select" data-id="hotel-sevilla"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>預訂聖十字街區 Barrio Santa Cruz 或大教堂周邊飯店</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">城市</span><span>塞維亞</span></div><div class="todo-detail-row"><span class="dl-label">日期</span><span>11/5 – 11/7（2晚）</span></div><div class="todo-detail-row"><span class="dl-label">建議</span><span>建議住聖十字街區 Barrio Santa Cruz 或大教堂周邊</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="hotel-sevilla"></textarea></details></div></div></div><div class="todo-card" id="todo-hotel-granada"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-hotel-granada"><div class="todo-body"><div class="todo-title">格拉納達住宿（2晚）</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/7</span><select class="todo-booking-select" data-id="hotel-granada"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>預訂阿爾拜辛區 Albaicín 或市中心 Puerta Real 周邊飯店</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">城市</span><span>格拉納達</span></div><div class="todo-detail-row"><span class="dl-label">日期</span><span>11/7 – 11/9（2晚）</span></div><div class="todo-detail-row"><span class="dl-label">建議</span><span>建議住阿爾拜辛區 Albaicín 或市中心 Puerta Real 周邊</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="hotel-granada"></textarea></details></div></div></div><div class="todo-card" id="todo-hotel-barcelona"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-hotel-barcelona"><div class="todo-body"><div class="todo-title">巴塞隆納住宿（5晚）</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 11/9</span><select class="todo-booking-select" data-id="hotel-barcelona"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>預訂哥德區 Barri Gòtic、格拉西亞區 Gràcia 或格拉西亞大道周邊飯店</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">城市</span><span>巴塞隆納</span></div><div class="todo-detail-row"><span class="dl-label">日期</span><span>11/9 – 11/14（5晚）</span></div><div class="todo-detail-row"><span class="dl-label">建議</span><span>建議住哥德區 Barri Gòtic、格拉西亞區 Gràcia 或格拉西亞大道周邊，交通最方便</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="hotel-barcelona"></textarea></details></div></div></div></div><div class="cat-group"><div class="cat-group-title">🍽 RESTAURANT 餐廳</div><div class="todo-card" id="todo-restaurant-flamenco"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-restaurant-flamenco"><div class="todo-body"><div class="todo-title">Flamenco 佛朗明哥秀訂位（塞維亞或格拉納達）</div><div class="todo-meta-row"><span class="priority-badge pr-low">🟢 LOW</span><span class="todo-deadline">期限 待確認</span><select class="todo-booking-select" data-id="restaurant-flamenco"><option value="PENDING" selected="">PENDING 待處理</option><option value="BOOKED">BOOKED 已預訂</option><option value="PAID">PAID 已付款</option><option value="CONFIRMED">CONFIRMED 已確認</option><option value="N/A">N/A 不適用</option></select></div><div class="todo-next"><b>NEXT ACTION</b><br>建議提前訂位，確切場次/餐廳待確認</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">行程</span><span>Day 5（11/5）提及</span></div><div class="todo-detail-row"><span class="dl-label">原文</span><span>晚上可安排 Flamenco 佛朗明哥秀（建議提前訂位）</span></div><div class="todo-detail-row"><span class="dl-label">參考</span><span>美食頁列有塞維亞 La Carboneria（佛朗明哥秀＋餐酒）可供參考，惟尚未確認是否即為此行預訂對象</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="restaurant-flamenco"></textarea></details></div></div></div></div><div class="cat-group"><div class="cat-group-title">📱 TRAVEL 通訊/App</div><div class="todo-card" id="todo-travel-esim"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-travel-esim"><div class="todo-body"><div class="todo-title">申請歐洲網卡／漫遊</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 10/31</span></div><div class="todo-next"><b>NEXT ACTION</b><br>出發前於機場櫃檯或線上申辦歐洲可用 SIM/eSIM</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">來源</span><span>打包清單「行前待辦」項目：申請歐洲網卡/漫遊</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="travel-esim"></textarea></details></div></div></div></div><div class="cat-group"><div class="cat-group-title">📄 DOCUMENTS 證件</div><div class="todo-card" id="todo-documents-passport"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-documents-passport"><div class="todo-body"><div class="todo-title">護照效期確認（需 6 個月以上）</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 10/31</span></div><div class="todo-next"><b>NEXT ACTION</b><br>確認護照效期，如不足 6 個月儘速換發</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">來源</span><span>打包清單「證件與財務」項目：護照（效期需6個月以上）</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="documents-passport"></textarea></details></div></div></div><div class="todo-card" id="todo-documents-insurance"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-documents-insurance"><div class="todo-body"><div class="todo-title">購買旅平險</div><div class="todo-meta-row"><span class="priority-badge pr-high">🔴 HIGH</span><span class="todo-deadline">期限 10/31</span></div><div class="todo-next"><b>NEXT ACTION</b><br>出發前投保旅遊平安險（含海外醫療）</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">來源</span><span>打包清單「證件與財務」項目：旅平險保單</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="documents-insurance"></textarea></details></div></div></div><div class="todo-card" id="todo-documents-currency"><div class="todo-head"><input type="checkbox" class="todo-check" id="chk-documents-currency"><div class="todo-body"><div class="todo-title">歐元現金兌換／通知信用卡海外消費</div><div class="todo-meta-row"><span class="priority-badge pr-medium">🟡 MEDIUM</span><span class="todo-deadline">期限 10/31</span></div><div class="todo-next"><b>NEXT ACTION</b><br>出發前兌換歐元現金並通知發卡銀行海外刷卡</div><details class="todo-details"><summary>查看詳細資訊</summary><div class="todo-detail-row"><span class="dl-label">來源</span><span>打包清單「行前待辦」項目：歐元現金兌換／通知信用卡海外消費</span></div><textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="documents-currency"></textarea></details></div></div></div></div></div>
+    <div class="card">
+      <h2>打包清單</h2>
+      <div id="packingList"><div class="pack-cat"><h3>證件與財務</h3><label class="pack-item"><input type="checkbox" data-pack-key="pack-0-0">護照（效期需 6 個月以上）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-0-1">護照影本／電子檔備份</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-0-2">信用卡（含 2 張以上分開放）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-0-3">歐元現金</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-0-4">西班牙住宿訂單／機票電子憑證</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-0-5">國際駕照（如租車）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-0-6">旅平險保單</label></div><div class="pack-cat"><h3>3C與轉接</h3><label class="pack-item"><input type="checkbox" data-pack-key="pack-1-0">歐規轉接頭（圓孔 Type C/F）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-1-1">行動電源</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-1-2">手機／相機充電線</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-1-3">歐洲可用 SIM 卡或網卡</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-1-4">萬用轉接頭（多國插座型）</label></div><div class="pack-cat"><h3>衣物（11月西班牙偏涼)</h3><label class="pack-item"><input type="checkbox" data-pack-key="pack-2-0">薄外套/風衣</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-2-1">保暖內搭/毛衣</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-2-2">長褲數件</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-2-3">舒適好走的鞋（石板路多）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-2-4">圍巾</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-2-5">輕便雨具/折疊傘</label></div><div class="pack-cat"><h3>健康與盥洗</h3><label class="pack-item"><input type="checkbox" data-pack-key="pack-3-0">個人常備藥品</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-3-1">暈車藥（長途高鐵/巴士）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-3-2">防曬乳</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-3-3">個人盥洗用品</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-3-4">口罩</label></div><div class="pack-cat"><h3>行前待辦</h3><label class="pack-item"><input type="checkbox" data-pack-key="pack-4-0">預訂哥多華/塞維亞/格拉納達/巴塞隆納住宿</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-4-1">阿爾罕布拉宮門票（官網 tickets.alhambra-patronato.es）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-4-2">聖家堂＋奎爾公園門票</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-4-3">各段 AVE 高鐵車票</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-4-4">Flamenco 秀訂位（塞維亞或格拉納達）</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-4-5">歐元現金兌換／通知信用卡海外消費</label><label class="pack-item"><input type="checkbox" data-pack-key="pack-4-6">申請歐洲網卡/漫遊</label></div></div>
+      <p class="muted" style="margin-top:8px;">勾選狀態會自動儲存在此裝置的瀏覽器中。</p>
     </div>
   </section>
 
@@ -1594,6 +1649,197 @@ function updateItinStatus(){
   }
 }
 updateItinStatus();
+
+/* ---------------- V5: 行前任務中心 Trip Preparation Center ----------------
+   TODO_ITEMS/PACKING_DATA/*_META below are serialized straight from the exact same
+   data the source script already used to bake the static fallback above — no new
+   travel facts are introduced here, only real localStorage-backed interactivity. */
+var TODO_ITEMS = [{"id":"hotel-madrid","category":"HOTEL","title":"馬德里住宿：Urbansea Atocha 113","priority":"HIGH","deadline":"11/1","hasBooking":true,"bookingDefault":"CONFIRMED","doneDefault":true,"nextAction":"已由團長訂妥，無需動作","detail":[{"label":"城市","value":"馬德里"},{"label":"日期","value":"11/1 – 11/4（3晚）"},{"label":"飯店","value":"Urbansea Atocha 113"},{"label":"備註","value":"團長已訂，4.2/5，近麗池公園、普拉多博物館，Antón Martín 地鐵站旁"}]},{"id":"hotel-cordoba","category":"HOTEL","title":"哥多華住宿（1晚）","priority":"HIGH","deadline":"11/4","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"於訂房網站預訂老城區（猶太區 Judería）步行範圍內飯店","detail":[{"label":"城市","value":"哥多華"},{"label":"日期","value":"11/4 – 11/5（1晚）"},{"label":"建議","value":"建議住老城區（猶太區 Judería）步行範圍內"}]},{"id":"hotel-sevilla","category":"HOTEL","title":"塞維亞住宿（2晚）","priority":"HIGH","deadline":"11/5","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"預訂聖十字街區 Barrio Santa Cruz 或大教堂周邊飯店","detail":[{"label":"城市","value":"塞維亞"},{"label":"日期","value":"11/5 – 11/7（2晚）"},{"label":"建議","value":"建議住聖十字街區 Barrio Santa Cruz 或大教堂周邊"}]},{"id":"hotel-granada","category":"HOTEL","title":"格拉納達住宿（2晚）","priority":"HIGH","deadline":"11/7","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"預訂阿爾拜辛區 Albaicín 或市中心 Puerta Real 周邊飯店","detail":[{"label":"城市","value":"格拉納達"},{"label":"日期","value":"11/7 – 11/9（2晚）"},{"label":"建議","value":"建議住阿爾拜辛區 Albaicín 或市中心 Puerta Real 周邊"}]},{"id":"hotel-barcelona","category":"HOTEL","title":"巴塞隆納住宿（5晚）","priority":"HIGH","deadline":"11/9","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"預訂哥德區 Barri Gòtic、格拉西亞區 Gràcia 或格拉西亞大道周邊飯店","detail":[{"label":"城市","value":"巴塞隆納"},{"label":"日期","value":"11/9 – 11/14（5晚）"},{"label":"建議","value":"建議住哥德區 Barri Gòtic、格拉西亞區 Gràcia 或格拉西亞大道周邊，交通最方便"}]},{"id":"ticket-prado","category":"TICKETS","title":"普拉多博物館門票 Museo del Prado","priority":"MEDIUM","deadline":"11/2","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"至 entradas.museodelprado.es 訂票避免排隊","relatedUrl":"https://www.museodelprado.es","detail":[{"label":"行程","value":"Day 2（11/2）上午"},{"label":"原文","value":"週一正常開放 10:00-20:00，建議提前於官網訂票避免排隊"}]},{"id":"ticket-mezquita","category":"TICKETS","title":"哥多華清真寺-大教堂門票 Mezquita","priority":"LOW","deadline":"11/4","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"若當天想入內參觀，先上官網訂票","relatedUrl":"https://mezquita-catedraldecordoba.es","detail":[{"label":"行程","value":"Day 4（11/4）傍晚"},{"label":"原文","value":"若當天時間充裕可先入內參觀，建議先上官網訂票"}]},{"id":"ticket-alcazar-sevilla","category":"TICKETS","title":"塞維亞王宮門票 Real Alcázar de Sevilla","priority":"MEDIUM","deadline":"11/6","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"至 alcazarsevilla.org 訂時段票","relatedUrl":"https://www.alcazarsevilla.org","detail":[{"label":"行程","value":"Day 6（11/6）上午"},{"label":"原文","value":"建議官網 alcazarsevilla.org 提前訂時段票"}]},{"id":"ticket-alhambra","category":"TICKETS","title":"阿爾罕布拉宮門票 La Alhambra","priority":"HIGH","deadline":"11/8","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"至 tickets.alhambra-patronato.es 訂票，建議提前 2-4 週鎖定場次","relatedUrl":"https://tickets.alhambra-patronato.es","detail":[{"label":"行程","value":"Day 8（11/8）全天"},{"label":"原文","value":"務必提前於官網訂票；11月為淡季相對好訂，仍建議提前2-4週鎖定場次"}]},{"id":"ticket-sagrada","category":"TICKETS","title":"聖家堂門票 Sagrada Família","priority":"HIGH","deadline":"11/10","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"至 sagradafamilia.org 訂票，建議提前 1-2 週以上（登塔票需另約）","relatedUrl":"https://sagradafamilia.org","detail":[{"label":"行程","value":"Day 10（11/10）上午"},{"label":"原文","value":"建議官網提前1-2週以上訂票，登塔票需另外預約時段"}]},{"id":"ticket-parkguell","category":"TICKETS","title":"奎爾公園門票 Park Güell","priority":"MEDIUM","deadline":"11/10","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"至 parkguell.barcelona 預約入場時段","relatedUrl":"https://parkguell.barcelona","detail":[{"label":"行程","value":"Day 10（11/10）下午"},{"label":"原文","value":"官網需預約入場時段"}]},{"id":"ticket-picasso","category":"TICKETS","title":"畢卡索美術館門票 Museu Picasso","priority":"MEDIUM","deadline":"11/11","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"至官網事先訂票","relatedUrl":"https://www.museupicasso.bcn.cat","detail":[{"label":"行程","value":"Day 11（11/11）下午"},{"label":"原文","value":"建議事先訂票"}]},{"id":"transport-ave-toledo","category":"TRANSPORT","title":"AVE 高鐵：馬德里 → 托雷多（來回）","priority":"MEDIUM","deadline":"11/3","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"至 Renfe 官網訂票，建議訂上午班次","relatedUrl":"https://www.renfe.com/es/en","detail":[{"label":"路段","value":"馬德里 → 托雷多（來回）"},{"label":"方式","value":"AVE／Avant"},{"label":"車程","value":"約 33-34 分"},{"label":"班次","value":"每日約 13 班（首班06:45／末班20:45）"},{"label":"參考票價","value":"約 US$17 起（約 €15-16）"}]},{"id":"transport-ave-cordoba","category":"TRANSPORT","title":"AVE 高鐵：馬德里 → 哥多華","priority":"HIGH","deadline":"11/4","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"建議提前 1-2 個月於 Renfe 官網訂票","relatedUrl":"https://www.renfe.com/es/en","detail":[{"label":"路段","value":"馬德里 → 哥多華"},{"label":"方式","value":"AVE 高鐵"},{"label":"車程","value":"約 1h43m-1h45m"},{"label":"班次","value":"每日約 42 班"},{"label":"參考票價","value":"約 US$11 起（約 €10）"}]},{"id":"transport-ave-sevilla","category":"TRANSPORT","title":"AVE 高鐵：哥多華 → 塞維亞","priority":"MEDIUM","deadline":"11/5","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"班次密集，可視行程彈性訂票","relatedUrl":"https://www.renfe.com/es/en","detail":[{"label":"路段","value":"哥多華 → 塞維亞"},{"label":"方式","value":"AVE 高鐵"},{"label":"車程","value":"約 52-56 分"},{"label":"班次","value":"每日約 23 班"},{"label":"參考票價","value":"約 US$8.5 起（約 €8）"}]},{"id":"transport-ave-granada","category":"TRANSPORT","title":"AVE 高鐵：塞維亞 → 格拉納達","priority":"HIGH","deadline":"11/7","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"多數班次需轉乘一次，訂票時留意轉乘資訊","relatedUrl":"https://www.renfe.com/es/en","detail":[{"label":"路段","value":"塞維亞 → 格拉納達"},{"label":"方式","value":"AVE 高鐵"},{"label":"車程","value":"最快 2h34m，平均約 3h16m"},{"label":"班次","value":"每日約 6 班，多數需轉乘 1 次"},{"label":"參考票價","value":"約 US$37 起（約 €35）"}]},{"id":"transport-ave-barcelona","category":"TRANSPORT","title":"AVE 高鐵：格拉納達 → 巴塞隆納","priority":"HIGH","deadline":"11/9","hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"長途直達車，建議儘早於 Renfe 官網訂票（越早越便宜）","relatedUrl":"https://www.renfe.com/es/en","detail":[{"label":"路段","value":"格拉納達 → 巴塞隆納"},{"label":"方式","value":"AVE 高鐵"},{"label":"車程","value":"約 6h59m（新時刻表直達）"},{"label":"班次","value":"2026/9/14 起新時刻表：07:55發車／14:54抵達"},{"label":"參考票價","value":"約 US$78 起（約 €70+）"}]},{"id":"transport-flight-seat","category":"TRANSPORT","title":"回程航班選位 MU5007（浦東→桃園）","priority":"LOW","deadline":null,"hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"開放線上報到後盡快選位","detail":[{"label":"航段","value":"上海浦東 PVG T1 → 台北 TPE T2"},{"label":"日期時間","value":"11/15（日）12:05 → 14:00"},{"label":"航班","value":"MU5007"},{"label":"目前座位","value":"尚未選位"}]},{"id":"restaurant-flamenco","category":"RESTAURANT","title":"Flamenco 佛朗明哥秀訂位（塞維亞或格拉納達）","priority":"LOW","deadline":null,"hasBooking":true,"bookingDefault":"PENDING","doneDefault":false,"nextAction":"建議提前訂位，確切場次/餐廳待確認","detail":[{"label":"行程","value":"Day 5（11/5）提及"},{"label":"原文","value":"晚上可安排 Flamenco 佛朗明哥秀（建議提前訂位）"},{"label":"參考","value":"美食頁列有塞維亞 La Carboneria（佛朗明哥秀＋餐酒）可供參考，惟尚未確認是否即為此行預訂對象"}]},{"id":"travel-esim","category":"TRAVEL","title":"申請歐洲網卡／漫遊","priority":"MEDIUM","deadline":"10/31","hasBooking":false,"doneDefault":false,"nextAction":"出發前於機場櫃檯或線上申辦歐洲可用 SIM/eSIM","detail":[{"label":"來源","value":"打包清單「行前待辦」項目：申請歐洲網卡/漫遊"}]},{"id":"documents-passport","category":"DOCUMENTS","title":"護照效期確認（需 6 個月以上）","priority":"HIGH","deadline":"10/31","hasBooking":false,"doneDefault":false,"nextAction":"確認護照效期，如不足 6 個月儘速換發","detail":[{"label":"來源","value":"打包清單「證件與財務」項目：護照（效期需6個月以上）"}]},{"id":"documents-insurance","category":"DOCUMENTS","title":"購買旅平險","priority":"HIGH","deadline":"10/31","hasBooking":false,"doneDefault":false,"nextAction":"出發前投保旅遊平安險（含海外醫療）","detail":[{"label":"來源","value":"打包清單「證件與財務」項目：旅平險保單"}]},{"id":"documents-currency","category":"DOCUMENTS","title":"歐元現金兌換／通知信用卡海外消費","priority":"MEDIUM","deadline":"10/31","hasBooking":false,"doneDefault":false,"nextAction":"出發前兌換歐元現金並通知發卡銀行海外刷卡","detail":[{"label":"來源","value":"打包清單「行前待辦」項目：歐元現金兌換／通知信用卡海外消費"}]}];
+var CATEGORY_META = {"TICKETS":{"icon":"🎟️","label":"TICKETS 門票"},"TRANSPORT":{"icon":"🚄","label":"TRANSPORT 交通"},"HOTEL":{"icon":"🏨","label":"HOTEL 住宿"},"RESTAURANT":{"icon":"🍽","label":"RESTAURANT 餐廳"},"TRAVEL":{"icon":"📱","label":"TRAVEL 通訊/App"},"DOCUMENTS":{"icon":"📄","label":"DOCUMENTS 證件"}};
+var CATEGORY_ORDER = ["TICKETS","TRANSPORT","HOTEL","RESTAURANT","TRAVEL","DOCUMENTS"];
+var PRIORITY_META = {"HIGH":{"label":"🔴 HIGH"},"MEDIUM":{"label":"🟡 MEDIUM"},"LOW":{"label":"🟢 LOW"}};
+var BOOKING_META = {"PENDING":{"label":"PENDING 待處理"},"BOOKED":{"label":"BOOKED 已預訂"},"PAID":{"label":"PAID 已付款"},"CONFIRMED":{"label":"CONFIRMED 已確認"},"N/A":{"label":"N/A 不適用"}};
+var PACKING_DATA = {"證件與財務":["護照（效期需 6 個月以上）","護照影本／電子檔備份","信用卡（含 2 張以上分開放）","歐元現金","西班牙住宿訂單／機票電子憑證","國際駕照（如租車）","旅平險保單"],"3C與轉接":["歐規轉接頭（圓孔 Type C/F）","行動電源","手機／相機充電線","歐洲可用 SIM 卡或網卡","萬用轉接頭（多國插座型）"],"衣物（11月西班牙偏涼)":["薄外套/風衣","保暖內搭/毛衣","長褲數件","舒適好走的鞋（石板路多）","圍巾","輕便雨具/折疊傘"],"健康與盥洗":["個人常備藥品","暈車藥（長途高鐵/巴士）","防曬乳","個人盥洗用品","口罩"],"行前待辦":["預訂哥多華/塞維亞/格拉納達/巴塞隆納住宿","阿爾罕布拉宮門票（官網 tickets.alhambra-patronato.es）","聖家堂＋奎爾公園門票","各段 AVE 高鐵車票","Flamenco 秀訂位（塞維亞或格拉納達）","歐元現金兌換／通知信用卡海外消費","申請歐洲網卡/漫遊"]};
+var TODO_BY_ID = {};
+TODO_ITEMS.forEach(function(it){ TODO_BY_ID[it.id] = it; });
+
+function ppLoad(key, fb){ try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fb; }catch(e){ return fb; } }
+function ppSave(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+function getPrepState(){
+  var raw = ppLoad('trip-prep-v1', {});
+  return { done: raw.done||{}, status: raw.status||{}, note: raw.note||{}, doneAt: raw.doneAt||{} };
+}
+function setPrepState(s){ ppSave('trip-prep-v1', s); }
+function isTodoDone(id, state){ return (id in state.done) ? !!state.done[id] : !!TODO_BY_ID[id].doneDefault; }
+function todoStatus(id, state){ return state.status[id] || TODO_BY_ID[id].bookingDefault || 'N/A'; }
+function todoNote(id, state){ return state.note[id] || ''; }
+function todoDoneAt(id, state){ return state.doneAt[id] || null; }
+function fmtDoneAt(iso){
+  if (!iso) return '';
+  try{
+    var d = new Date(iso);
+    var mm = d.getMonth()+1, dd = d.getDate();
+    var hh = ('0'+d.getHours()).slice(-2), mi = ('0'+d.getMinutes()).slice(-2);
+    return mm+'/'+dd+' '+hh+':'+mi+' 完成';
+  }catch(e){ return ''; }
+}
+function todoCardHtml(it, state){
+  var done = isTodoDone(it.id, state);
+  var status = todoStatus(it.id, state);
+  var note = todoNote(it.id, state);
+  var doneAt = todoDoneAt(it.id, state);
+  var pri = PRIORITY_META[it.priority];
+  var dl = it.deadline || '待確認';
+  var html = '<div class="todo-card'+(done?' is-done':'')+'" id="todo-'+it.id+'">';
+  html += '<div class="todo-head"><input type="checkbox" class="todo-check" id="chk-'+it.id+'"'+(done?' checked':'')+'>';
+  html += '<div class="todo-body"><div class="todo-title">'+it.title+'</div>';
+  html += '<div class="todo-meta-row"><span class="priority-badge pr-'+it.priority.toLowerCase()+'">'+pri.label+'</span><span class="todo-deadline">期限 '+dl+'</span>';
+  if (it.hasBooking){
+    html += '<select class="todo-booking-select" data-id="'+it.id+'">' + ['PENDING','BOOKED','PAID','CONFIRMED','N/A'].map(function(s){
+      return '<option value="'+s+'"'+(s===status?' selected':'')+'>'+BOOKING_META[s].label+'</option>';
+    }).join('') + '</select>';
+  }
+  html += '</div>';
+  if (done && doneAt){ html += '<div class="todo-doneat">'+fmtDoneAt(doneAt)+'</div>'; }
+  html += '<div class="todo-next"><b>NEXT ACTION</b><br>'+it.nextAction+'</div>';
+  html += '<details class="todo-details"><summary>查看詳細資訊</summary>';
+  (it.detail||[]).forEach(function(d){ html += '<div class="todo-detail-row"><span class="dl-label">'+d.label+'</span><span>'+d.value+'</span></div>'; });
+  if (it.relatedUrl){ html += '<div class="todo-detail-row"><span class="dl-label">官方網站</span><span><a class="link" href="'+it.relatedUrl+'" target="_blank">'+it.relatedUrl.replace('https://','')+'</a></span></div>'; }
+  html += '<textarea class="todo-note" placeholder="個人備註（例：已詢問報價）" data-id="'+it.id+'">'+note+'</textarea>';
+  html += '</details></div></div></div>';
+  return html;
+}
+function renderPrepList(){
+  var container = document.getElementById('prepItemsList');
+  if (!container) return;
+  var state = getPrepState();
+  var html = '';
+  CATEGORY_ORDER.forEach(function(catKey){
+    var items = TODO_ITEMS.filter(function(it){ return it.category === catKey; });
+    if (!items.length) return;
+    var cat = CATEGORY_META[catKey];
+    html += '<div class="cat-group"><div class="cat-group-title">'+cat.icon+' '+cat.label+'</div>';
+    items.forEach(function(it){ html += todoCardHtml(it, state); });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+  TODO_ITEMS.forEach(function(it){
+    var chk = document.getElementById('chk-'+it.id);
+    if (chk){ chk.addEventListener('change', function(){ toggleTodoDone(it.id); }); }
+  });
+  Array.prototype.forEach.call(container.querySelectorAll('.todo-booking-select'), function(sel){
+    sel.addEventListener('change', function(){ changeBookingStatus(sel.getAttribute('data-id'), sel.value); });
+  });
+  Array.prototype.forEach.call(container.querySelectorAll('.todo-note'), function(ta){
+    ta.addEventListener('change', function(){ saveTodoNote(ta.getAttribute('data-id'), ta.value); });
+  });
+}
+function toggleTodoDone(id){
+  var state = getPrepState();
+  var next = !isTodoDone(id, state);
+  state.done[id] = next;
+  state.doneAt[id] = next ? new Date().toISOString() : null;
+  setPrepState(state);
+  renderPrepList();
+  renderDashboardPrep();
+}
+function changeBookingStatus(id, val){
+  var state = getPrepState();
+  state.status[id] = val;
+  setPrepState(state);
+  renderPrepList();
+  renderDashboardPrep();
+}
+function saveTodoNote(id, val){
+  var state = getPrepState();
+  state.note[id] = val;
+  setPrepState(state);
+}
+function getPackingState(){ return ppLoad('packing-state-v1', {}); }
+function setPackingState(s){ ppSave('packing-state-v1', s); }
+function renderPackingChecks(){
+  var packState = getPackingState();
+  Array.prototype.forEach.call(document.querySelectorAll('#packingList input[data-pack-key]'), function(cb){
+    var key = cb.getAttribute('data-pack-key');
+    cb.checked = !!packState[key];
+    cb.addEventListener('change', function(){
+      var s = getPackingState();
+      s[key] = cb.checked;
+      setPackingState(s);
+      renderDashboardPrep();
+    });
+  });
+}
+function computePrepStats(){
+  var state = getPrepState();
+  var doneCount = 0;
+  TODO_ITEMS.forEach(function(it){ if (isTodoDone(it.id, state)) doneCount++; });
+  var packState = getPackingState();
+  var packTotal = 0, packDone = 0;
+  Object.keys(PACKING_DATA).forEach(function(cat, ci){
+    PACKING_DATA[cat].forEach(function(_, ii){
+      packTotal++;
+      if (packState['pack-'+ci+'-'+ii]) packDone++;
+    });
+  });
+  var packFraction = packTotal>0 ? (packDone/packTotal) : 0;
+  var totalUnits = TODO_ITEMS.length + 1;
+  var doneUnits = doneCount + packFraction;
+  var pct = Math.round((doneUnits/totalUnits)*100);
+  var remainCount = (TODO_ITEMS.length - doneCount) + (packFraction < 1 ? 1 : 0);
+  return { pct: pct, remainCount: remainCount, state: state };
+}
+function sortForTop3(state){
+  var candidates = TODO_ITEMS.filter(function(it){ return !isTodoDone(it.id, state); });
+  var priRank = {HIGH:0, MEDIUM:1, LOW:2};
+  var stRank = {PENDING:0, BOOKED:1, PAID:2, CONFIRMED:3, 'N/A':4};
+  function dlKey(it){
+    if (!it.deadline) return 999999;
+    var m = it.deadline.match(/(\d{1,2})\/(\d{1,2})/);
+    if (!m) return 999999;
+    var mo = parseInt(m[1],10), da = parseInt(m[2],10);
+    return mo===10 ? da : (100+da+(mo-11)*31);
+  }
+  candidates.sort(function(a,b){
+    if (priRank[a.priority] !== priRank[b.priority]) return priRank[a.priority]-priRank[b.priority];
+    var da = dlKey(a), db = dlKey(b);
+    if (da !== db) return da-db;
+    return stRank[todoStatus(a.id,state)] - stRank[todoStatus(b.id,state)];
+  });
+  return candidates.slice(0,3);
+}
+function renderDashboardPrep(){
+  var stats = computePrepStats();
+  ['prepPercent','prepPercentFull'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent = stats.pct+'%'; });
+  ['prepBar','prepBarFull'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.width = stats.pct+'%'; });
+  var remainText = stats.remainCount>0 ? ('還有 '+stats.remainCount+' 件事情待完成') : '全部完成，準備出發！';
+  ['prepRemainText','prepRemainTextFull'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent = remainText; });
+  var top3El = document.getElementById('top3List');
+  if (top3El){
+    var top3 = sortForTop3(stats.state);
+    if (!top3.length){
+      top3El.innerHTML = '<div class="top3-empty">目前沒有待處理的高優先事項 🎉</div>';
+    } else {
+      top3El.innerHTML = top3.map(function(it, i){
+        var dl = it.deadline || '待確認';
+        return '<div class="top3-item"><div class="t3-rank">'+(i+1)+'</div><div class="t3-body">'+
+          '<div class="t3-title">'+it.title+'</div>'+
+          '<div class="t3-meta"><span>'+CATEGORY_META[it.category].icon+' '+CATEGORY_META[it.category].label+'</span><span>期限 '+dl+'</span><span>'+PRIORITY_META[it.priority].label+'</span></div>'+
+          '</div></div>';
+      }).join('');
+    }
+  }
+  var card = document.getElementById('prepCenterCard');
+  if (card){
+    var now = new Date();
+    var today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var startDate = new Date(DASH_TRIP_YEAR, 9, 31);
+    card.classList.toggle('prep-compact', today0.getTime() >= startDate.getTime());
+  }
+}
+renderPrepList();
+renderPackingChecks();
+renderDashboardPrep();
 </script>
 <footer class="bottom-nav">
   <label for="tab-overview"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>Home</label>
