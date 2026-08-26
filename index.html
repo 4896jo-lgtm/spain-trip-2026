@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="app-version" content="1787397146780">
+<meta name="app-version" content="1787668342789">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -366,6 +366,51 @@
   .tomorrow-chip b{ color:var(--ink); }
   .tomorrow-chip .tc-label{ font-size:10px; font-weight:800; letter-spacing:.08em; color:var(--accent); background:rgba(179,71,42,0.1); padding:2px 7px; border-radius:6px; flex:0 0 auto; }
 
+  /* ================= Table View（行程總覽） ================= */
+  input.itinview-radio{ display:none; }
+  .itin-view-switch{ display:flex; gap:6px; margin-bottom:12px; }
+  .itinview-tab{ flex:1; text-align:center; font-size:12.5px; font-weight:700; padding:9px 10px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--ink-2); cursor:pointer; min-height:34px; display:flex; align-items:center; justify-content:center; }
+  #itinViewTimeline:checked ~ .itin-view-switch label[for="itinViewTimeline"],
+  #itinViewTable:checked ~ .itin-view-switch label[for="itinViewTable"]{ background:var(--chip-active-bg); color:var(--olive); border-color:var(--olive); }
+  .itin-table-view{ display:none; }
+  #itinViewTable:checked ~ .itin-timeline-view{ display:none; }
+  #itinViewTable:checked ~ .itin-table-view{ display:block; }
+  .table-view-toolbar{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .table-view-toolbar p{ margin:0; flex:1; min-width:180px; }
+  .tv-print-btn{ font-size:11.5px; padding:8px 12px; min-height:32px; flex:0 0 auto; }
+  .tv-city-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  /* Desktop real table (min-width breakpoint) vs Mobile compact card list */
+  .tvm-wrap{ display:block; }
+  .tvd-wrap{ display:none; }
+  .tv-row{ cursor:pointer; }
+  .tv-row:hover{ background:var(--chip-active-bg); }
+  .tv-row.tv-transfer{ box-shadow: inset 3px 0 0 0 var(--accent); }
+  .tv-row td{ vertical-align:top; line-height:1.5; }
+  .tv-card{ background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--border); border-radius:12px; padding:11px 13px; margin-bottom:9px; box-shadow: var(--shadow-card); }
+  .tv-card.tv-transfer{ border-left-width:4px; }
+  .tv-card-head{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; font-size:13px; }
+  .tv-card-date{ font-size:11.5px; color:var(--ink-muted); font-weight:600; }
+  .tv-card-city{ font-size:14.5px; font-weight:700; margin-top:2px; }
+  .tv-transfer-tag{ font-size:10px; font-weight:800; color:var(--accent); background:rgba(179,71,42,0.1); padding:2px 7px; border-radius:6px; margin-left:4px; }
+  .tv-card-row{ display:flex; gap:8px; font-size:12.5px; margin-top:6px; line-height:1.45; }
+  .tv-label{ flex:0 0 auto; width:56px; color:var(--ink-muted); font-weight:700; font-size:11.5px; }
+  .tv-goto-btn{ width:100%; margin-top:9px; font-size:12px; min-height:34px; }
+  @media (min-width: 720px){
+    .tvm-wrap{ display:none; }
+    .tvd-wrap{ display:block; }
+  }
+  @media print{
+    .app-header, footer.bottom-nav, .itin-view-switch, .itin-timeline-view,
+    .table-view-toolbar, .tvm-wrap{ display:none !important; }
+    main > section.panel{ display:none !important; }
+    main > section.panel#panel-itinerary{ display:block !important; }
+    .itin-table-view{ display:block !important; }
+    .tvd-wrap{ display:block !important; }
+    body{ background:#fff !important; }
+    .info-table th, .info-table td{ border-color:#ccc; }
+    @page{ size: A4 landscape; margin: 10mm; }
+  }
+
   /* ================= V5 Trip Preparation Center ================= */
   .prep-progress-row{ display:flex; align-items:center; gap:12px; margin:8px 0 6px 0; }
   .prep-percent{ font-family:"Fraunces", serif; font-size:24px; font-weight:600; color:var(--accent); flex:0 0 auto; min-width:52px; }
@@ -669,6 +714,13 @@
 
   <!-- ============ 每日行程 ============ -->
   <section class="panel" id="panel-itinerary">
+    <input type="radio" name="itinview" id="itinViewTimeline" class="itinview-radio" checked>
+    <input type="radio" name="itinview" id="itinViewTable" class="itinview-radio">
+    <div class="itin-view-switch">
+      <label class="itinview-tab" for="itinViewTimeline">▦ Timeline</label>
+      <label class="itinview-tab" for="itinViewTable">☷ Table</label>
+    </div>
+    <div class="itin-timeline-view">
     <input type="radio" name="daytab" id="day-1" class="day-radio" checked>
     <input type="radio" name="daytab" id="day-2" class="day-radio">
     <input type="radio" name="daytab" id="day-3" class="day-radio">
@@ -914,6 +966,211 @@
     <div class="tr-head"><span class="tr-mode">✈️ 飛機</span><span class="tr-badge tr-check">⚠️ 待確認選位</span></div><div class="tr-leg"><div class="tr-route">巴塞隆納 BCN T1 → 上海浦東 PVG T1</div><div class="tr-meta"><span>🕐 10:20 → 05:30</span><span>MU250</span><span>65H</span></div></div><div class="tr-leg"><div class="tr-route">上海浦東 PVG T1</div><div class="tr-meta"><span>🕐 轉機 6h35m</span></div></div><div class="tr-leg"><div class="tr-route">上海浦東 PVG T1 → 台北 TPE T2</div><div class="tr-meta"><span>🕐 12:05 → 14:00</span><span>MU5007</span><span>尚未選位</span></div></div></div><p>10:20 BCN 起飛 → 11/15 05:30 抵上海浦東（轉機 6h35m）→ 12:05 浦東起飛 → 14:00 抵達桃園機場，行程結束。</p></div></div><div class="card" style="padding:0; overflow:hidden;">
       <div style="padding:12px 16px 0 16px; font-size:12.5px; font-weight:700; color:var(--ink-2);">地圖：Barcelona Spain → Barcelona Airport</div>
       <iframe src="https://www.google.com/maps?saddr=Barcelona%20Spain&amp;daddr=Barcelona%20Airport&amp;output=embed" width="100%" height="230" style="border:0; display:block; margin-top:8px;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div></div>
+    </div>
+    </div>
+    <div class="itin-table-view">
+      <div class="table-view-toolbar">
+        <p class="muted">14 天行程總覽，點任一天可跳到詳細 Timeline。</p>
+        <button type="button" class="btn ghost tv-print-btn" onclick="window.print()">🖨 列印 / Print</button>
+      </div>
+      <div class="tvd-wrap"><div style="overflow-x:auto; -webkit-overflow-scrolling:touch;"><table class="info-table" id="tableViewDesktop" style="min-width:640px;"><tbody><tr><th>DAY</th><th>日期</th><th>城市</th><th>主要行程</th><th>交通</th><th>重要事項</th></tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-1').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D1</b></td>
+        <td>11/1<br><span class="muted" style="font-size:10.5px;">星期日</span></td>
+        <td><span class="tv-city-dot" style="background:var(--blue)"></span>馬德里</td>
+        <td>機場<br>Puerta del Sol<br>Temple of Debod</td>
+        <td>🚇 🚕 ✈️</td>
+        <td><span class="muted">—</span></td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-2').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D2</b></td>
+        <td>11/2<br><span class="muted" style="font-size:10.5px;">星期一</span></td>
+        <td><span class="tv-city-dot" style="background:var(--blue)"></span>馬德里</td>
+        <td>Prado Museum<br>El Retiro Park<br>Gran Via Madrid</td>
+        <td><span class="muted">—</span></td>
+        <td>🎟 需訂票</td>
+      </tr><tr class="tv-row tv-transfer" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-3').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D3</b></td>
+        <td>11/3<br><span class="muted" style="font-size:10.5px;">星期二</span></td>
+        <td><span class="tv-city-dot" style="background:var(--violet)"></span>托雷多</td>
+        <td>馬德里 → 托雷多<br>Toledo Cathedral<br>古城區午餐，可嚐當地烤乳豬 Coch…</td>
+        <td>🚄 🚶</td>
+        <td><span class="muted">—</span></td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-4').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D4</b></td>
+        <td>11/4<br><span class="muted" style="font-size:10.5px;">星期三</span></td>
+        <td><span class="tv-city-dot" style="background:var(--blue)"></span>馬德里</td>
+        <td>此為新增的第 4 晚馬德里住宿（原規…<br>Gran Via Madrid</td>
+        <td><span class="muted">—</span></td>
+        <td><span class="muted">—</span></td>
+      </tr><tr class="tv-row tv-transfer" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-5').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D5</b></td>
+        <td>11/5<br><span class="muted" style="font-size:10.5px;">星期四</span></td>
+        <td><span class="tv-city-dot" style="background:var(--aqua)"></span>塞維亞</td>
+        <td>馬德里 → 塞維亞<br>Barrio Santa Cruz Seville</td>
+        <td>🚄</td>
+        <td><span class="muted">—</span></td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-6').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D6</b></td>
+        <td>11/6<br><span class="muted" style="font-size:10.5px;">星期五</span></td>
+        <td><span class="tv-city-dot" style="background:var(--aqua)"></span>塞維亞</td>
+        <td>Barrio Santa Cruz Seville</td>
+        <td><span class="muted">—</span></td>
+        <td>🔀 彈性日</td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-7').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D7</b></td>
+        <td>11/7<br><span class="muted" style="font-size:10.5px;">星期六</span></td>
+        <td><span class="tv-city-dot" style="background:var(--aqua)"></span>塞維亞</td>
+        <td>Real Alcazar de Sevilla<br>Plaza de Espana Sevilla<br>瓜達幾維河畔散步，晚餐選一家道地 T…</td>
+        <td><span class="muted">—</span></td>
+        <td>🎟 需訂票</td>
+      </tr><tr class="tv-row tv-transfer" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-8').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D8</b></td>
+        <td>11/8<br><span class="muted" style="font-size:10.5px;">星期日</span></td>
+        <td><span class="tv-city-dot" style="background:var(--yellow)"></span>格拉納達</td>
+        <td>塞維亞 → 格拉納達<br>Alhambra Granada<br>Albaicin Granada</td>
+        <td>🚄</td>
+        <td>🎟 需訂票</td>
+      </tr><tr class="tv-row tv-transfer" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-9').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D9</b></td>
+        <td>11/9<br><span class="muted" style="font-size:10.5px;">星期一</span></td>
+        <td><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</td>
+        <td>格拉納達 → 巴塞隆納<br>Barcelona Sants<br>La Rambla Barcelona</td>
+        <td>🚄 ✈️</td>
+        <td>❓ 交通待定</td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-10').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D10</b></td>
+        <td>11/10<br><span class="muted" style="font-size:10.5px;">星期二</span></td>
+        <td><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</td>
+        <td>Sagrada Familia<br>Park Guell<br>Casa Batllo</td>
+        <td><span class="muted">—</span></td>
+        <td>🎟 需訂票</td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-11').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D11</b></td>
+        <td>11/11<br><span class="muted" style="font-size:10.5px;">星期三</span></td>
+        <td><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</td>
+        <td>Barcelona Cathedral<br>Museu Picasso<br>El Born Barcelona</td>
+        <td><span class="muted">—</span></td>
+        <td>🎟 需訂票</td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-12').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D12</b></td>
+        <td>11/12<br><span class="muted" style="font-size:10.5px;">星期四</span></td>
+        <td><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</td>
+        <td>Montjuic<br>Font Magica<br>Barceloneta Beach</td>
+        <td><span class="muted">—</span></td>
+        <td><span class="muted">—</span></td>
+      </tr><tr class="tv-row" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-13').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D13</b></td>
+        <td>11/13<br><span class="muted" style="font-size:10.5px;">星期五</span></td>
+        <td><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</td>
+        <td>Passeig de Gracia</td>
+        <td><span class="muted">—</span></td>
+        <td>🔀 彈性日</td>
+      </tr><tr class="tv-row tv-transfer" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-14').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">
+        <td><b>D14</b></td>
+        <td>11/14<br><span class="muted" style="font-size:10.5px;">星期六</span></td>
+        <td><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</td>
+        <td>巴塞隆納 → 台北<br>Barcelona Airport</td>
+        <td>✈️</td>
+        <td><span class="muted">—</span></td>
+      </tr></tbody></table></div></div>
+      <div class="tvm-wrap" id="tableViewMobile"><div class="tv-card" style="border-left-color:var(--blue)">
+      <div class="tv-card-head"><b>DAY 1</b><span class="tv-card-date">11/1・星期日</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--blue)"></span>馬德里</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>機場 → Puerta del Sol → Temple of Debod</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>🚇 🚕 ✈️</span></div>
+      
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-1').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 1 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--blue)">
+      <div class="tv-card-head"><b>DAY 2</b><span class="tv-card-date">11/2・星期一</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--blue)"></span>馬德里</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>Prado Museum → El Retiro Park → Gran Via Madrid</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>🎟 需訂票</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-2').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 2 詳細行程 →</button>
+    </div><div class="tv-card tv-transfer" style="border-left-color:var(--violet)">
+      <div class="tv-card-head"><b>DAY 3</b><span class="tv-card-date">11/3・星期二</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--violet)"></span>托雷多 <span class="tv-transfer-tag">🔁 移動日</span></div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>馬德里 → 托雷多 → Toledo Cathedral → 古城區午餐，可嚐當地烤乳豬 Coch…</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>🚄 🚶</span></div>
+      
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-3').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 3 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--blue)">
+      <div class="tv-card-head"><b>DAY 4</b><span class="tv-card-date">11/4・星期三</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--blue)"></span>馬德里</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>此為新增的第 4 晚馬德里住宿（原規… → Gran Via Madrid</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-4').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 4 詳細行程 →</button>
+    </div><div class="tv-card tv-transfer" style="border-left-color:var(--aqua)">
+      <div class="tv-card-head"><b>DAY 5</b><span class="tv-card-date">11/5・星期四</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--aqua)"></span>塞維亞 <span class="tv-transfer-tag">🔁 移動日</span></div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>馬德里 → 塞維亞 → Barrio Santa Cruz Seville</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>🚄</span></div>
+      
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-5').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 5 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--aqua)">
+      <div class="tv-card-head"><b>DAY 6</b><span class="tv-card-date">11/6・星期五</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--aqua)"></span>塞維亞</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>Barrio Santa Cruz Seville</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>🔀 彈性日</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-6').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 6 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--aqua)">
+      <div class="tv-card-head"><b>DAY 7</b><span class="tv-card-date">11/7・星期六</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--aqua)"></span>塞維亞</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>Real Alcazar de Sevilla → Plaza de Espana Sevilla → 瓜達幾維河畔散步，晚餐選一家道地 T…</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>🎟 需訂票</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-7').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 7 詳細行程 →</button>
+    </div><div class="tv-card tv-transfer" style="border-left-color:var(--yellow)">
+      <div class="tv-card-head"><b>DAY 8</b><span class="tv-card-date">11/8・星期日</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--yellow)"></span>格拉納達 <span class="tv-transfer-tag">🔁 移動日</span></div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>塞維亞 → 格拉納達 → Alhambra Granada → Albaicin Granada</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>🚄</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>🎟 需訂票</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-8').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 8 詳細行程 →</button>
+    </div><div class="tv-card tv-transfer" style="border-left-color:var(--magenta)">
+      <div class="tv-card-head"><b>DAY 9</b><span class="tv-card-date">11/9・星期一</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納 <span class="tv-transfer-tag">🔁 移動日</span></div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>格拉納達 → 巴塞隆納 → Barcelona Sants → La Rambla Barcelona</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>🚄 ✈️</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>❓ 交通待定</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-9').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 9 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--magenta)">
+      <div class="tv-card-head"><b>DAY 10</b><span class="tv-card-date">11/10・星期二</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>Sagrada Familia → Park Guell → Casa Batllo</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>🎟 需訂票</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-10').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 10 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--magenta)">
+      <div class="tv-card-head"><b>DAY 11</b><span class="tv-card-date">11/11・星期三</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>Barcelona Cathedral → Museu Picasso → El Born Barcelona</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>🎟 需訂票</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-11').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 11 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--magenta)">
+      <div class="tv-card-head"><b>DAY 12</b><span class="tv-card-date">11/12・星期四</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>Montjuic → Font Magica → Barceloneta Beach</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-12').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 12 詳細行程 →</button>
+    </div><div class="tv-card" style="border-left-color:var(--magenta)">
+      <div class="tv-card-head"><b>DAY 13</b><span class="tv-card-date">11/13・星期五</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納</div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>Passeig de Gracia</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>—</span></div>
+      <div class="tv-card-row"><span class="tv-label">重要</span><span>🔀 彈性日</span></div>
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-13').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 13 詳細行程 →</button>
+    </div><div class="tv-card tv-transfer" style="border-left-color:var(--magenta)">
+      <div class="tv-card-head"><b>DAY 14</b><span class="tv-card-date">11/14・星期六</span></div>
+      <div class="tv-card-city"><span class="tv-city-dot" style="background:var(--magenta)"></span>巴塞隆納 <span class="tv-transfer-tag">🔁 移動日</span></div>
+      <div class="tv-card-row"><span class="tv-label">主要行程</span><span>巴塞隆納 → 台北 → Barcelona Airport</span></div>
+      <div class="tv-card-row"><span class="tv-label">交通</span><span>✈️</span></div>
+      
+      <button type="button" class="btn ghost tv-goto-btn" onclick="document.getElementById('itinViewTimeline').checked=true;document.getElementById('day-14').checked=true;var p=document.getElementById('panel-itinerary');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});">查看 Day 14 詳細行程 →</button>
     </div></div>
     </div>
   </section>
@@ -1367,12 +1624,74 @@
   <section class="panel" id="panel-news">
     <label class="back-more" for="tab-more"><svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> 返回更多</label>
     <div class="card">
-      <h2>西班牙新聞快報</h2>
-      <p class="muted">以下標題為建置本頁面時（見下方日期）收錄的西班牙相關中文新聞，僅列出標題與來源，點入標題可開啟原文閱讀。這是當時的靜態快照，不會自動更新；若想看更即時的新聞，可點下方連結。</p>
+      <h2>認識西班牙</h2>
+      <p class="muted">還沒去過西班牙？出發前先從這次會去的 5 座城市，還有幾個西班牙的生活文化小知識開始熟悉起，比起硬記行程，更容易對這趟旅程產生畫面感。</p>
+      <div id="spainCityIntro" style="margin-top:10px;">
+  <div class="day-block">
+    <div class="time" style="color:var(--blue)">馬德里 Madrid</div>
+    <p style="margin-top:4px;">西班牙首都，海拔約 667 公尺，是歐洲地勢最高的首都之一，日夜溫差大、氣候乾燥。馬德里人以夜生活聞名，「不到凌晨不算晚」是這裡的日常步調；普拉多、蘇菲亞王后、提森波內米薩三大美術館齊聚一區，合稱藝術金三角，也是這趟行程第一站。</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time" style="color:var(--violet)">托雷多 Toledo</div>
+    <p style="margin-top:4px;">曾是西班牙首都，因長期融合天主教、伊斯蘭與猶太三大文化而有「三文化之都」美譽，古城完整保留中世紀樣貌，1986 年整座城市被列入 UNESCO 世界遺產，也被稱為「石頭城」，是這趟行程安排的馬德里近郊一日遊。</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time" style="color:var(--aqua)">塞維亞 Sevilla</div>
+    <p style="margin-top:4px;">安達魯西亞首府，佛朗明哥的發源地之一，街頭巷尾都能感受到南方熱情奔放的氣質。塞維亞王宮、大教堂與希拉達塔訴說著伊斯蘭與天主教文化交融的歷史，也是《卡門》《唐璜》等經典故事的舞台。</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time" style="color:var(--yellow)">格拉納達 Granada</div>
+    <p style="margin-top:4px;">伊斯蘭教在西班牙的最後據點：1492 年納斯里德王朝在此向天主教雙王投降，結束了西班牙近八百年的伊斯蘭統治，阿爾罕布拉宮就是這段歷史最壯麗的見證。當地至今仍保有濃厚的摩爾建築遺風，也以「點飲料送免費 Tapas」的獨特文化著稱。</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time" style="color:var(--magenta)">巴塞隆納 Barcelona</div>
+    <p style="margin-top:4px;">加泰隆尼亞自治區首府，有自己的語言（加泰隆尼亞語 Catalan）與強烈的地方認同，城市氣質跟馬德里截然不同——更靠海、更國際化。這裡也是高第與現代主義建築的殿堂，聖家堂、奎爾公園、巴特略之家共同構成這座城市的天際線，是行程最後、待最久的一站。</p>
+  </div>
+</div>
+    </div>
+    <div class="card">
+      <h2>西班牙生活文化小知識</h2>
+      <div id="spainCultureNotes" style="margin-top:6px;">
+  <div class="day-block">
+    <p><strong>Siesta 午休文化</strong></p>
+    <p style="margin-top:4px;">傳統上西班牙人在正午到下午 5 點左右會有較長的午休時段，部分小店會拉下鐵門暫停營業，這跟夏季酷熱、傳統午餐後小憩的習慣有關。不過在馬德里、巴塞隆納這類大城市市中心，很多商店與餐廳其實已經全天營業，Siesta 更多是一種文化印象，實際遇到與否因店而異。</p>
+  </div>
+
+  <div class="day-block">
+    <p><strong>Tapas 文化與晚餐時間</strong></p>
+    <p style="margin-top:4px;">西班牙人習慣把一餐拆成好幾道小份量的 Tapas，配著酒慢慢吃、慢慢聊；晚餐時間也普遍偏晚，很多餐廳晚上 8 點後才真正熱鬧起來，跟台灣的用餐時間很不一樣，行前可以先有心理準備。</p>
+  </div>
+
+  <div class="day-block">
+    <p><strong>佛朗明哥 Flamenco</strong></p>
+    <p style="margin-top:4px;">起源於安達魯西亞（塞維亞、格拉納達一帶），融合了吉普賽（Roma）、摩爾與安達魯西亞在地文化，2010 年被 UNESCO 列入非物質文化遺產，結合歌唱（cante）、吉他（toque）與舞蹈（baile），是這趟行程塞維亞、格拉納達站很值得安排觀賞的傳統表演。</p>
+  </div>
+
+  <div class="day-block">
+    <p><strong>鬥牛的現況與爭議</strong></p>
+    <p style="margin-top:4px;">2010 年加泰隆尼亞議會曾立法禁止鬥牛，2016 年西班牙憲法法院以「鬥牛屬全國共同文化資產」為由裁定該禁令違憲、失效；但實務上巴塞隆納的鬥牛場此後多轉作演唱會等其他用途，是否觀賞鬥牛在西班牙社會（尤其加泰隆尼亞）至今仍是高度爭議的話題，支持與反對的聲音都很強烈。</p>
+  </div>
+
+  <div class="day-block">
+    <p><strong>見面問候的親吻禮</strong></p>
+    <p style="margin-top:4px;">西班牙人初次見面或朋友聚會常見「兩頰貼面」的問候方式（先左後右，多是臉頰輕觸、發出親吻聲而非真的親到臉），這是社交禮儀而非曖昧表示；朋友聚會聊到很晚也很正常，西班牙人的夜生活步調普遍比台灣人習慣的更晚。</p>
+  </div>
+</div>
+    </div>
+    <div class="card">
+      <h2>西班牙觀光新聞</h2>
+      <p class="muted">以下即時擷取自 Google 新聞的西班牙旅遊／觀光相關中文報導，每次打開本頁都會重新抓取一次最新結果（等同每日自動更新）；若當下裝置無法連上新聞來源，會自動改顯示下方保留的靜態新聞快照與官方查詢連結，不會讓頁面空白。</p>
       <div class="quicklinks">
-        <a class="tag-link" href="https://news.google.com/search?q=%E8%A5%BF%E7%8F%AD%E7%89%99&hl=zh-TW&gl=TW" target="_blank">🔎 查看即時最新新聞（Google 新聞）</a>
+        <a class="tag-link" href="https://news.google.com/search?q=%E8%A5%BF%E7%8F%AD%E7%89%99+%E8%A7%80%E5%85%89&hl=zh-TW&gl=TW" target="_blank">🔎 查看即時最新新聞（Google 新聞）</a>
+        <a class="tag-link" href="#" onclick="if(window.loadSpainNews)loadSpainNews();return false;">🔄 重新整理新聞</a>
       </div>
-      <div id="newsList" style="margin-top:10px;">
+      <div id="newsLive" style="margin-top:10px;"><p class="muted">正在載入即時西班牙觀光新聞...</p></div>
+      <div id="newsFallbackNote" style="display:none;margin-top:10px;"><p class="muted">⚠️ 目前無法取得即時新聞（可能是網路限制或新聞來源暫時無回應），以下改顯示建置頁面時保留的靜態新聞快照：</p></div>
+      <div id="newsList" style="margin-top:4px;display:none;">
   <div class="day-block">
     <div class="time">2026/08/19　·　聯合新聞網</div>
     <p><a class="link" href="https://udn.com/news/story/7266/9700013" target="_blank">健康你我他／朝聖之路蟲咬過敏 西班牙看診竟免費</a></p>
@@ -1490,7 +1809,7 @@
       </label>
       <label class="more-item" for="tab-news">
         <svg class="icon mi" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
-        <span class="mt">西班牙新聞</span>
+        <span class="mt">認識西班牙／新聞</span>
         <svg class="icon ma" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
       </label>
       <label class="more-item" for="tab-notes">
@@ -1593,6 +1912,49 @@ function loadWeather(){
   });
 }
 loadWeather();
+
+/* Live Spain-tourism news: mirrors loadWeather()'s fetch-with-graceful-fallback pattern.
+   Source: Google News RSS (zh-TW edition, "西班牙 觀光/旅遊" query) wrapped through
+   rss2json.com — a purpose-built, documented CORS-enabled RSS→JSON proxy (arbitrary news
+   sites/Google News itself do not send Access-Control-Allow-Origin, so a direct fetch()
+   from the browser would fail; rss2json exists specifically to solve this for client-side
+   apps like this one). No API key = shared free-tier rate limit, so this can occasionally
+   fail or be slow — on ANY failure (network block, rate limit, empty result) this falls
+   back to the pre-baked static snapshot (#newsList, from NEWS_ITEMS at build time) plus
+   the official Google News search link, exactly like the weather widget's fallback text,
+   so the page never breaks or shows blank. */
+function loadSpainNews(){
+  var live = document.getElementById('newsLive');
+  var fallbackNote = document.getElementById('newsFallbackNote');
+  var fallbackList = document.getElementById('newsList');
+  if(!live) return;
+  live.innerHTML = '<p class="muted">正在載入即時西班牙觀光新聞...</p>';
+  if (fallbackNote) fallbackNote.style.display = 'none';
+  if (fallbackList) fallbackList.style.display = 'none';
+  var gnewsUrl = 'https://news.google.com/rss/search?q=' + encodeURIComponent('西班牙 (觀光 OR 旅遊)') + '&hl=zh-TW&gl=TW&ceid=TW:zh-Hant';
+  var proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(gnewsUrl);
+  fetch(proxyUrl).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(data){
+      if (!data || data.status !== 'ok' || !data.items || !data.items.length) throw new Error('empty result');
+      var items = data.items.slice(0, 8);
+      var html = items.map(function(it){
+        var title = (it.title||'').trim();
+        var source = '';
+        var m = title.match(/^(.*)s-s([^-]+)$/);
+        if (m) { title = m[1].trim(); source = m[2].trim(); }
+        var d = it.pubDate ? new Date(it.pubDate.replace(' ', 'T')) : null;
+        var dateLabel = (d && !isNaN(d.getTime())) ? (d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()) : '';
+        return '<div class="day-block"><div class="time">'+dateLabel+(source?'　·　'+source:'')+'</div><p><a class="link" href="'+it.link+'" target="_blank">'+title+'</a></p></div>';
+      }).join('');
+      live.innerHTML = html + '<p class="muted" style="margin-top:8px;">來源：Google 新聞即時搜尋結果，每次開啟本頁重新抓取。</p>';
+    })
+    .catch(function(){
+      live.innerHTML = '';
+      if (fallbackNote) fallbackNote.style.display = 'block';
+      if (fallbackList) fallbackList.style.display = 'block';
+    });
+}
+loadSpainNews();
 
 var esVoice = null;
 function pickEsVoice(){
