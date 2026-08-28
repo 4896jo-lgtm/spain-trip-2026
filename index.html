@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="app-version" content="1787668342789">
+<meta name="app-version" content="1787844158066">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -461,6 +461,7 @@
   #tab-tickets:checked ~ main #panel-tickets{ display:block; }
   #tab-budget:checked ~ main #panel-budget{ display:block; }
   #tab-packing:checked ~ main #panel-packing{ display:block; }
+  #tab-upcoming:checked ~ main #panel-upcoming{ display:block; }
   #tab-phrases:checked ~ main #panel-phrases{ display:block; }
   #tab-journals:checked ~ main #panel-journals{ display:block; }
   #tab-food:checked ~ main #panel-food{ display:block; }
@@ -503,6 +504,7 @@
   #tab-metro:checked ~ footer.bottom-nav label[for="tab-metro"]{ color:var(--olive); }
   #tab-packing:checked ~ footer.bottom-nav label[for="tab-packing"]{ color:var(--olive); }
   #tab-more:checked ~ footer.bottom-nav label[for="tab-more"]{ color:var(--olive); }
+  #tab-upcoming:checked ~ footer.bottom-nav label[for="tab-more"]{ color:var(--olive); }
   #tab-logistics:checked ~ footer.bottom-nav label[for="tab-more"]{ color:var(--olive); }
   #tab-tickets:checked ~ footer.bottom-nav label[for="tab-more"]{ color:var(--olive); }
   #tab-budget:checked ~ footer.bottom-nav label[for="tab-more"]{ color:var(--olive); }
@@ -563,6 +565,7 @@
 <input type="radio" name="maintab" id="tab-tickets" class="tab-radio">
 <input type="radio" name="maintab" id="tab-budget" class="tab-radio">
 <input type="radio" name="maintab" id="tab-packing" class="tab-radio">
+<input type="radio" name="maintab" id="tab-upcoming" class="tab-radio">
 <input type="radio" name="maintab" id="tab-phrases" class="tab-radio">
 <input type="radio" name="maintab" id="tab-journals" class="tab-radio">
 <input type="radio" name="maintab" id="tab-food" class="tab-radio">
@@ -1282,6 +1285,66 @@
     </div>
   </section>
 
+  <!-- ============ 近期待辦（7人團隊訂房總覽快照） ============ -->
+  <section class="panel" id="panel-upcoming">
+    <label class="back-more" for="tab-more"><svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> 返回更多</label>
+    <div class="card">
+      <h2>近期待辦</h2>
+      <p class="muted">整理自團隊共用的 Google 試算表「西班牙_2026_7人自由行_預訂總覽」，是目前 5 段住宿、5 段交通、門票的最新預訂進度。這是<strong>讀取當下的靜態快照</strong>，不會自動同步；試算表之後若有更新，把最新的分享連結貼給我，我會重新整理這頁。</p>
+      <p class="muted" id="upcomingSnapshotNote" style="margin-top:4px;">讀取時間：2026/08/26（來源：使用者提供之 Google 試算表分享連結）</p>
+    </div>
+    <div class="card">
+      <h2>完成度總覽</h2>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;"><table class="info-table" id="upcomingDashboardTable" style="min-width:560px;"><tbody><tr><th>類別</th><th>項目</th><th>已完成</th><th>待處理</th><th>進度</th><th>目前最重要事項</th></tr><tr><td>✈️ 國際航班</td><td>台北 ↔ 西班牙</td><td>1</td><td>0</td><td>100%</td><td>已確認</td></tr><tr><td>🏨 飯店</td><td>5 段住宿</td><td>1</td><td>4</td><td>20%</td><td>塞維亞、格拉納達優先</td></tr><tr><td>🚄 火車</td><td>5 段交通</td><td>0</td><td>5</td><td>0%</td><td>11/5 馬德里→塞維亞已選定班次</td></tr><tr><td>🎫 門票</td><td>主要景點</td><td>0</td><td>待整理</td><td>待整理</td><td>阿爾罕布拉宮優先</td></tr><tr><td>🍴 餐廳</td><td>聚餐／特色餐廳</td><td>0</td><td>待整理</td><td>待整理</td><td>後續安排</td></tr></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>🔥 目前最需要處理 TOP 5</h2>
+      <div id="upcomingTop5List" style="margin-top:6px;">
+  <div class="day-block">
+    <div class="time">🔴 1</div>
+    <p><strong>格拉納達住宿</strong></p>
+    <p style="margin-top:2px;">只有 1 晚＋阿爾罕布拉宮行程</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time">🔴 2</div>
+    <p><strong>阿爾罕布拉宮門票</strong></p>
+    <p style="margin-top:2px;">日期／時段需要先確定</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time">🔴 3</div>
+    <p><strong>塞維亞住宿</strong></p>
+    <p style="margin-top:2px;">3 晚，會影響整個塞維亞行程</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time">🟠 4</div>
+    <p><strong>11/5 Ouigo 車票</strong></p>
+    <p style="margin-top:2px;">班次已選定 11:40→14:21</p>
+  </div>
+
+  <div class="day-block">
+    <div class="time">🟠 5</div>
+    <p><strong>格拉納達→巴塞隆納交通</strong></p>
+    <p style="margin-top:2px;">11/9 長途移動，需決定火車或飛機</p>
+  </div>
+</div>
+    </div>
+    <div class="card">
+      <h2>🚄 交通預訂狀態</h2>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;"><table class="info-table" id="upcomingTransportTable" style="min-width:680px;"><tbody><tr><th>#</th><th>日期</th><th>路段</th><th>方式</th><th>出發</th><th>抵達</th><th>車程</th><th>狀態</th><th>平台</th><th>備註</th></tr><tr><td>1</td><td>11/5</td><td>馬德里 → 塞維亞</td><td>Ouigo 高鐵</td><td>11:40</td><td>14:21</td><td>2h41m</td><td>待訂</td><td>Ouigo</td><td>已選定班次</td></tr><tr><td>2</td><td>11/8</td><td>塞維亞 → 格拉納達</td><td>AVE 高鐵</td><td>—</td><td>—</td><td>約3h16m</td><td>待訂</td><td>Renfe</td><td>部分班次需轉乘</td></tr><tr><td>3</td><td>11/9</td><td>格拉納達 → 巴塞隆納</td><td>AVE 高鐵</td><td>07:55</td><td>14:54</td><td>6h59m</td><td>待決定</td><td>Renfe</td><td>直達；亦可比較飛機</td></tr><tr><td>4</td><td>11/3</td><td>馬德里 ↔ 托雷多</td><td>AVE／Avant</td><td>—</td><td>—</td><td>約33–34m</td><td>待訂</td><td>Renfe</td><td>建議上午</td></tr><tr><td>5</td><td>11/6</td><td>塞維亞 ↔ 哥多華</td><td>AVE</td><td>10:20／11:41／11:48</td><td>—</td><td>45–56m</td><td>彈性</td><td>Renfe</td><td>是否成行待定</td></tr></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>🏨 飯店預訂狀態</h2>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;"><table class="info-table" id="upcomingHotelTable" style="min-width:640px;"><tbody><tr><th>城市</th><th>入住</th><th>退房</th><th>晚數</th><th>飯店</th><th>狀態</th><th>備註</th></tr><tr><td>馬德里</td><td>11/1</td><td>11/4</td><td>3 晚</td><td>Urbansea Atocha 113</td><td>已訂</td><td>團長已訂；4.2/5；近麗池公園、普拉多博物館；Antón Martín 地鐵站旁</td></tr><tr><td>馬德里</td><td>11/4</td><td>11/5</td><td>1 晚</td><td>待確認</td><td>待訂</td><td>先確認能否續住 Urbansea Atocha 113</td></tr><tr><td>塞維亞</td><td>11/5</td><td>11/8</td><td>3 晚</td><td>待訂</td><td>待訂</td><td>建議 Santa Cruz 或大教堂周邊</td></tr><tr><td>格拉納達</td><td>11/8</td><td>11/9</td><td>1 晚</td><td>待訂</td><td>待訂</td><td>建議 Albaicín 或市中心 Puerta Real</td></tr><tr><td>巴塞隆納</td><td>11/9</td><td>11/14</td><td>5 晚</td><td>Eixample Building Apartments by Mercedes Heritage</td><td>待決定</td><td>備選①</td></tr><tr><td>巴塞隆納</td><td>11/9</td><td>11/14</td><td>5 晚</td><td>Stay Together Barcelona Apartments</td><td>待決定</td><td>備選②</td></tr></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>🎫 門票預訂狀態</h2>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;"><table class="info-table" id="upcomingTicketTable" style="min-width:520px;"><tbody><tr><th>日期</th><th>城市</th><th>景點</th><th>人數</th><th>狀態</th><th>備註</th></tr><tr><td>11/3</td><td>托雷多</td><td>主要景點</td><td>7 人</td><td>待整理</td><td>—</td></tr><tr><td>11/8</td><td>格拉納達</td><td>阿爾罕布拉宮</td><td>7 人</td><td>優先確認</td><td>日期／時段需先確定</td></tr><tr><td>—</td><td>—</td><td>其他主要景點</td><td>7 人</td><td>待整理</td><td>—</td></tr></tbody></table></div>
+    </div>
+  </section>
+
   <!-- ============ 常用西語 ============ -->
   <section class="panel" id="panel-phrases">
     <label class="back-more" for="tab-more"><svg class="icon" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> 返回更多</label>
@@ -1559,7 +1622,7 @@
   <h3 style="color:var(--blue)">馬德里</h3>
   <table class="info-table">
     <tbody><tr><th>店家</th><th>推薦菜色</th><th>人均消費</th><th>備註</th></tr>
-    <tr><td>Casa Labra</td><td>炸鱈魚排、鱈魚可樂餅</td><td>約 €8-12</td><td class="muted">太陽門廣場旁百年老酒館</td></tr><tr><td>Chocolatería San Ginés</td><td>油條 Churros 配熱巧克力</td><td>約 €6-10</td><td class="muted">傳統西班牙早餐／宵夜體驗</td></tr><tr><td>Mercado de San Miguel</td><td>Tapas、海鮮燉飯</td><td>約 €15-25</td><td class="muted">市場型美食聚落，多攤位分食價格會累加</td></tr><tr><td>La Mallorquina</td><td>糕點、鮮奶油甜點</td><td>約 €8-12</td><td class="muted">太陽門廣場旁百年糕餅店，多為站立式快速消費</td></tr>
+    <tr><td>Casa Labra</td><td>炸鱈魚排、鱈魚可樂餅</td><td>約 €8-12</td><td class="muted">太陽門廣場旁百年老酒館</td></tr><tr><td>Chocolatería San Ginés</td><td>油條 Churros 配熱巧克力</td><td>約 €6-10</td><td class="muted">傳統西班牙早餐／宵夜體驗</td></tr><tr><td>Mercado de San Miguel</td><td>Tapas、海鮮燉飯</td><td>約 €15-25</td><td class="muted">市場型美食聚落，多攤位分食價格會累加</td></tr><tr><td>La Mallorquina</td><td>糕點、鮮奶油甜點</td><td>約 €8-12</td><td class="muted">太陽門廣場旁百年糕餅店，多為站立式快速消費</td></tr><tr><td><a class="link" href="https://maps.app.goo.gl/a64C82ZgGvP9CZMA7?g_st=ic" target="_blank">Caracola Antón Martín</a></td><td>巴斯克蛋糕 Tarta de Queso</td><td>—</td><td class="muted">鄰近 Antón Martín 地鐵站，與此行馬德里飯店同一帶</td></tr>
   </tbody></table>
 
   <h3 style="color:var(--orange)">哥多華</h3>
@@ -1772,6 +1835,11 @@
   <section class="panel" id="panel-more">
     <div class="t-page" style="margin:4px 2px 12px 2px;">更多</div>
     <div class="more-grid">
+      <label class="more-item" for="tab-upcoming">
+        <svg class="icon mi" viewBox="0 0 24 24"><path d="M12 8v5l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+        <span class="mt">近期待辦</span>
+        <svg class="icon ma" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+      </label>
       <label class="more-item" for="tab-logistics">
         <svg class="icon mi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5l-2 5-5 2 2-5z"/></svg>
         <span class="mt">住宿交通</span>
