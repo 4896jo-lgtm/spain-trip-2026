@@ -412,6 +412,7 @@ ol.tl .w small{font-size:14px}
   <section role="tabpanel" id="spanish" aria-labelledby="t-spanish" hidden>
     <h2>旅遊西班牙語</h2>
     <p class="note">按 🔊 用手機內建語音播放西班牙發音（iPhone 請先關閉靜音；建議先下載「西班牙文（西班牙）」加強版語音）。聽起來不自然就按下方的 G，會開 Google 翻譯，再按喇叭聽。諧音只是近似：西班牙本土 z、ce、ci 會發類似英文 th 的音。</p>
+    <p class="note" id="phVoice" style="margin-top:-6px"></p>
     <p class="alert" id="phMsg" hidden>這個瀏覽器不支援語音播放，請改用 Chrome 或 Safari 開啟。</p>
     <div class="vids" style="--c:var(--cobalt)"><a class="vid" href="https://youtu.be/cK-N3PvLPo4?si=QUibAN-9O89ddO0k" target="_blank" rel="noopener"><span class="vplay" aria-hidden="true">▶</span><span><b>十句好用西班牙語</b><small>YouTube 影片 · 新分頁開啟</small></span></a></div>
     <div class="filters" id="phFilters"></div>
@@ -1065,13 +1066,35 @@ const PH=[
  ["緊急","☎️","Ciento doce (112)","西恩－托　多－塞","歐盟緊急電話 112（報警、救護、消防）"]
 ];
 let phCat="全部",phRate=0.85;
+// pick best Spanish (Spain) voice: Premium > Enhanced > named Spain voices > any es-ES > any es
+function voiceScore(v){
+  const id=((v.name||"")+" "+(v.voiceURI||"")).toLowerCase(),lang=(v.lang||"").replace("_","-").toLowerCase();
+  if(!lang.startsWith("es"))return -1;
+  let sc=lang==="es-es"?100:10;
+  if(/premium|高品質|alta calidad/.test(id))sc+=60;
+  else if(/enhanced|加強|增強|mejorad|neural|natural/.test(id))sc+=40;
+  if(/m[oó]nica|jorge|marisol|google espa[nñ]ol(?! de estados)/.test(id))sc+=15;
+  if(/compact|eloquence|eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley|bad news|bubbles|whisper|zarvox|trinoids|albert|bahh|bells|boing|cellos|jester|organ|superstar|wobble|good news/.test(id))sc-=50;
+  if(v.localService)sc+=5;
+  return sc;
+}
+function pickVoice(){
+  let best=null,bs=-1;
+  try{speechSynthesis.getVoices().forEach(v=>{const sc=voiceScore(v);if(sc>bs){bs=sc;best=v;}});}catch(e){}
+  return bs>=0?best:null;
+}
+function showVoice(){
+  const el=document.getElementById("phVoice");if(!el)return;
+  const v=pickVoice();
+  el.textContent=v?`目前使用語音：${v.name}（${v.lang}）${/premium|enhanced|加強|高品質|增強/i.test(v.name+" "+v.voiceURI)?" ✓ 加強／高品質":"；建議依說明下載加強版語音"}`:"找不到西班牙文語音，請依說明下載。";
+}
 function speak(t){
   try{
     if(!("speechSynthesis" in window))throw 0;
     speechSynthesis.cancel();
     const u=new SpeechSynthesisUtterance(t.replace(/…/g,""));u.lang="es-ES";u.rate=phRate;
-    const v=speechSynthesis.getVoices().find(v=>/^es(-|_)ES/i.test(v.lang))||speechSynthesis.getVoices().find(v=>/^es/i.test(v.lang));
-    if(v)u.voice=v;
+    const v=pickVoice();
+    if(v){u.voice=v;u.lang=v.lang;}
     speechSynthesis.speak(u);
   }catch(e){document.getElementById("phMsg").hidden=false;}
 }
@@ -1086,7 +1109,8 @@ function renderPH(){
 }
 document.getElementById("phFilters").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;if(b.id==="phSlow"){phRate=phRate<0.8?0.85:0.6;}else{phCat=b.dataset.c;}renderPH();});
 document.getElementById("phList").addEventListener("click",e=>{const b=e.target.closest(".phs");if(b)speak(PH[+b.dataset.i][2]);});
-try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{};}catch(e){}
+try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=showVoice;}catch(e){}
+setTimeout(showVoice,300);
 renderPH();
 
 // lightbox
