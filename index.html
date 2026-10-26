@@ -158,6 +158,15 @@ ul.phl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:rep
 #lbw{width:100%;height:100%;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pinch-zoom pan-x pan-y}
 #lbi{display:block;width:100%;max-width:1100px;height:auto;margin:0 auto}
 #lbx{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);right:max(12px,env(safe-area-inset-right,0px));width:36px;height:36px;border-radius:50%;border:0;background:#fff;color:#111;font-size:18px;cursor:pointer}
+.themebtn{margin-top:14px;font:inherit;font-size:14px;min-height:40px;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.themebtn:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+.gmap{margin:0 0 14px}
+.gmap-t{font-family:var(--head);font-weight:700;color:var(--c);margin:0 0 6px}
+.gmap iframe{display:block;width:100%;aspect-ratio:4/3;max-height:520px;border:1px solid var(--line);border-radius:10px;background:var(--cobalt-soft)}
+.gmap-f{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-top:8px;font-size:13px}
+ol.oth{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:o}
+ol.oth li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;counter-increment:o}
+ol.oth li::before{content:counter(o);width:28px;height:28px;border-radius:50%;background:var(--cobalt);color:var(--surface);display:grid;place-items:center;font-weight:700;font-size:14px}
 /* route map */
 .route-map{margin:0 0 14px;padding:12px;border:1px solid var(--line);border-radius:8px}
 .rm-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12px;letter-spacing:.06em;color:var(--muted);margin-bottom:10px}
@@ -290,6 +299,7 @@ ol.tl .w small{font-size:14px}
   <p class="sub">10/31（六）出發 – 11/15（日）返台 ｜ 7 人同行</p>
   <div class="route" id="route"></div>
   <div class="stats" id="stats"></div>
+  <button type="button" id="themeBtn" class="themebtn" aria-label="切換白天／夜晚模式">🌙 夜晚模式</button>
 </div></header>
 
 <nav class="tabs" aria-label="頁面"><div class="wrap" role="tablist">
@@ -302,6 +312,7 @@ ol.tl .w small{font-size:14px}
   <button role="tab" id="t-weather" aria-controls="weather" aria-selected="false">天氣</button>
   <button role="tab" id="t-madrid" aria-controls="madrid" aria-selected="false">地圖清單</button>
   <button role="tab" id="t-spanish" aria-controls="spanish" aria-selected="false">西班牙語</button>
+  <button role="tab" id="t-other" aria-controls="other" aria-selected="false">其他</button>
 </div></nav>
 
 <main class="wrap">
@@ -402,8 +413,17 @@ ol.tl .w small{font-size:14px}
     <h2>旅遊西班牙語</h2>
     <p class="note">按 🔊 用手機內建語音播放西班牙發音（iPhone 請先關閉靜音；建議先下載「西班牙文（西班牙）」加強版語音）。聽起來不自然就按下方的 G，會開 Google 翻譯，再按喇叭聽。諧音只是近似：西班牙本土 z、ce、ci 會發類似英文 th 的音。</p>
     <p class="alert" id="phMsg" hidden>這個瀏覽器不支援語音播放，請改用 Chrome 或 Safari 開啟。</p>
+    <div class="vids" style="--c:var(--cobalt)"><a class="vid" href="https://youtu.be/cK-N3PvLPo4?si=QUibAN-9O89ddO0k" target="_blank" rel="noopener"><span class="vplay" aria-hidden="true">▶</span><span><b>十句好用西班牙語</b><small>YouTube 影片 · 新分頁開啟</small></span></a></div>
     <div class="filters" id="phFilters"></div>
     <ul class="phl" id="phList"></ul>
+  </section>
+
+  <section role="tabpanel" id="other" aria-labelledby="t-other" hidden>
+    <h2>其他</h2>
+    <p class="note">旅途中用得到的補充資料。</p>
+    <ol class="oth">
+      <li><a class="vid" href="https://youtu.be/e0hpc4JSVtI?si=cybHNMHRWyRqHg39" target="_blank" rel="noopener" style="--c:var(--cobalt)"><span class="vplay" aria-hidden="true">▶</span><span><b>西班牙食物：10 道必吃的西班牙料理＋點餐秘訣</b><small>Alicia_mundo hispano · YouTube · 新分頁開啟</small></span></a></li>
+    </ol>
   </section>
 
   <p class="foot">資料來源：西班牙15日行程簡表_1018.xlsx（10/22 版）＋專案內車票／門票 PDF。版本 v1 · 製作 2026/10/24。</p>
@@ -535,8 +555,8 @@ const D=[
   alerts:[],tips:["訂位代號 WSG3VL；車票含 Cercanías 市郊火車","蘭布拉大道、哥德區注意扒手"]},
  {d:"D10",date:"11/10",wd:"二",city:"bcn",title:"聖家堂",hotel:"bcn",
   tr:"地鐵",
-  items:[["10:15","{聖家堂|Basílica de la Sagrada Família}入場","入口在 Carrer de la Marina"],["10:45","西語導覽",""],["12:15","登受難立面塔樓","Torre de la Pasión"],["16:00","{Terraza del Rosellón|Terraza del Rosellón|Hotel Sercotel Rosellón, Barcelona}","Sercotel 飯店的露台酒吧"]],
-  alerts:["Terraza del Rosellón 還沒訂位"],tips:["要帶附照片的證件","門票不能轉讓；可下載聖家堂官方 App 聽語音導覽"]},
+  items:[["10:15","{聖家堂|Basílica de la Sagrada Família}入場","入口在 Carrer de la Marina"],["10:45","西語導覽",""],["12:15","登受難立面塔樓","Torre de la Pasión"],["16:00","{Rooftop Sercotel Rosellón|Rooftop Sercotel Rosellón|C/ del Rosselló 390, Barcelona}","已訂位 7 人（Access to the terrace，€49）· C/ del Rosselló 390，就在聖家堂旁"]],
+  alerts:[],tips:["要帶附照片的證件","門票不能轉讓；可下載聖家堂官方 App 聽語音導覽"]},
  {d:"D11",date:"11/11",wd:"三",city:"bcn",title:"高第建築與老城",hotel:"bcn",
   tr:"市區公車、地鐵",
   items:[["09:00","{奎爾公園|Park Güell}","搭公車到後方的站比較近"],["11:00","{維森斯之家|Casa Vicens} → {巴特略之家|Casa Batlló}（入內）→ {米拉之家|Casa Milà}（外觀）",""],["14:00","{巴塞隆納主教座堂|Catedral de Barcelona}、{猶太區|El Call}",""],["15:30","{加泰隆尼亞音樂宮|Palau de la Música Catalana} → {聖卡特琳娜市場|Mercat de Santa Caterina}",""],["17:00","{El Born|El Born}、{聖母海洋教堂|Santa Maria del Mar}",""],["20:00","晚餐：{Els 4 Gats|Els 4 Gats} 或 {Can Solé|Can Solé}",""]],
@@ -571,7 +591,7 @@ const T=[
  {date:"11/8",cat:"門票",item:"阿爾罕布拉宮（7 人）",detail:"納斯里德宮 15:00",cost:"€213.36",st:"ok",tip:"金幣票（Dobla de Oro）€28.74／人；帶實體護照；14:45 前排隊"},
  {date:"11/9",cat:"火車",item:"AVE 03933 格拉納達 → 巴塞隆納",detail:"07:55 → 14:54，Confort 車廂",cost:"€94.70／人",st:"ok",tip:"代號 WSG3VL；開車前 2 分鐘關閘"},
  {date:"11/10",cat:"門票",item:"聖家堂 導覽＋塔樓",detail:"10:15 入場、10:45 導覽、12:15 受難立面塔",cost:"€40／人",st:"ok",tip:"入口 Carrer de la Marina；帶附照片證件"},
- {date:"11/10",cat:"餐廳",item:"Terraza del Rosellón",detail:"16:00",cost:"",st:"warn",tip:""},
+ {date:"11/10",cat:"餐廳",item:"Rooftop Sercotel Rosellón（7 人）",detail:"16:00 · Access to the terrace · C/ del Rosselló 390",cost:"€49",st:"ok",tip:"訂位人 shiuchin lin"},
  {date:"11/11",cat:"門票",item:"奎爾公園",detail:"",cost:"",st:"warn",tip:"限時段入場"},
  {date:"11/11",cat:"門票",item:"加泰隆尼亞音樂宮",detail:"",cost:"",st:"warn",tip:""},
  {date:"11/12",cat:"租車",item:"蒙塞拉特一日遊租車",detail:"",cost:"",st:"warn",tip:"7 人要確認車型"},
@@ -590,7 +610,7 @@ const R={
  7:[["Plaza de Armas 巴士站","Estación de Autobuses Plaza de Armas, Sevilla"],["格拉納達巴士總站","Estación de Autobuses de Granada"],["飯店","Sercotel HMO Martina, Granada"],["達阿霍拉宮","Palacio de Dar al-Horra, Granada"],["聖尼古拉斯觀景台","Mirador de San Nicolás, Granada"],["Cueva Los Parrones","Cueva Los Parrones, Camino del Sacromonte 23, Granada"]],
  8:[["Alhambra Churrería","Churrería Alhambra, Granada"],["煤炭之家","Corral del Carbón, Granada"],["阿拉伯澡堂","El Bañuelo, Granada"],["主入口","Alhambra Pabellón de Acceso, Granada"],["夏宮","Generalife, Granada"],["阿卡薩瓦","Alcazaba, Alhambra, Granada"],["納斯里德宮","Palacios Nazaríes, Granada"],["正義之門","Puerta de la Justicia, Alhambra, Granada"],["Paseo de los Tristes","Paseo de los Tristes, Granada"],["摩爾市集","Alcaicería, Granada"]],
  9:[["格拉納達火車站","Estación de Granada"],["Barcelona-Sants","Barcelona Sants"],["公寓","Eixample Building Apartments, Barcelona"],["蘭布拉大道","La Rambla, Barcelona"],["波格利亞市場","Mercat de la Boqueria, Barcelona"],["哥德區","Barri Gòtic, Barcelona"],["Cervecería Catalana","Cervecería Catalana, Barcelona"]],
- 10:[["公寓","Eixample Building Apartments, Barcelona"],["聖家堂（Marina 入口）","Sagrada Família, Carrer de la Marina, Barcelona"],["Terraza del Rosellón","Hotel Sercotel Rosellón, Barcelona"]],
+ 10:[["公寓","Eixample Building Apartments, Barcelona"],["聖家堂（Marina 入口）","Sagrada Família, Carrer de la Marina, Barcelona"],["Rooftop Sercotel Rosellón","C/ del Rosselló 390, Barcelona"]],
  11:[["奎爾公園","Park Güell, Barcelona"],["維森斯之家","Casa Vicens, Barcelona"],["巴特略之家","Casa Batlló, Barcelona"],["米拉之家","Casa Milà, Barcelona"],["主教座堂","Catedral de Barcelona"],["音樂宮","Palau de la Música Catalana, Barcelona"],["聖卡特琳娜市場","Mercat de Santa Caterina, Barcelona"],["聖母海洋教堂","Santa Maria del Mar, Barcelona"],["Els 4 Gats","Els 4 Gats, Barcelona"]],
  12:[["公寓","Eixample Building Apartments, Barcelona"],["Monistrol-Vila 站","Monistrol-Vila, Monistrol de Montserrat"],["蒙塞拉特修道院","Monasterio de Montserrat"],["Bages 964（OLLER del MAS）","Oller del Mas, Manresa"],["公寓","Eixample Building Apartments, Barcelona"]],
  13:[["格拉西亞大道","Passeig de Gràcia, Barcelona"],["Plaça de Gaudí","Plaça de Gaudí, Barcelona"],["MNAC","Museu Nacional d'Art de Catalunya, Barcelona"],["魔法噴泉","Font Màgica de Montjuïc, Barcelona"],["聖家堂夜景","Sagrada Família, Barcelona"]],
@@ -655,6 +675,37 @@ function noteHtml(i){const v=NOTE[i];if(!v)return "";return [].concat(v).map(n=>
 function imgHtml(i){const L=IMG[i];return L?`<div class="dimgs">${L.map(m=>`<figure class="dimg"><button class="zoom" type="button" aria-label="放大：${m.cap}"><img src="${m.src}" alt="${m.cap}" loading="lazy"></button><figcaption>${m.cap} · 點圖放大（可雙指縮放）</figcaption></figure>`).join("")}</div>`:"";}
 const VID={1:[["馬德里自由行 2024 完整教學：景點、住宿、必吃美食（詹姆士與艾瑞兒）","https://www.youtube.com/watch?v=wdMAggMZ6Bw"]],2:[["馬德里自由行 2024 完整教學：景點、住宿、必吃美食（詹姆士與艾瑞兒）","https://www.youtube.com/watch?v=wdMAggMZ6Bw"]],3:[["如何從馬德里搭乘巴士前往托萊多（Toledo）","https://www.youtube.com/watch?v=cZNDGh1vFdw"]]};
 function vidHtml(i){const L=VID[i];return L?`<div class="vids">${L.map(v=>`<a class="vid" href="${v[1]}" target="_blank" rel="noopener"><span class="vplay" aria-hidden="true">▶</span><span><b>${esc(v[0])}</b><small>YouTube 影片 · 新分頁開啟</small></span></a>`).join("")}</div>`:"";}
+// embedded Google route maps (m: w 步行 / r 大眾運輸 / d 開車)
+const MAD_H="Urbansea Atocha 113, Madrid",SEV_H="Calle Real de la Carretería 29, Sevilla",GRA_H="Sercotel HMO Martina, Granada",BCN_H="Carrer de Provença 131, Barcelona";
+const GM={
+ 1:{m:"w",note:"步行路線：飯店 → 早午餐 → El Rastro → 太陽門 → 馬約爾廣場 → 王宮 → 德波神廟 → 晚餐",s:[MAD_H,"Café Matilda, Madrid","El Rastro, Madrid","Puerta del Sol, Madrid","Plaza Mayor, Madrid","Palacio Real de Madrid","Templo de Debod, Madrid","Taberna El Sur, Madrid"]},
+ 2:{m:"w",note:"步行路線；王宮往返普拉多約 2 km，可改搭地鐵或計程車",s:[MAD_H,"Mercado Antón Martín, Madrid","Palacio Real de Madrid","Taberna La Bola, Madrid","Museo del Prado, Madrid","Parque del Retiro, Madrid","Puerta de Alcalá, Madrid","Plaza de Cibeles, Madrid","Gran Vía, Madrid","Mercado de San Miguel, Madrid","Casa Labra, Madrid"]},
+ 3:[{t:"飯店 → Plaza Elíptica 巴士站",m:"r",note:"地鐵到 Plaza Elíptica（L6／L11），08:15 集合搭 08:30 ALSA",s:[MAD_H,"Intercambiador Plaza Elíptica, Madrid"]},
+    {t:"托雷多市區步行",m:"w",note:"托雷多市區步行路線（不含馬德里來回巴士）；谷地觀景台那段實際是搭計程車",s:["Estación de Autobuses de Toledo","Remonte de Safont, Toledo","Plaza de Zocodover, Toledo","Catedral Primada de Toledo","Iglesia de Santo Tomé, Toledo","Alcázar de Toledo","Mirador del Valle, Toledo","Puente de San Martín, Toledo","Puerta Nueva de Bisagra, Toledo","La Abadía, Toledo","Estación de Autobuses de Toledo"]}],
+ 4:{m:"r",note:"大眾運輸路線：飯店 → 格蘭大道 → 伯納烏球場（地鐵 L10 到 Santiago Bernabéu 站）",s:[MAD_H,"Gran Vía, Madrid","Estadio Santiago Bernabéu, Madrid"]},
+ 5:[{t:"飯店 → 阿托查車站",m:"w",note:"步行約 10 分；IRYO 12:25 發車",s:[MAD_H,"Madrid Puerta de Atocha"]},
+    {t:"塞維亞下午步行",m:"w",note:"塞維亞下午步行路線（Santa Justa 站到飯店建議搭 21 號公車或計程車）",s:["Estación de Sevilla-Santa Justa",SEV_H,"Plaza de España, Sevilla","Parque de María Luisa, Sevilla","Torre del Oro, Sevilla","Puente de Isabel II, Sevilla","Calle Betis, Sevilla"]}],
+ 6:[{t:"方案 A：飯店 → 往龍達的巴士站",m:"w",note:"巴士站依購票確認（多為 Prado de San Sebastián）",s:[SEV_H,"Estación de Autobuses Prado de San Sebastián, Sevilla"]},
+    {t:"方案 A：龍達市區步行（不含塞維亞來回巴士）",m:"w",note:"從龍達巴士站出發，繞新橋、鬥牛場、阿拉伯浴場再回巴士站",s:["Estación de Autobuses de Ronda","Plaza de Toros de Ronda","Puente Nuevo, Ronda","Baños Árabes de Ronda","Estación de Autobuses de Ronda"]},
+    {t:"方案 B：塞維亞市區步行",m:"w",note:"王宮 → 大教堂 → 聖十字區 → 美術館 → 都市陽傘 → 晚餐",s:[SEV_H,"Real Alcázar de Sevilla","Catedral de Sevilla","Barrio de Santa Cruz, Sevilla","Museo de Bellas Artes de Sevilla","Metropol Parasol, Sevilla","Taberna Coloniales, Sevilla"]}],
+ 7:[{t:"上午（方案 A）：塞維亞王宮 → 巴士站",m:"w",note:"方案 B 改走 Triana 市場 → Lonja del Barranco → 巴士站",s:[SEV_H,"Real Alcázar de Sevilla","Barrio de Santa Cruz, Sevilla",SEV_H,"Estación de Autobuses Plaza de Armas, Sevilla"]},
+    {t:"下午：格拉納達阿爾拜辛 → 洞穴佛朗明哥",m:"w",note:"巴士站到飯店請搭計程車；上阿爾拜辛可搭 4 號＋C31／C32",s:[GRA_H,"Palacio de Dar al-Horra, Granada","Mirador de San Nicolás, Granada","Cueva Los Parrones, Camino del Sacromonte 23, Granada"]}],
+ 8:{m:"w",note:"金幣票古蹟 → 阿爾罕布拉宮（新廣場到主入口建議搭 C30／C32）→ 正義之門下山 → 達羅河 → 市集",s:[GRA_H,"Churrería Alhambra, Granada","Corral del Carbón, Granada","El Bañuelo, Granada","Casa de Zafra, Granada","Alhambra Pabellón de Acceso, Granada","Generalife, Granada","Palacios Nazaríes, Granada","Puerta de la Justicia, Alhambra, Granada","Paseo de los Tristes, Granada","Alcaicería, Granada"]},
+ 9:[{t:"飯店 → 格拉納達火車站",m:"w",note:"步行約 7 分；AVE 07:55 發車，開車前 2 分鐘關閘",s:[GRA_H,"Estación de Granada"]},
+    {t:"Sants 站 → 公寓",m:"r",note:"地鐵 L5 直達 Hospital Clínic 站",s:["Barcelona Sants",BCN_H]},
+    {t:"傍晚：蘭布拉大道 → 哥德區",m:"w",note:"從加泰隆尼亞廣場往下走，晚餐 Cervecería Catalana 要排隊",s:["Plaça de Catalunya, Barcelona","Mercat de la Boqueria, Barcelona","Barri Gòtic, Barcelona","Cervecería Catalana, Barcelona"]}],
+ 10:{m:"r",note:"公寓 → 聖家堂（地鐵 L5 直達）→ Rooftop Sercotel Rosellón（16:00 已訂）",s:[BCN_H,"Sagrada Família, Carrer de la Marina, Barcelona","C/ del Rosselló 390, Barcelona"]},
+ 11:{m:"w",note:"公寓到奎爾公園約 3 km，建議搭公車或計程車；奎爾公園到維森斯之家、米拉之家到主教座堂距離較遠，可搭地鐵或公車接駁",s:[BCN_H,"Park Güell, Barcelona","Casa Vicens, Barcelona","Casa Batlló, Barcelona","Casa Milà, Barcelona","Catedral de Barcelona","Palau de la Música Catalana, Barcelona","Mercat de Santa Caterina, Barcelona","Santa Maria del Mar, Barcelona","Els 4 Gats, Barcelona"]},
+ 12:{m:"d",note:"開車路線：約 1 小時到 Monistrol-Vila，搭齒軌火車上山；午餐在 Manresa 附近的酒莊",s:[BCN_H,"Monistrol-Vila, Monistrol de Montserrat","Monasterio de Montserrat","Oller del Mas, Manresa",BCN_H]},
+ 13:{m:"r",note:"格拉西亞大道 → 高第廣場 → 蒙特惠奇山（150 號公車）→ 魔法噴泉 → 聖家堂夜景",s:[BCN_H,"Passeig de Gràcia, Barcelona","Plaça de Gaudí, Barcelona","Museu Nacional d'Art de Catalunya, Barcelona","Font Màgica de Montjuïc, Barcelona","Sagrada Família, Barcelona"]},
+ 14:{m:"d",note:"包車到機場約 35 分，07:10 飯店門口集合",s:[BCN_H,"Aeropuerto de Barcelona-El Prat T1"]}
+};
+const GMODE={w:"walking",r:"transit",d:"driving"};
+function gmapOne(i,g){const e=encodeURIComponent;
+  const src=`https://maps.google.com/maps?saddr=${e(g.s[0])}&daddr=${g.s.slice(1).map(e).join("+to:")}&dirflg=${g.m}&hl=zh-TW&output=embed`;
+  const app="https://www.google.com/maps/dir/?api=1&travelmode="+GMODE[g.m]+"&origin="+e(g.s[0])+"&destination="+e(g.s[g.s.length-1])+(g.s.length>2?"&waypoints="+g.s.slice(1,-1).map(e).join("%7C"):"");
+  return `<div class="gmap">${g.t?`<div class="gmap-t">${esc(g.t)}</div>`:""}<iframe src="${src}" loading="lazy" title="D${i} Google 路線圖" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><div class="gmap-f"><span class="muted">${esc(g.note)}</span><a class="wxbtn" href="${app}" target="_blank" rel="noopener">在 Google Maps 導航 ↗</a></div></div>`;}
+function gmapHtml(i){const g=GM[i];return g?[].concat(g).map(x=>gmapOne(i,x)).join(""):"";}
 function routeHtml(i){
   const r=R[i];if(!r)return "";
   const all="https://www.google.com/maps/dir/"+r.map(p=>encodeURIComponent(p[1])).join("/");
@@ -702,6 +753,7 @@ function showDay(i){
     <div class="dayhead"><span class="dno">${x.d}</span><h3>${esc(x.title)}</h3><span class="muted">${x.date}（${x.wd}）· ${CITY[x.city].n}</span></div>
     <div class="meta"><div><span>交通</span>${x.tr}</div><div><span>住宿</span>${esc(hotel)}</div></div>
     ${routeHtml(i)}
+    ${gmapHtml(i)}
     ${vidHtml(i)}
     ${(x.alerts.length||x.tips.length)?`<div class="alerts">${x.alerts.map(a=>`<div class="alert">⚠ ${fmt(a,x.city)}</div>`).join("")}${x.tips.map(a=>`<div class="alert tip">${fmt(a,x.city)}</div>`).join("")}</div>`:""}
     <ol class="tl">${x.items.map(([t,w,s])=>w.startsWith("【")?`<li class="plan"><span class="w"><b>${esc(w)}</b></span></li>`:`<li><span class="t">${esc(t)}</span><span class="w"><b>${fmt(w,x.city)}</b>${s?`<small>${fmt(s,x.city)}</small>`:""}</span></li>`).join("")}</ol>
@@ -1134,6 +1186,17 @@ renderSG();
   document.addEventListener("keydown",e=>{if(e.key==="Escape")ov.hidden=true;});
 })();
 
+// theme toggle (light / dark), remembered per device
+(function(){
+  const root=document.documentElement,btn=document.getElementById("themeBtn");
+  const sysDark=()=>window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches;
+  const cur=()=>root.getAttribute("data-theme")||(sysDark()?"dark":"light");
+  const label=()=>{btn.textContent=cur()==="dark"?"☀️ 白天模式":"🌙 夜晚模式";};
+  try{const t=localStorage.getItem("spain26-theme");if(t==="dark"||t==="light")root.setAttribute("data-theme",t);}catch(e){}
+  label();
+  btn.addEventListener("click",()=>{const n=cur()==="dark"?"light":"dark";root.setAttribute("data-theme",n);try{localStorage.setItem("spain26-theme",n);}catch(e){}label();});
+  if(window.matchMedia)matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",label);
+})();
 // tabs
 const tabs=[...document.querySelectorAll('[role="tab"]')];
 function show(id){
@@ -1141,7 +1204,7 @@ function show(id){
   document.querySelectorAll('[role="tabpanel"]').forEach(p=>p.hidden=p.id!==id);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>show(t.getAttribute("aria-controls"))));
-const h=(location.hash||"").slice(1);if(["overview","daily","sights","map","hotels","tickets","weather","madrid","spanish"].includes(h))show(h);
+const h=(location.hash||"").slice(1);if(["overview","daily","sights","map","hotels","tickets","weather","madrid","spanish","other"].includes(h))show(h);
 </script>
 
 </body>
