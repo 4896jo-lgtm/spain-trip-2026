@@ -356,6 +356,9 @@ ol.tl .w small{font-size:14px}
     </div>
     <h3 class="sub2">主要景點導覽</h3>
     <div id="gdL"></div>
+    <h3 class="sub2">馬德里市場巡禮</h3>
+    <p class="note">⚠ 傳統市場週日（11/1）大多休息，D1 只逛 El Rastro 和美食型市場。各攤營業時間不同，出發前用 Google Maps 再確認。塞維亞的 Triana 市場、巴塞隆納的波格利亞市場和聖卡特琳娜市場，介紹在下方「其他景點導覽」。</p>
+    <div class="sg" id="mkL"></div>
     <h3 class="sub2">其他景點導覽</h3>
     <div class="filters" id="sgF"></div>
     <div class="sg" id="sgL"></div>
@@ -542,7 +545,7 @@ const D=[
   tips:["回程叫車：Radio Taxi Toledo +34 925 25 50 50（請觀景台小販幫忙打）","全城石板陡坡，穿運動鞋、帶防風外套","迷路時：往上走是大教堂和廣場，往下坡是猶太區和河邊"]},
  {d:"D4",date:"11/4",wd:"三",city:"mad",title:"彈性日",hotel:"mad",
   tr:"無跨城交通",
-  items:[["上午","{格蘭大道|Gran Vía}購物","或休息"],["下午","{伯納烏球場|Estadio Santiago Bernabéu}導覽（未定）",""],["晚上","整理行李","隔天移動到塞維亞"]],
+  items:[["上午","{格蘭大道|Gran Vía}購物","或休息"],["下午","市場巡禮（可選）","{聖安東市場|Mercado de San Antón}（Chueca，頂樓露台）／{聖伊爾德豐索市場|Mercado de San Ildefonso}（Malasaña，街頭小吃）"],["晚上","整理行李","隔天移動到塞維亞"]],
   alerts:["決定 11/6 是否去龍達（看天氣），要去就訂巴士票"],tips:["確認後段車票都已收到"]},
  {d:"D5",date:"11/5",wd:"四",city:"sev",title:"移動到塞維亞",hotel:"sev",
   tr:"IRYO 高鐵 12:25 馬德里 → 15:04 塞維亞（直達）",
@@ -653,7 +656,7 @@ const R={
  1:[["馬德里機場","Aeropuerto Adolfo Suárez Madrid-Barajas"],["飯店","Urbansea Atocha 113, Madrid"],["Café Matilda","Café Matilda, Madrid"],["El Rastro","El Rastro, Madrid"],["太陽門","Puerta del Sol, Madrid"],["馬約爾廣場","Plaza Mayor, Madrid"],["皇宮","Palacio Real de Madrid"],["德波神廟","Templo de Debod, Madrid"],["Taberna El Sur","Taberna El Sur, Madrid"]],
  2:[["Antón Martín 市場","Mercado Antón Martín, Madrid"],["王宮","Palacio Real de Madrid"],["Taberna La Bola","Taberna La Bola, Madrid"],["普拉多","Museo del Prado, Madrid"],["麗池公園","Parque del Retiro, Madrid"],["阿爾卡拉門","Puerta de Alcalá, Madrid"],["西貝萊斯廣場","Plaza de Cibeles, Madrid"],["格蘭大道","Gran Vía, Madrid"],["聖米格爾市場","Mercado de San Miguel, Madrid"],["Casa Labra","Casa Labra, Madrid"]],
  3:[["Plaza Elíptica","Intercambiador Plaza Elíptica, Madrid"],["托雷多巴士站","Estación de Autobuses de Toledo"],["Zocodover 廣場","Plaza de Zocodover, Toledo"],["大教堂","Catedral Primada de Toledo"],["聖多美教堂","Iglesia de Santo Tomé, Toledo"],["阿爾卡薩城堡","Alcázar de Toledo"],["谷地觀景台","Mirador del Valle, Toledo"],["聖馬丁古橋","Puente de San Martín, Toledo"],["新比薩門","Puerta Nueva de Bisagra, Toledo"],["La Abadía","La Abadía, Toledo"],["托雷多巴士站","Estación de Autobuses de Toledo"]],
- 4:[["飯店","Urbansea Atocha 113, Madrid"],["格蘭大道","Gran Vía, Madrid"],["伯納烏球場","Estadio Santiago Bernabéu, Madrid"]],
+ 4:[["飯店","Urbansea Atocha 113, Madrid"],["格蘭大道","Gran Vía, Madrid"],["聖安東市場","Mercado de San Antón, Madrid"],["聖伊爾德豐索市場","Mercado de San Ildefonso, Madrid"]],
  5:[["Atocha 車站","Madrid Puerta de Atocha"],["Santa Justa 車站","Estación de Sevilla-Santa Justa"],["飯店","Real Maestranza Suite, Sevilla"],["西班牙廣場","Plaza de España, Sevilla"],["聖十字區","Barrio de Santa Cruz, Sevilla"],["塞維亞大教堂","Catedral de Sevilla"]],
  6:[["飯店","Real Maestranza Suite, Sevilla"],["Prado de San Sebastián 巴士站（依購票確認）","Estación de Autobuses Prado de San Sebastián, Sevilla"],["龍達新橋","Puente Nuevo, Ronda"],["龍達鬥牛場","Plaza de Toros de Ronda"],["阿拉伯浴場","Baños Árabes de Ronda"],["龍達巴士站","Estación de Autobuses de Ronda"],["Taberna Coloniales","Taberna Coloniales, Sevilla"]],
  7:[["Plaza de Armas 巴士站","Estación de Autobuses Plaza de Armas, Sevilla"],["格拉納達巴士總站","Estación de Autobuses de Granada"],["飯店","Sercotel HMO Martina, Granada"],["達阿霍拉宮","Palacio de Dar al-Horra, Granada"],["聖尼古拉斯觀景台","Mirador de San Nicolás, Granada"],["Cueva Los Parrones","Cueva Los Parrones, Camino del Sacromonte 23, Granada"]],
@@ -755,7 +758,7 @@ const GM={
  2:{m:"w",note:"步行路線；王宮往返普拉多約 2 km，可改搭地鐵或計程車",s:[MAD_H,"Mercado Antón Martín, Madrid","Palacio Real de Madrid","Taberna La Bola, Madrid","Museo del Prado, Madrid","Parque del Retiro, Madrid","Puerta de Alcalá, Madrid","Plaza de Cibeles, Madrid","Gran Vía, Madrid","Mercado de San Miguel, Madrid","Casa Labra, Madrid"]},
  3:[{t:"飯店 → Plaza Elíptica 巴士站",m:"r",note:"地鐵到 Plaza Elíptica（L6／L11），08:15 集合搭 08:30 ALSA",s:[MAD_H,"Intercambiador Plaza Elíptica, Madrid"]},
     {t:"托雷多市區步行",m:"w",note:"托雷多市區步行路線（不含馬德里來回巴士）；谷地觀景台那段實際是搭計程車",s:["Estación de Autobuses de Toledo","Remonte de Safont, Toledo","Plaza de Zocodover, Toledo","Catedral Primada de Toledo","Iglesia de Santo Tomé, Toledo","Alcázar de Toledo","Mirador del Valle, Toledo","Puente de San Martín, Toledo","Puerta Nueva de Bisagra, Toledo","La Abadía, Toledo","Estación de Autobuses de Toledo"]}],
- 4:{m:"r",note:"大眾運輸路線：飯店 → 格蘭大道 → 伯納烏球場（地鐵 L10 到 Santiago Bernabéu 站）",s:[MAD_H,"Gran Vía, Madrid","Estadio Santiago Bernabéu, Madrid"]},
+ 4:{m:"w",note:"步行路線：飯店 → 格蘭大道 → 聖安東市場（Chueca）→ 聖伊爾德豐索市場（Malasaña）",s:[MAD_H,"Gran Vía, Madrid","Mercado de San Antón, Madrid","Mercado de San Ildefonso, Madrid"]},
  5:[{t:"飯店 → 阿托查車站",m:"w",note:"步行約 10 分；IRYO 12:25 發車",s:[MAD_H,"Madrid Puerta de Atocha"]},
     {t:"塞維亞下午步行",m:"w",note:"塞維亞下午步行路線（Santa Justa 站到飯店建議搭 21 號公車或計程車）",s:["Estación de Sevilla-Santa Justa",SEV_H,"Plaza de España, Sevilla","Parque de María Luisa, Sevilla","Torre del Oro, Sevilla","Puente de Isabel II, Sevilla","Calle Betis, Sevilla"]}],
  6:[{t:"方案 A：飯店 → 往龍達的巴士站",m:"w",note:"巴士站依購票確認（多為 Prado de San Sebastián）",s:[SEV_H,"Estación de Autobuses Prado de San Sebastián, Sevilla"]},
@@ -948,7 +951,7 @@ const ML=[
  ["景點","Plaza de Cibeles","西貝萊斯廣場","D2",""],
  ["景點","Gran Vía","格蘭大道","D2 / D4","D4 購物"],
  ["景點","Mercado de San Miguel","聖米格爾市場","D2",""],
- ["景點","Estadio Santiago Bernabéu","伯納烏球場","D4","彈性日，球場導覽（未定）"],
+ ["景點","Estadio Santiago Bernabéu","伯納烏球場","—","不去",1],
  ["咖啡","Café Matilda","Café Matilda","D1","3–4 分 · €5–10 · 番茄橄欖油吐司"],
  ["咖啡","ACID Café","ACID Café","D1","5 分 · €8–14 · 精品咖啡＋酸麵包"],
  ["咖啡","Vertical Caffé","Vertical Caffé","D1","6 分 · €6–12 · 健康早午餐"],
@@ -986,6 +989,9 @@ const ML=[
  ["咖啡","Hanso Cafe 2","Hanso Cafe 2","—","Brunch"],
  ["甜點","Maestro Churrero","Maestro Churrero","—","油條（Churros）＋熱巧克力"],
  ["甜點","Heladería Véneta","Heladería Véneta","—","義式冰淇淋 Gelato"],
+ ["市場","Mercado de San Antón","聖安東市場","D4","Chueca 區；一樓生鮮、樓上美食攤，頂樓露台"],
+ ["市場","Mercado de San Ildefonso","聖伊爾德豐索市場","D4","Fuencarral 街；街頭小吃風格，氣氛熱鬧"],
+ ["市場","Mercado de San Fernando","聖費爾南多市場","—","Lavapiés 區，離飯店近；在地感強"],
  ["超市","Mi Alcampo","Mi Alcampo","—","離飯店最近"],
  ["超市","Carrefour Express","Carrefour Express","—","週日營業到 22:00"],
  ["超市","Carrefour Market Lavapiés","Carrefour Market Lavapiés","—","24 小時 · 深夜注意安全"],
@@ -1312,6 +1318,9 @@ renderSG();
 })();
 // say buttons (餐廳實用)
 document.addEventListener("click",e=>{const b=e.target.closest(".say");if(b)speak(b.dataset.say);});
+const MK=[["El Rastro 跳蚤市場", "El Rastro", "La Latina／Embajadores", "露天跳蚤市場", [1], "推薦", "古董、二手衣、皮件、紀念品；以 Cascorro 廣場為中心往下坡逛", "只在週日和假日開 09:00–15:00；扒手熱區，包包背前面"], ["Antón Martín 市場", "Mercado de Antón Martín", "Antón Martín（離飯店最近）", "傳統＋美食", [2], "推薦", "80 多個攤位；生鮮、火腿起司，還有西班牙、亞洲、拉美小吃", "⚠ 週日休息；平日美食區開到 23:30，各攤時間不同"], ["聖米格爾市場", "Mercado de San Miguel", "馬約爾廣場旁", "美食市場", [2], "推薦", "1916 年鐵架玻璃建築；精緻 Tapas、生蠔、火腿、葡萄酒", "名氣最大、最擠、價格偏觀光區；傍晚人最多"], ["Cebada 市場", "Mercado de la Cebada", "La Latina", "傳統市場", [1], "順路", "馬德里最大、最老的市場之一，在地生鮮", "D1 逛完 El Rastro 走過去就到；週日多數攤位休息，以現場為準"], ["聖安東市場", "Mercado de San Antón", "Chueca", "美食市場", [4], "順路", "一樓生鮮、二樓美食攤、頂樓露台餐廳", "D4 逛格蘭大道後走過去約 10 分鐘"], ["聖伊爾德豐索市場", "Mercado de San Ildefonso", "Malasaña（Fuencarral 街）", "街頭小吃", [4], "順路", "19 個攤位，街頭小吃風格，年輕人多、氣氛熱鬧", "晚上比白天熱鬧"], ["聖費爾南多市場", "Mercado de San Fernando", "Lavapiés", "傳統＋美食", [4], "可選", "在地感強；日本料理、秤重賣的二手書、手作攤", "離飯店近，D4 彈性日可去；週日多數攤位休息"], ["La Paz 市場", "Mercado de la Paz", "Salamanca 區", "高級食材", [], "較遠", "1882 年開業，品質好、觀光客少", "離你們的行程較遠，不特地去"]];
+document.getElementById("mkL").innerHTML=MK.map(m=>`<article class="sc" style="--c:var(--c-mad)"><div class="sc-m">${ctag("mad")}${m[4].map(d=>`<a class="pl" href="#daily" data-day="${d}">D${d}</a>`).join(" ")}<span class="pill ${m[5]==="推薦"?"ok":m[5]==="較遠"?"warn":"info"}">${m[5]}</span></div><h3><a class="pl" href="${mq(m[1]+", Madrid")}" target="_blank" rel="noopener">${esc(m[0])}</a> <span class="es">${esc(m[1])}</span></h3><p class="tp">${esc(m[2])}｜${esc(m[3])}</p><p>${esc(m[6])}</p><p class="tp">${esc(m[7])}</p></article>`).join("");
+document.getElementById("mkL").addEventListener("click",e=>{const a=e.target.closest("[data-day]");if(!a)return;e.preventDefault();showDay(+a.dataset.day);show("daily");});
 // tabs
 const tabs=[...document.querySelectorAll('[role="tab"]')];
 function show(id){
