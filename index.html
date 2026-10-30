@@ -170,6 +170,10 @@ ol.oth li::before{content:counter(o);width:28px;height:28px;border-radius:50%;ba
 .say{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);border-radius:50%;width:32px;height:32px;cursor:pointer;vertical-align:middle;margin-left:4px}
 .say:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
 .fd table{min-width:560px}
+.em ol{margin:6px 0 0;padding-left:20px;display:grid;gap:5px;font-size:14px}
+.em h3{color:var(--c)}
+ul.em-check{list-style:none;padding:0;margin:0;display:grid;gap:6px;font-size:15px}
+#sos .tbl table{min-width:0}
 /* route map */
 .route-map{margin:0 0 14px;padding:12px;border:1px solid var(--line);border-radius:8px}
 .rm-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:12px;letter-spacing:.06em;color:var(--muted);margin-bottom:10px}
@@ -313,6 +317,7 @@ ol.tl .w small{font-size:14px}
   <button role="tab" id="t-map" aria-controls="map" aria-selected="false">地鐵地圖</button>
   <button role="tab" id="t-hotels" aria-controls="hotels" aria-selected="false">住宿資訊</button>
   <button role="tab" id="t-tickets" aria-controls="tickets" aria-selected="false">車票／門票</button>
+  <button role="tab" id="t-sos" aria-controls="sos" aria-selected="false">🆘 緊急應變</button>
   <button role="tab" id="t-weather" aria-controls="weather" aria-selected="false">天氣</button>
   <button role="tab" id="t-madrid" aria-controls="madrid" aria-selected="false">地圖清單</button>
   <button role="tab" id="t-spanish" aria-controls="spanish" aria-selected="false">西班牙語</button>
@@ -458,6 +463,54 @@ ol.tl .w small{font-size:14px}
     </div>
   </section>
 
+  <section role="tabpanel" id="sos" aria-labelledby="t-sos" hidden>
+    <h2>🆘 緊急應變</h2>
+    <p class="note">東西不見、被偷、生病、走散時照這裡做。電話可以直接點撥，打不出去時抄下號碼用其他手機撥。</p>
+    <div class="tbl"><table><thead><tr><th>單位</th><th>電話</th><th>什麼時候打</th></tr></thead><tbody>
+      <tr><td><b>西班牙緊急電話</b></td><td><b style="color:var(--c-mad);font-size:1.2em"><a class="pl" href="tel:112">112</a></b></td><td>警察、救護車、消防；有人受傷或遇到搶劫</td></tr>
+      <tr><td>國家警察 Policía Nacional</td><td><a class="pl" href="tel:091">091</a></td><td>需要警察到場</td></tr>
+      <tr><td>外國遊客報案協助 SATE</td><td><a class="pl" href="tel:902102112">902 102 112</a></td><td>付費專線，有英語服務，可協助報案</td></tr>
+      <tr><td><b>駐西班牙台北經濟文化辦事處</b>（馬德里）</td><td>上班 <a class="pl" href="tel:+34915714678">+34 915 714 678</a><br><b>急難 <a class="pl" href="tel:+34639384883">+34 639 384 883</a></b></td><td>護照遺失、重大事故（急難專線限重大緊急）<br>C/ Rosario Pino 14-16, Piso 18 Dcha., Madrid</td></tr>
+      <tr><td>外交部旅外急難救助（台灣家人撥）</td><td><a class="pl" href="tel:0800-085-095">0800-085-095</a></td><td>家人聯絡不上你們時</td></tr>
+      <tr><td><b>International SOS</b>（富邦海外救援）</td><td><a class="pl" href="tel:+34915724363">+34 91 572 4363</a><br>台灣 <a class="pl" href="tel:+886-2-2563-6292">+886-2-2563-6292</a></td><td>要就醫、住院前先打，確認醫院與付款方式</td></tr>
+      <tr><td>富邦產險</td><td><a class="pl" href="tel:+886-2-6636-7890">+886-2-6636-7890</a><br>台灣免付費 0800-009-888</td><td>理賠查詢</td></tr>
+    </tbody></table></div>
+    <h3 class="sub2">情況處理</h3>
+    <div class="sg">
+      <article class="sc em" style="--c:var(--c-mad)"><h3>🛂 護照遺失</h3><ol><li>先到附近警察局報案，取得<b>報案證明（Denuncia）</b></li><li>聯絡<b>駐西班牙台北經濟文化辦事處</b>（只在馬德里）</li><li>趕著回國：申請<b>入國證明書</b>，回台灣再補辦護照</li><li>留在當地補辦：備報案證明、照片、護照影本，其他文件依辦事處指示</li><li>⚠ 出發前把護照照片頁拍照存手機，另傳一份給家人</li></ol></article>
+      <article class="sc em" style="--c:var(--c-mad)"><h3>👜 被偷／被搶</h3><ol><li>人身安全第一，被搶不要追</li><li><b>馬德里、塞維亞、格拉納達</b>：到國家警察局（Comisaría，24 小時）報案；也可上網預填，但要在 <b>72 小時內</b>到警局簽名才有效</li><li><b>巴塞隆納</b>：Mossos 警局 Nou de la Rambla 76，或蘭布拉大道 43 號的遊客服務處（24 小時）；巴塞隆納不能網路報案</li><li>帶護照，列出被偷物品（型號、序號、照片；手機要有 IMEI）</li><li><b>報案證明一定要拿</b>，保險理賠要用</li></ol></article>
+      <article class="sc em" style="--c:var(--cobalt)"><h3>🔍 東西掉了（不是被偷）</h3><ol><li>先回頭問店家、飯店、車站服務台</li><li><b>馬德里失物招領處</b>：Paseo del Molino 7，週一到週五 08:30–14:00，<a class="pl" href="tel:915279590">915 279 590</a></li><li>Renfe 火車（AVE、IRYO 另洽各公司）：<a class="pl" href="tel:912320320">912 320 320</a></li><li>巴塞隆納地鐵、公車 TMB：<a class="pl" href="tel:900701149">900 701 149</a></li><li>計程車上掉的東西：48 小時後送到市政府失物招領處</li><li>手機、平板等 3C：報 IMEI 或序號比較好找</li></ol></article>
+      <article class="sc em" style="--c:var(--cobalt)"><h3>💳 信用卡、錢包遺失</h3><ol><li>立刻打發卡銀行的<b>國際掛失電話</b>，或在銀行 App 凍結卡片</li><li>⬜ 出發前把每張卡背面的掛失電話記在手機裡（不要記卡號）</li><li>7 人分開帶現金和卡，不要全部放同一個包包</li><li>被盜刷：保留報案證明，回台向銀行申請爭議款</li></ol></article>
+      <article class="sc em" style="--c:var(--cobalt)"><h3>📱 手機遺失</h3><ol><li>用同行者的手機登入 <b>iCloud「尋找」</b>或 <b>Google「尋找我的裝置」</b>定位、鎖定</li><li>鎖定後改 LINE、Google、Apple 帳號密碼</li><li>打給台灣電信公司停話（防盜用）</li><li>報案時附 IMEI（手機撥 *#06# 可查，出發前先截圖）</li></ol></article>
+      <article class="sc em" style="--c:var(--cobalt)"><h3>🔢 IMEI 是什麼、怎麼查</h3><ol><li><b>IMEI</b>：每支手機獨一無二的 15 碼序號，像手機的身分證號碼</li><li><b>用途</b>：手機被偷時報案、保險理賠、請電信公司鎖機都要用</li><li><b>查法 1</b>：撥號畫面輸入 <b>*#06#</b>，直接跳出來</li><li><b>查法 2</b>：iPhone「設定」→「一般」→「關於本機」往下拉；Android「設定」→「關於手機」</li><li><b>手機已經不見</b>：手機盒或購買收據上有；iPhone 也可用別人的手機登入 account.apple.com →「裝置」查看</li><li>雙卡手機有 <b>IMEI 和 IMEI2</b> 兩組，兩組都要記</li><li>⬜ 出發前截圖存起來，另外傳一份給家人或自己的 email（手機不見時才看得到）</li></ol></article>
+      <article class="sc em" style="--c:var(--c-gra)"><h3>🏥 生病、受傷</h3><ol><li>緊急情況直接打 <b>112</b></li><li>不緊急：先打 <b>International SOS</b>，由他們安排醫院、說明付款方式</li><li>小病去藥局（綠色十字招牌 Farmacia）；晚上找值班藥局 Farmacia de guardia</li><li><b>收據、診斷書、藥單全部留著</b>，回台申請保險理賠</li><li>常備藥從台灣帶，藥名寫英文</li></ol></article>
+      <article class="sc em" style="--c:var(--c-sev)"><h3>👨‍👩‍👧 走散</h3><ol><li>每天出門前約好<b>集合點</b>和時間（例如飯店大廳、景點入口）</li><li>打開 iPhone「尋找」→「人員」看彼此位置（設定見下一張卡）；Android 用 Google Maps「位置資訊分享」</li><li>每人手機存好當天飯店的地址（網頁的「給司機看的地址」）</li><li>找不到人：留在原地等 15 分鐘，不要到處找</li></ol></article>
+      <article class="sc em" style="--c:var(--c-sev)"><h3>📍 iPhone 互相定位設定（出發前做一次）</h3><ol><li><b>開啟位置分享</b>：「設定」→ 點最上面自己的名字 →「尋找」→ 打開「共享我的位置」，「我的位置」選「此 iPhone」</li><li><b>開定位服務</b>：「設定」→「隱私權與安全性」→「定位服務」→ 打開</li><li><b>分享給 6 位旅伴</b>：打開「尋找」App →「人員」→「＋」→「分享我的位置」→ 輸入 6 人名字或電話 →「傳送」→ 選「永久分享」</li><li><b>接受別人的分享</b>：收到「○○ 開始與你分享位置」通知時，點「分享」回傳</li><li><b>確認</b>：「尋找」→「人員」看得到 6 個人就完成</li><li><b>走散時</b>：「尋找」→「人員」→ 點對方名字 →「路線」導航過去</li><li>⚠ 要有網路位置才會更新；比較耗電，帶行動電源</li><li><b>回國後關掉</b>（擇一）：<br>・<b>全部停止（最快）</b>：「設定」→ 自己的名字 →「尋找」→ 關掉「共享我的位置」<br>・<b>只停某一人</b>：「尋找」→「人員」→ 點對方名字 → 最下面「停止分享我的位置」<br>・<b>從清單移除</b>：「尋找」→「人員」→ 點對方名字 →「移除〇〇」</li><li>⚠ 不要關「尋找我的 iPhone」（手機遺失時定位、鎖定要用）；對方分享給你的位置要由他自己關，或用「移除」</li></ol></article>
+      <article class="sc em" style="--c:var(--c-sev)"><h3>⚠️ 常見扒手手法</h3><ol><li>假裝問路、拿地圖遮住你的視線</li><li>故意弄髒你的衣服再「好心」幫你擦</li><li>要你簽連署書、送花、綁幸運繩</li><li>假警察要看錢包或證件（真的警察不會這樣要求）</li><li>地鐵門關上前搶了就跑；包包背前面、拉鍊關好，手機不要放後口袋</li></ol></article>
+    </div>
+    <h3 class="sub2">救急西班牙語</h3>
+    <div class="tbl"><table><thead><tr><th>中文</th><th>西班牙文</th></tr></thead><tbody>
+      <tr><td>救命！</td><td><b>¡Ayuda!</b> <button type="button" class="say" data-say="¡Ayuda!">🔊</button></td></tr>
+      <tr><td>我被偷了</td><td><b>Me han robado.</b> <button type="button" class="say" data-say="Me han robado.">🔊</button></td></tr>
+      <tr><td>我的護照不見了</td><td><b>He perdido mi pasaporte.</b> <button type="button" class="say" data-say="He perdido mi pasaporte.">🔊</button></td></tr>
+      <tr><td>警察局在哪裡？</td><td><b>¿Dónde está la comisaría?</b> <button type="button" class="say" data-say="¿Dónde está la comisaría?">🔊</button></td></tr>
+      <tr><td>我需要醫生</td><td><b>Necesito un médico.</b> <button type="button" class="say" data-say="Necesito un médico.">🔊</button></td></tr>
+      <tr><td>請叫救護車</td><td><b>Llame a una ambulancia, por favor.</b> <button type="button" class="say" data-say="Llame a una ambulancia, por favor.">🔊</button></td></tr>
+      <tr><td>我需要報案證明</td><td><b>Necesito una denuncia.</b> <button type="button" class="say" data-say="Necesito una denuncia.">🔊</button></td></tr>
+      <tr><td>我是台灣人</td><td><b>Soy de Taiwán.</b> <button type="button" class="say" data-say="Soy de Taiwán.">🔊</button></td></tr>
+    </tbody></table></div>
+    <h3 class="sub2">出發前要做</h3>
+    <ul class="em-check">
+      <li>☐ 護照照片頁拍照存手機，並傳給台灣家人</li>
+      <li>☐ 保險證明 PDF 存手機（離線也打得開）</li>
+      <li>☐ 手機撥 *#06# 截圖 IMEI</li>
+      <li>☐ 記下每張信用卡的國際掛失電話</li>
+      <li>☐ 外交部「出國登錄」</li>
+      <li>☐ 家人聯絡單傳到家族群組</li>
+    </ul>
+    <p class="note">資料來源：外交部領事事務局、富邦申根醫療旅行保險證明、西班牙警方報案說明（Consumoteca）、巴塞隆納報案說明（Barcelona Urbana）、馬德里失物招領處資料（2023 更新）。電話與時間可能變動，以官方公告為準。</p>
+  </section>
+
   <p class="foot">資料來源：西班牙15日行程簡表_1018.xlsx（10/22 版）＋專案內車票／門票 PDF。版本 v1 · 製作 2026/10/24。</p>
 </main>
 
@@ -531,12 +584,12 @@ const D=[
   alerts:[],tips:["浦東轉機約 4.5 小時"]},
  {d:"D1",date:"11/1",wd:"日",city:"mad",title:"馬德里市區初探",hotel:"mad",
   tr:"<s>機場快線／地鐵</s>　巴士、計程車到飯店",
-  items:[["08:00","抵達{馬德里機場|Aeropuerto Madrid-Barajas}",""],["09:00","飯店寄放行李","Urbansea Atocha 113"],["09:30","早午餐（擇一）","{Café Matilda|Café Matilda}（3–4 分，€5–10，番茄橄欖油吐司）／{ACID Café|ACID Café}（5 分，€8–14，精品咖啡＋酸麵包）／{Vertical Caffé|Vertical Caffé}（6 分，€6–12，健康早午餐）／{Pum Pum Café|Pum Pum Café}（8–10 分，€10–15，份量大，要排隊）"],["11:00","{El Rastro 跳蚤市場|El Rastro}","只在週日開"],["13:00","{太陽門|Puerta del Sol}（看抗議情況）","在 {La Mallorquina|La Mallorquina} 買甜點；有抗議活動就略過，直接往馬約爾廣場"],["14:00","{馬約爾廣場|Plaza Mayor} → {皇宮|Palacio Real} → {阿穆德納主教座堂|Catedral de la Almudena}",""],["17:00","{德波神廟|Templo de Debod}看日落，或去{普拉多|Museo del Prado}免費時段","看天氣決定；免費時段約 18:00–20:00"],["20:00","晚餐（擇一）","首選 {Taberna El Sur|Taberna El Sur}（5 分，營業到 24:00）／{La Fragua de Vulcano|Taberna La Fragua de Vulcano}（12 分，份量大，適合團體，營業到凌晨 1 點）／{El Rincón de Esteban|El Rincón de Esteban}（9 分，價位較高，可問 7 人包廂）／{Bodega de la Ardosa|Bodega de la Ardosa}（平價，多站位，在 Malasaña 較遠）"],["22:00","超市買酒水、宵夜","{Mi Alcampo|Mi Alcampo|Mi Alcampo Calle de Atocha, Madrid}（最近，零食飲料齊）／{Carrefour Express|Carrefour Express|Carrefour Express Calle de Atocha, Madrid}（週日到 22:00）／{Carrefour Market Lavapiés|Carrefour Market|Carrefour Market Lavapiés, Madrid}（24 小時，兩層樓，熟食多；深夜注意安全）／{Alcampo Atocha 80|Alcampo Supermercado|Alcampo Calle de Atocha 80, Madrid}（只開一個收銀台，要排隊）"]],
+  items:[["08:00","抵達{馬德里機場|Aeropuerto Madrid-Barajas}",""],["09:00","飯店寄放行李","Urbansea Atocha 113"],["09:30","早午餐（擇一）","{Café Matilda|Café Matilda}（3–4 分，€5–10，番茄橄欖油吐司）／{ACID Café|ACID Café}（5 分，€8–14，精品咖啡＋酸麵包）／{Vertical Caffé|Vertical Caffé}（6 分，€6–12，健康早午餐）／{Pum Pum Café|Pum Pum Café}（8–10 分，€10–15，份量大，要排隊）"],["11:00","{El Rastro 跳蚤市場|El Rastro}","只在週日開"],["12:45","🍷 Tapas 午餐：{Casa Amadeo – Los Caracoles|Casa Amadeo Los Caracoles}（招牌蝸牛）→ {Bodegas Ricla|Bodegas Ricla}（苦艾酒、醃鯷魚）","就在 El Rastro 旁；週日開市最熱鬧，站吧台吃，每家點 1–2 樣招牌就換下一家"],["14:00","{馬約爾廣場|Plaza Mayor} → {太陽門|Puerta del Sol}（看抗議情況）","在 {La Mallorquina|La Mallorquina} 買諸聖節甜點 Buñuelos、Huesos de santo；有抗議就略過太陽門"],["15:00","{皇宮|Palacio Real} → {阿穆德納主教座堂|Catedral de la Almudena}",""],["17:00","{德波神廟|Templo de Debod}看日落，或去{普拉多|Museo del Prado}免費時段","看天氣決定；免費時段約 18:00–20:00"],["20:00","晚餐（擇一）","首選 {Taberna El Sur|Taberna El Sur}（5 分，營業到 24:00）／{La Fragua de Vulcano|Taberna La Fragua de Vulcano}（12 分，份量大，適合團體，營業到凌晨 1 點）／{El Rincón de Esteban|El Rincón de Esteban}（9 分，價位較高，可問 7 人包廂）／{Bodega de la Ardosa|Bodega de la Ardosa}（平價，多站位，在 Malasaña 較遠）"],["22:00","超市買酒水、宵夜","{Mi Alcampo|Mi Alcampo|Mi Alcampo Calle de Atocha, Madrid}（最近，零食飲料齊）／{Carrefour Express|Carrefour Express|Carrefour Express Calle de Atocha, Madrid}（週日到 22:00）／{Carrefour Market Lavapiés|Carrefour Market|Carrefour Market Lavapiés, Madrid}（24 小時，兩層樓，熟食多；深夜注意安全）／{Alcampo Atocha 80|Alcampo Supermercado|Alcampo Calle de Atocha 80, Madrid}（只開一個收銀台，要排隊）"]],
   alerts:["Taberna El Sur 要先訂 7 人位，請店家併桌","Mercadona 週日休息，改去 Carrefour Express（營業到 22:00）"],
   tips:["11/1 諸聖節：銀行休息，景點照常","Casa Alberto 週日只開午餐，不適合 D1 晚餐；Mercadona、Lidl 平價但 Mercadona 週日休息","很多店週日或假日公休，出發前用 Google Maps 再確認營業時間"]},
  {d:"D2",date:"11/2",wd:"一",city:"mad",title:"王宮、普拉多與麗池公園",hotel:"mad",
   tr:"步行、地鐵",
-  items:[["09:00","{Antón Martín 市場|Mercado Antón Martín} 早午餐",""],["10:30","{馬德里王宮|Palacio Real}",""],["12:30","午餐：{Taberna La Bola|Taberna La Bola}","備案：{Estado Puro|Estado Puro}／{Lhardy|Lhardy}／{La Casa del Abuelo|La Casa del Abuelo}"],["14:00","{普拉多博物館|Museo del Prado}",""],["16:30","{麗池公園|Parque del Retiro}、~~{水晶宮|Palacio de Cristal}~~ → {阿爾卡拉門|Puerta de Alcalá} → {西貝萊斯廣場|Plaza de Cibeles}",""],["18:30","{格蘭大道|Gran Vía} → {聖米格爾市場|Mercado de San Miguel}",""],["20:30","晚餐：{Casa Labra|Casa Labra}",""]],
+  items:[["09:00","{Antón Martín 市場|Mercado Antón Martín} 早午餐",""],["10:30","{馬德里王宮|Palacio Real}",""],["12:30","午餐：{Taberna La Bola|Taberna La Bola}","備案：{Estado Puro|Estado Puro}／{Lhardy|Lhardy}／{La Casa del Abuelo|La Casa del Abuelo}"],["14:00","{普拉多博物館|Museo del Prado}",""],["16:30","{麗池公園|Parque del Retiro}、~~{水晶宮|Palacio de Cristal}~~ → {阿爾卡拉門|Puerta de Alcalá} → {西貝萊斯廣場|Plaza de Cibeles}",""],["18:30","{格蘭大道|Gran Vía} → {聖米格爾市場|Mercado de San Miguel}",""],["20:30","🍷 Tapas 晚餐巡禮：{Casa Labra|Casa Labra}（炸鱈魚塊、可樂餅）→ {La Casa del Abuelo|La Casa del Abuelo}（蒜味蝦配甜酒）","兩家都在太陽門旁、週一有開；Casa Labra 站著吃、人多。⚠ Casa Alberto、Los Gatos 週一公休"]],
   alerts:["普拉多門票未訂"],tips:["Casa Alberto 週一休息"]},
  {d:"D3",date:"11/3",wd:"二",city:"tol",title:"托雷多一日遊",hotel:"mad",hotelTxt:"當晚回馬德里",
   tr:"ALSA 直達巴士 08:30 Plaza Elíptica → 托雷多（約 1 小時）；19:20 回程",
@@ -545,8 +598,8 @@ const D=[
   tips:["回程叫車：Radio Taxi Toledo +34 925 25 50 50（請觀景台小販幫忙打）","全城石板陡坡，穿運動鞋、帶防風外套","迷路時：往上走是大教堂和廣場，往下坡是猶太區和河邊"]},
  {d:"D4",date:"11/4",wd:"三",city:"mad",title:"彈性日",hotel:"mad",
   tr:"無跨城交通",
-  items:[["上午","{格蘭大道|Gran Vía}購物","或休息"],["下午","市場巡禮（可選）","{聖安東市場|Mercado de San Antón}（Chueca，頂樓露台）／{聖伊爾德豐索市場|Mercado de San Ildefonso}（Malasaña，街頭小吃）"],["晚上","整理行李","隔天移動到塞維亞"]],
-  alerts:["決定 11/6 是否去龍達（看天氣），要去就訂巴士票"],tips:["確認後段車票都已收到"]},
+  items:[["上午","{格蘭大道|Gran Vía}購物","或休息"],["下午","市場巡禮（可選）","{聖安東市場|Mercado de San Antón}（Chueca，頂樓露台）／{聖伊爾德豐索市場|Mercado de San Ildefonso}（Malasaña，街頭小吃）"],["20:00","🍷 文學區 Tapas 巡禮：{Casa Alberto|Casa Alberto}（苦艾酒、燉牛尾、肉丸）→ {La Venencia|La Venencia}（只賣雪莉酒）→ {Los Gatos|Los Gatos}","都在飯店附近步行範圍；Casa Alberto 熱門，可先訂位"],["22:30","回飯店整理行李","隔天 12:25 搭 IRYO 去塞維亞"]],
+  alerts:["決定 11/6 是否去龍達（看天氣），要去就訂巴士票"],tips:["馬德里人吃 Tapas：先點一杯 Vermú de grifo（苦艾酒），每家只點招牌、站吧台吃，吃一兩樣就換下一家；一輪約 €15–20／人","確認後段車票都已收到"]},
  {d:"D5",date:"11/5",wd:"四",city:"sev",title:"移動到塞維亞",hotel:"sev",
   tr:"IRYO 高鐵 12:25 馬德里 → 15:04 塞維亞（直達）",
   items:[["上午","退房，前往{阿托查車站|Madrid Puerta de Atocha|Madrid Puerta de Atocha}",""],["12:25","IRYO 高鐵","15:04 抵達{聖胡斯塔車站|Sevilla-Santa Justa|Estación de Sevilla-Santa Justa}"],["15:30","飯店放行李","21 號公車到{黃金塔|Torre del Oro}，或搭計程車"],["16:30","{西班牙廣場|Plaza de España}，逛到日落",""],["19:00","{聖十字區|Barrio de Santa Cruz}夜景、{大教堂|Catedral de Sevilla}與{希拉達塔|La Giralda}外觀",""],["","{塞維亞王宮|Real Alcázar de Sevilla}","看時間決定"]],
@@ -653,10 +706,10 @@ const T=[
 ];
 // route map stops per day index: [label, Google Maps query]
 const R={
- 1:[["馬德里機場","Aeropuerto Adolfo Suárez Madrid-Barajas"],["飯店","Urbansea Atocha 113, Madrid"],["Café Matilda","Café Matilda, Madrid"],["El Rastro","El Rastro, Madrid"],["太陽門","Puerta del Sol, Madrid"],["馬約爾廣場","Plaza Mayor, Madrid"],["皇宮","Palacio Real de Madrid"],["德波神廟","Templo de Debod, Madrid"],["Taberna El Sur","Taberna El Sur, Madrid"]],
+ 1:[["馬德里機場","Aeropuerto Adolfo Suárez Madrid-Barajas"],["飯店","Urbansea Atocha 113, Madrid"],["Café Matilda","Café Matilda, Madrid"],["El Rastro","El Rastro, Madrid"],["Los Caracoles","Casa Amadeo Los Caracoles, Madrid"],["太陽門","Puerta del Sol, Madrid"],["馬約爾廣場","Plaza Mayor, Madrid"],["皇宮","Palacio Real de Madrid"],["德波神廟","Templo de Debod, Madrid"],["Taberna El Sur","Taberna El Sur, Madrid"]],
  2:[["Antón Martín 市場","Mercado Antón Martín, Madrid"],["王宮","Palacio Real de Madrid"],["Taberna La Bola","Taberna La Bola, Madrid"],["普拉多","Museo del Prado, Madrid"],["麗池公園","Parque del Retiro, Madrid"],["阿爾卡拉門","Puerta de Alcalá, Madrid"],["西貝萊斯廣場","Plaza de Cibeles, Madrid"],["格蘭大道","Gran Vía, Madrid"],["聖米格爾市場","Mercado de San Miguel, Madrid"],["Casa Labra","Casa Labra, Madrid"]],
  3:[["Plaza Elíptica","Intercambiador Plaza Elíptica, Madrid"],["托雷多巴士站","Estación de Autobuses de Toledo"],["Zocodover 廣場","Plaza de Zocodover, Toledo"],["大教堂","Catedral Primada de Toledo"],["聖多美教堂","Iglesia de Santo Tomé, Toledo"],["阿爾卡薩城堡","Alcázar de Toledo"],["谷地觀景台","Mirador del Valle, Toledo"],["聖馬丁古橋","Puente de San Martín, Toledo"],["新比薩門","Puerta Nueva de Bisagra, Toledo"],["La Abadía","La Abadía, Toledo"],["托雷多巴士站","Estación de Autobuses de Toledo"]],
- 4:[["飯店","Urbansea Atocha 113, Madrid"],["格蘭大道","Gran Vía, Madrid"],["聖安東市場","Mercado de San Antón, Madrid"],["聖伊爾德豐索市場","Mercado de San Ildefonso, Madrid"]],
+ 4:[["飯店","Urbansea Atocha 113, Madrid"],["格蘭大道","Gran Vía, Madrid"],["聖安東市場","Mercado de San Antón, Madrid"],["聖伊爾德豐索市場","Mercado de San Ildefonso, Madrid"],["Casa Alberto","Casa Alberto, Madrid"],["La Venencia","La Venencia, Madrid"],["Los Gatos","Los Gatos, Madrid"]],
  5:[["Atocha 車站","Madrid Puerta de Atocha"],["Santa Justa 車站","Estación de Sevilla-Santa Justa"],["飯店","Real Maestranza Suite, Sevilla"],["西班牙廣場","Plaza de España, Sevilla"],["聖十字區","Barrio de Santa Cruz, Sevilla"],["塞維亞大教堂","Catedral de Sevilla"]],
  6:[["飯店","Real Maestranza Suite, Sevilla"],["Prado de San Sebastián 巴士站（依購票確認）","Estación de Autobuses Prado de San Sebastián, Sevilla"],["龍達新橋","Puente Nuevo, Ronda"],["龍達鬥牛場","Plaza de Toros de Ronda"],["阿拉伯浴場","Baños Árabes de Ronda"],["龍達巴士站","Estación de Autobuses de Ronda"],["Taberna Coloniales","Taberna Coloniales, Sevilla"]],
  7:[["Plaza de Armas 巴士站","Estación de Autobuses Plaza de Armas, Sevilla"],["格拉納達巴士總站","Estación de Autobuses de Granada"],["飯店","Sercotel HMO Martina, Granada"],["達阿霍拉宮","Palacio de Dar al-Horra, Granada"],["聖尼古拉斯觀景台","Mirador de San Nicolás, Granada"],["Cueva Los Parrones","Cueva Los Parrones, Camino del Sacromonte 23, Granada"]],
@@ -754,11 +807,11 @@ function vidHtml(i){const L=VID[i];return L?`<div class="vids">${L.map(v=>`<a cl
 // embedded Google route maps (m: w 步行 / r 大眾運輸 / d 開車)
 const MAD_H="Urbansea Atocha 113, Madrid",SEV_H="Calle Real de la Carretería 29, Sevilla",GRA_H="Sercotel HMO Martina, Granada",BCN_H="Carrer de Provença 131, Barcelona";
 const GM={
- 1:{m:"w",note:"步行路線：飯店 → 早午餐 → El Rastro → 太陽門 → 馬約爾廣場 → 王宮 → 德波神廟 → 晚餐",s:[MAD_H,"Café Matilda, Madrid","El Rastro, Madrid","Puerta del Sol, Madrid","Plaza Mayor, Madrid","Palacio Real de Madrid","Templo de Debod, Madrid","Taberna El Sur, Madrid"]},
- 2:{m:"w",note:"步行路線；王宮往返普拉多約 2 km，可改搭地鐵或計程車",s:[MAD_H,"Mercado Antón Martín, Madrid","Palacio Real de Madrid","Taberna La Bola, Madrid","Museo del Prado, Madrid","Parque del Retiro, Madrid","Puerta de Alcalá, Madrid","Plaza de Cibeles, Madrid","Gran Vía, Madrid","Mercado de San Miguel, Madrid","Casa Labra, Madrid"]},
+ 1:{m:"w",note:"步行路線：飯店 → 早午餐 → El Rastro → 太陽門 → 馬約爾廣場 → 王宮 → 德波神廟 → 晚餐",s:[MAD_H,"Café Matilda, Madrid","El Rastro, Madrid","Casa Amadeo Los Caracoles, Madrid","Puerta del Sol, Madrid","Plaza Mayor, Madrid","Palacio Real de Madrid","Templo de Debod, Madrid","Taberna El Sur, Madrid"]},
+ 2:{m:"w",note:"步行路線；王宮往返普拉多約 2 km，可改搭地鐵或計程車",s:[MAD_H,"Mercado Antón Martín, Madrid","Palacio Real de Madrid","Taberna La Bola, Madrid","Museo del Prado, Madrid","Parque del Retiro, Madrid","Puerta de Alcalá, Madrid","Plaza de Cibeles, Madrid","Gran Vía, Madrid","Mercado de San Miguel, Madrid","Casa Labra, Madrid","La Casa del Abuelo, Madrid"]},
  3:[{t:"飯店 → Plaza Elíptica 巴士站",m:"r",note:"地鐵到 Plaza Elíptica（L6／L11），08:15 集合搭 08:30 ALSA",s:[MAD_H,"Intercambiador Plaza Elíptica, Madrid"]},
     {t:"托雷多市區步行",m:"w",note:"托雷多市區步行路線（不含馬德里來回巴士）；谷地觀景台那段實際是搭計程車",s:["Estación de Autobuses de Toledo","Remonte de Safont, Toledo","Plaza de Zocodover, Toledo","Catedral Primada de Toledo","Iglesia de Santo Tomé, Toledo","Alcázar de Toledo","Mirador del Valle, Toledo","Puente de San Martín, Toledo","Puerta Nueva de Bisagra, Toledo","La Abadía, Toledo","Estación de Autobuses de Toledo"]}],
- 4:{m:"w",note:"步行路線：飯店 → 格蘭大道 → 聖安東市場（Chueca）→ 聖伊爾德豐索市場（Malasaña）",s:[MAD_H,"Gran Vía, Madrid","Mercado de San Antón, Madrid","Mercado de San Ildefonso, Madrid"]},
+ 4:{m:"w",note:"步行路線：飯店 → 格蘭大道 → 聖安東市場 → 聖伊爾德豐索市場 → 晚上回文學區吃 Tapas",s:[MAD_H,"Gran Vía, Madrid","Mercado de San Antón, Madrid","Mercado de San Ildefonso, Madrid","Casa Alberto, Madrid","La Venencia, Madrid","Los Gatos, Madrid"]},
  5:[{t:"飯店 → 阿托查車站",m:"w",note:"步行約 10 分；IRYO 12:25 發車",s:[MAD_H,"Madrid Puerta de Atocha"]},
     {t:"塞維亞下午步行",m:"w",note:"塞維亞下午步行路線（Santa Justa 站到飯店建議搭 21 號公車或計程車）",s:["Estación de Sevilla-Santa Justa",SEV_H,"Plaza de España, Sevilla","Parque de María Luisa, Sevilla","Torre del Oro, Sevilla","Puente de Isabel II, Sevilla","Calle Betis, Sevilla"]}],
  6:[{t:"方案 A：飯店 → 往龍達的巴士站",m:"w",note:"巴士站依購票確認（多為 Prado de San Sebastián）",s:[SEV_H,"Estación de Autobuses Prado de San Sebastián, Sevilla"]},
@@ -962,12 +1015,12 @@ const ML=[
  ["餐廳","Taberna El Sur","Taberna El Sur","D1","首選晚餐 · 5 分 · 7 人要訂位"],
  ["餐廳","Taberna La Fragua de Vulcano","La Fragua de Vulcano","D1","12 分 · 份量大，適合團體"],
  ["餐廳","El Rincón de Esteban","El Rincón de Esteban","—","9 分 · 價位較高，可問 7 人包廂"],
- ["餐廳","Casa Alberto","Casa Alberto","—","1827 年老店 · 週一休、週日只開午餐"],
+ ["餐廳","Casa Alberto","Casa Alberto","D4","1827 年老店 · 苦艾酒、燉牛尾 · 週一休、週日只開午餐"],
  ["餐廳","Bodega de la Ardosa","Bodega de la Ardosa","D1","平價 · 多站位 · 在 Malasaña"],
  ["餐廳","Taberna La Bola","Taberna La Bola","D2","午餐 · 馬德里燉肉鍋"],
  ["餐廳","Estado Puro","Estado Puro","D2","午餐備案"],
  ["餐廳","Lhardy","Lhardy","D2","午餐備案"],
- ["餐廳","La Casa del Abuelo","La Casa del Abuelo","D2","午餐備案 · 蒜味蝦"],
+ ["餐廳","La Casa del Abuelo","La Casa del Abuelo","D2","蒜味蝦配甜酒 · D2 晚上 Tapas 巡禮"],
  ["餐廳","Casa Labra","Casa Labra","D2","晚餐 · 炸鱈魚"],
  ["餐廳","Sobrino de Botín","Sobrino de Botín","—","金氏世界紀錄最古老餐廳 · 烤乳豬 · 要訂位"],
  ["餐廳","Vinitus Gran Vía","Vinitus","—","格蘭大道 Tapas 人氣店"],
@@ -992,6 +1045,15 @@ const ML=[
  ["市場","Mercado de San Antón","聖安東市場","D4","Chueca 區；一樓生鮮、樓上美食攤，頂樓露台"],
  ["市場","Mercado de San Ildefonso","聖伊爾德豐索市場","D4","Fuencarral 街；街頭小吃風格，氣氛熱鬧"],
  ["市場","Mercado de San Fernando","聖費爾南多市場","—","Lavapiés 區，離飯店近；在地感強"],
+ ["酒吧","Casa Amadeo Los Caracoles","Casa Amadeo – Los Caracoles","D1","招牌蝸牛；El Rastro 週日最熱鬧"],
+ ["酒吧","Bodegas Ricla","Bodegas Ricla","D1","苦艾酒、醃鯷魚、小串；家庭經營小店"],
+ ["酒吧","La Venencia","La Venencia","D4","1928 年老酒館，只賣雪莉酒；不接受訂位"],
+ ["酒吧","Los Gatos","Los Gatos","D4","文學區人氣 Tapas；週一休、週日到 17:00"],
+ ["酒吧","La Dolores","La Dolores","—","磁磚外牆、苦艾酒；文學區"],
+ ["酒吧","Taberna Los Gabrieles","Taberna Los Gabrieles","—","「磁磚的西斯汀禮拜堂」，重新開幕的老酒館"],
+ ["酒吧","Casa Lucas, Cava Baja","Casa Lucas","—","Cava Baja；週三只開晚上"],
+ ["酒吧","Txakolina, Cava Baja","Txakolina","—","巴斯克 Pintxos；週二休，週一到週四只開晚上"],
+ ["酒吧","Taberna Tempranillo, Cava Baja","Taberna Tempranillo","—","葡萄酒為主；週一只開晚上"],
  ["超市","Mi Alcampo","Mi Alcampo","—","離飯店最近"],
  ["超市","Carrefour Express","Carrefour Express","—","週日營業到 22:00"],
  ["超市","Carrefour Market Lavapiés","Carrefour Market Lavapiés","—","24 小時 · 深夜注意安全"],
@@ -1318,7 +1380,7 @@ renderSG();
 })();
 // say buttons (餐廳實用)
 document.addEventListener("click",e=>{const b=e.target.closest(".say");if(b)speak(b.dataset.say);});
-const MK=[["El Rastro 跳蚤市場", "El Rastro", "La Latina／Embajadores", "露天跳蚤市場", [1], "推薦", "古董、二手衣、皮件、紀念品；以 Cascorro 廣場為中心往下坡逛", "只在週日和假日開 09:00–15:00；扒手熱區，包包背前面"], ["Antón Martín 市場", "Mercado de Antón Martín", "Antón Martín（離飯店最近）", "傳統＋美食", [2], "推薦", "80 多個攤位；生鮮、火腿起司，還有西班牙、亞洲、拉美小吃", "⚠ 週日休息；平日美食區開到 23:30，各攤時間不同"], ["聖米格爾市場", "Mercado de San Miguel", "馬約爾廣場旁", "美食市場", [2], "推薦", "1916 年鐵架玻璃建築；精緻 Tapas、生蠔、火腿、葡萄酒", "名氣最大、最擠、價格偏觀光區；傍晚人最多"], ["Cebada 市場", "Mercado de la Cebada", "La Latina", "傳統市場", [1], "順路", "馬德里最大、最老的市場之一，在地生鮮", "D1 逛完 El Rastro 走過去就到；週日多數攤位休息，以現場為準"], ["聖安東市場", "Mercado de San Antón", "Chueca", "美食市場", [4], "順路", "一樓生鮮、二樓美食攤、頂樓露台餐廳", "D4 逛格蘭大道後走過去約 10 分鐘"], ["聖伊爾德豐索市場", "Mercado de San Ildefonso", "Malasaña（Fuencarral 街）", "街頭小吃", [4], "順路", "19 個攤位，街頭小吃風格，年輕人多、氣氛熱鬧", "晚上比白天熱鬧"], ["聖費爾南多市場", "Mercado de San Fernando", "Lavapiés", "傳統＋美食", [4], "可選", "在地感強；日本料理、秤重賣的二手書、手作攤", "離飯店近，D4 彈性日可去；週日多數攤位休息"], ["La Paz 市場", "Mercado de la Paz", "Salamanca 區", "高級食材", [], "較遠", "1882 年開業，品質好、觀光客少", "離你們的行程較遠，不特地去"]];
+const MK=[["El Rastro 跳蚤市場", "El Rastro", "La Latina／Embajadores", "露天跳蚤市場", [1], "推薦", "古董、二手衣、皮件、紀念品；以 Cascorro 廣場為中心往下坡逛", "只在週日和假日開 09:00–15:00；扒手熱區，包包背前面"], ["Antón Martín 市場", "Mercado de Antón Martín", "Antón Martín（離飯店最近）", "傳統＋美食", [2], "推薦", "80 多個攤位；生鮮、火腿起司，還有西班牙、亞洲、拉美小吃", "⚠ 週日休息；平日美食區開到 23:30，各攤時間不同"], ["聖米格爾市場", "Mercado de San Miguel", "馬約爾廣場旁", "美食市場", [2], "推薦", "1916 年鐵架玻璃建築；精緻 Tapas、生蠔、火腿、葡萄酒", "名氣最大、最擠、價格偏觀光區；傍晚人最多"], ["Cebada 市場", "Mercado de la Cebada", "La Latina", "傳統市場", [1], "順路", "馬德里最大、最老的市場之一，在地生鮮", "D1 逛完 El Rastro 走過去就到；週日多數攤位休息，以現場為準"], ["聖安東市場", "Mercado de San Antón", "Chueca", "美食市場", [4], "順路", "一樓生鮮、二樓美食攤、頂樓露台餐廳", "D4 逛格蘭大道後走過去約 10 分鐘"], ["聖伊爾德豐索市場", "Mercado de San Ildefonso", "Malasaña（Fuencarral 街）", "街頭小吃", [4], "順路", "19 個攤位，街頭小吃風格，年輕人多、氣氛熱鬧", "晚上比白天熱鬧"], ["聖費爾南多市場", "Mercado de San Fernando", "Lavapiés", "傳統＋美食", [4], "可選", "在地感強；日本料理、秤重賣的二手書、手作攤", "離飯店近，D4 彈性日可去；週日 11:00–18:00 也有開（2026/9 資料）"], ["La Paz 市場", "Mercado de la Paz", "Salamanca 區", "高級食材", [], "較遠", "1882 年開業，品質好、觀光客少", "離你們的行程較遠，不特地去"]];
 document.getElementById("mkL").innerHTML=MK.map(m=>`<article class="sc" style="--c:var(--c-mad)"><div class="sc-m">${ctag("mad")}${m[4].map(d=>`<a class="pl" href="#daily" data-day="${d}">D${d}</a>`).join(" ")}<span class="pill ${m[5]==="推薦"?"ok":m[5]==="較遠"?"warn":"info"}">${m[5]}</span></div><h3><a class="pl" href="${mq(m[1]+", Madrid")}" target="_blank" rel="noopener">${esc(m[0])}</a> <span class="es">${esc(m[1])}</span></h3><p class="tp">${esc(m[2])}｜${esc(m[3])}</p><p>${esc(m[6])}</p><p class="tp">${esc(m[7])}</p></article>`).join("");
 document.getElementById("mkL").addEventListener("click",e=>{const a=e.target.closest("[data-day]");if(!a)return;e.preventDefault();showDay(+a.dataset.day);show("daily");});
 // tabs
@@ -1328,7 +1390,7 @@ function show(id){
   document.querySelectorAll('[role="tabpanel"]').forEach(p=>p.hidden=p.id!==id);
 }
 tabs.forEach(t=>t.addEventListener("click",()=>show(t.getAttribute("aria-controls"))));
-const h=(location.hash||"").slice(1);if(["overview","daily","sights","map","hotels","tickets","weather","madrid","spanish","food","other"].includes(h))show(h);
+const h=(location.hash||"").slice(1);if(["overview","daily","sights","map","hotels","tickets","weather","madrid","spanish","food","other","sos"].includes(h))show(h);
 </script>
 
 </body>
